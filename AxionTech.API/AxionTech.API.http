@@ -1,0 +1,6 @@
+@AxionTech.API_HostAddress = http://localhost:5176
+
+GET {{AxionTech.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

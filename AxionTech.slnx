@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/API/">
+    <Project Path="AxionTech.API/AxionTech.API.csproj" />
+  </Folder>
+  <Folder Name="/Business/" />
+  <Folder Name="/Core/">
+    <Project Path="Core.Dtos/Core.Dtos.csproj" />
+    <Project Path="Core.Infrastructure/Core.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Data/">
+    <Project Path="Data.Access/Data.Access.csproj" />
+    <Project Path="Data.Infrastructure/Data.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="KatmanliMimariTanim.txt" />
+  </Folder>
+  <Project Path="AxionTech.WEB/AxionTech.WEB.csproj" Id="baab667c-b1bd-49c9-89b0-e135b3ac7ed1" />
+</Solution>

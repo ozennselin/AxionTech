@@ -1,0 +1,11 @@
+
+Katmanlý Mimari Nedir?
+BLL=>Business Logic Layer=> Ýþ Mantýðý Katmaný
+DLL=> Data Logic Layer (DAL-Data Access Layer)=>Veri Eriþim Katmaný
+UI=>User Interface(UI) => Kullanýcý Arayüzü Katmaný
+Katmanlý mimari, yazýlým geliþtirme sürecinde uygulamanýn farklý iþlevlerini ayrý katmanlara ayýrarak düzenleyen bir mimari desendir. Bu yaklaþým, kodun daha modüler, bakýmý kolay ve yeniden kullanýlabilir olmasýný saðlar. OOP (Nesne Yönelimli Programlama) prensipleriyle birlikte kullanýldýðýnda, katmanlý mimari yazýlým geliþtirme sürecini daha da iyileþtirir.
+-----------------------------------
+1)DB yi Code First ile oluþturduk.(Data Infrastructure)
+ Entities altýnda tablo yapmak
+ Configuration altýnda tablo kolonllarýnýn ayarlarýný kod olarak yazdýk.
+2)
