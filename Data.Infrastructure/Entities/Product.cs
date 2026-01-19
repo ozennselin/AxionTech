@@ -1,13 +1,15 @@
-﻿namespace Data.Infrastructure.Entities;
+﻿using Data.Infrastructure.Abstraction;
 
-public class Product
+namespace Data.Infrastructure.Entities;
+
+public class Product:BaseEntity
 {
-    public int Id { get; set; }
+   // public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public int CategoryId { get; set; }
-    public DateTime CreateDate { get; set; }
-    public int CreatorId { get; set; }
-    public DateTime? UpdateDate { get; set; }
-    public int? UpdaterId { get; set; }
+    //public int CategoryId { get; set; }
+    //public DateTime CreateDate { get; set; }
+    //public int CreatorId { get; set; }
+    //public DateTime? UpdateDate { get; set; }
+    //public int? UpdaterId { get; set; }
 }

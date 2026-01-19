@@ -12,6 +12,7 @@ namespace Data.Infrastructure
         }
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<Category> Category { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,5 +24,7 @@ namespace Data.Infrastructure
 
             base.OnModelCreating(modelBuilder);
         }
+
+       
     }
 }
