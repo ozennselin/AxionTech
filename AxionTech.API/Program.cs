@@ -1,34 +1,44 @@
+using Microsoft.EntityFrameworkCore;
+using Data.Infrastructure;
 
-namespace AxionTech.API
+namespace AxionTech.API;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+
+        builder.Services.AddControllers();
+        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+        builder.Services.AddOpenApi();
+
+        #region DbContext Configuration 
+
+        builder.Services.AddDbContext<AxionTechDB>(options =>
         {
-            var builder = WebApplication.CreateBuilder(args);
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"));
+        });
 
-            // Add services to the container.
+        #endregion
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+        var app = builder.Build();
 
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.MapOpenApi();
         }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+
+        app.MapControllers();
+
+        app.Run();
     }
 }
