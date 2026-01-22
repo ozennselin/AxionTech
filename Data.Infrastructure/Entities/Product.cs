@@ -12,4 +12,7 @@ public class Product:BaseEntity
     //public int CreatorId { get; set; }
     //public DateTime? UpdateDate { get; set; }
     //public int? UpdaterId { get; set; }
+
+    public ICollection<ProductPicture> ProductPictures { get; set; } = new List<ProductPicture>();
+    public ICollection<ProductDocument> ProductDocuments { get; set; } = new List<ProductDocument>();
 }

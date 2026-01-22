@@ -17,6 +17,15 @@ namespace Data.Infrastructure
         public DbSet<Role> Role { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
         public DbSet<Order> Order { get; set; }
+        public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartItem> CartItem { get; set; }
+        public DbSet<ProductPicture> ProductPicture { get; set; }
+        public DbSet<ProductDocument> ProductDocument { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<CustomerType> CustomerType { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

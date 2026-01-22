@@ -4,6 +4,7 @@ using Data.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Infrastructure.Migrations
 {
     [DbContext(typeof(AxionTechDB))]
-    partial class AxionTechDBModelSnapshot : ModelSnapshot
+    [Migration("20260122020328_CreateCustomerTables")]
+    partial class CreateCustomerTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,14 +270,14 @@ namespace Data.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2026, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreateDate = new DateTime(2026, 1, 22, 5, 3, 27, 607, DateTimeKind.Local).AddTicks(8127),
                             CreatorId = 1,
                             Name = "Individual"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2026, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreateDate = new DateTime(2026, 1, 22, 5, 3, 27, 609, DateTimeKind.Local).AddTicks(547),
                             CreatorId = 1,
                             Name = "Corporate"
                         });
