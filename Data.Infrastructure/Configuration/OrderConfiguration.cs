@@ -23,7 +23,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(x => x.UserId).IsRequired(true);
 
     
-        builder.Ignore(x => x.CategoryId);
+        
 
         builder.Property(x => x.CreateDate).IsRequired(true);
         builder.Property(x => x.CreatorId).IsRequired(true);

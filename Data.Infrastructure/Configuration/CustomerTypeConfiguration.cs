@@ -15,7 +15,7 @@ public class CustomerTypeConfiguration:IEntityTypeConfiguration<CustomerType>
 
         builder.Property(x => x.Name).IsRequired(true).HasMaxLength(50);
 
-        builder.Ignore(x => x.CategoryId);
+        
 
         builder.Property(x => x.CreateDate).IsRequired(true);
         builder.Property(x => x.CreatorId).IsRequired(true);

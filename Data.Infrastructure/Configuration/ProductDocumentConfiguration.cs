@@ -12,15 +12,10 @@ public class ProductDocumentConfiguration:IEntityTypeConfiguration<ProductDocume
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
-
-        builder.Ignore(x => x.CategoryId);
-
         builder.Property(x => x.ProductId).IsRequired(true);
-
         builder.Property(x => x.Url).IsRequired(true).HasMaxLength(500);
         builder.Property(x => x.FileName).IsRequired(true).HasMaxLength(250);
         builder.Property(x => x.FileType).IsRequired(true).HasMaxLength(50);
-
         builder.Property(x => x.CreateDate).IsRequired(true);
         builder.Property(x => x.CreatorId).IsRequired(true);
         builder.Property(x => x.UpdateDate).IsRequired(false);

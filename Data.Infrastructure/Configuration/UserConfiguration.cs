@@ -36,7 +36,7 @@ public class UserConfiguration:IEntityTypeConfiguration<User>
         builder.Property(x => x.UpdaterId).IsRequired(false);
 
        
-        builder.Ignore(x => x.CategoryId);
+        
 
         
         builder.HasIndex(x => x.Email).IsUnique();

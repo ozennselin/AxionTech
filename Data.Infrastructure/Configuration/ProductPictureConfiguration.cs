@@ -13,7 +13,7 @@ public class ProductPictureConfiguration:IEntityTypeConfiguration<ProductPicture
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
 
-        builder.Ignore(x => x.CategoryId);
+        
 
         builder.Property(x => x.ProductId).IsRequired(true);
 

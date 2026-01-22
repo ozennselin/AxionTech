@@ -14,7 +14,7 @@ public class OrderItemConfiguration:IEntityTypeConfiguration<OrderItem>
         builder.Property(x => x.Id).UseIdentityColumn();
 
         // BaseEntity’den gelen ama burada kullanılmayan alan
-        builder.Ignore(x => x.CategoryId);
+        
 
         builder.Property(x => x.OrderId).IsRequired(true);
         builder.Property(x => x.ProductId).IsRequired(true);
