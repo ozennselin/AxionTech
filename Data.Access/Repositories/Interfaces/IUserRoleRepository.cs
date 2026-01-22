@@ -2,6 +2,4 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface IUserRoleRepository: IReporsitory<UserRole>
-{
-}
+public interface IUserRoleRepository: IRepository<UserRole>{}

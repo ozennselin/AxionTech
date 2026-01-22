@@ -41,11 +41,6 @@ public class CustomerConfiguration:IEntityTypeConfiguration<Customer>
         builder.Property(x => x.UpdateDate).IsRequired(false);
         builder.Property(x => x.UpdaterId).IsRequired(false);
 
-        builder.HasOne(x => x.CustomerType)
-               .WithMany(ct => ct.Customers)
-               .HasForeignKey(x => x.CustomerTypeId)
-               .OnDelete(DeleteBehavior.Restrict);
-
         builder.HasIndex(x => x.Email).IsUnique();
     }
 }

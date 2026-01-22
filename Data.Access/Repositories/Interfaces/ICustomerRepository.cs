@@ -2,6 +2,6 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface ICustomerRepository:IReporsitory<Customer>
+public interface ICustomerRepository:IRepository<Customer>
 {
 }

@@ -2,6 +2,6 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface IProductDocumentRepository:IReporsitory<ProductDocument>
+public interface IProductDocumentRepository:IRepository<ProductDocument>
 {
 }

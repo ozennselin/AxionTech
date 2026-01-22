@@ -2,6 +2,6 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface IOrderItemRepository:IReporsitory<OrderItem>
+public interface IOrderItemRepository:IRepository<OrderItem>
 {
 }

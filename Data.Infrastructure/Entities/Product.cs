@@ -13,6 +13,6 @@ public class Product:BaseEntity
     //public DateTime? UpdateDate { get; set; }
     //public int? UpdaterId { get; set; }
 
-    public ICollection<ProductPicture> ProductPictures { get; set; } = new List<ProductPicture>();
-    public ICollection<ProductDocument> ProductDocuments { get; set; } = new List<ProductDocument>();
+    public ICollection<ProductPicture> ProductPictures { get; set; } = null;
+    public ICollection<ProductDocument> ProductDocuments { get; set; } = null;
 }

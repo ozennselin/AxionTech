@@ -2,6 +2,6 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface IUserRepository: IReporsitory<User>
+public interface IUserRepository: IRepository<User>
 {
 }

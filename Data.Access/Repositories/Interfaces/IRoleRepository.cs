@@ -2,6 +2,6 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface IRoleRepository:IReporsitory<Role>
+public interface IRoleRepository:IRepository<Role>
 {
 }

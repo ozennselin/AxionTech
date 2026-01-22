@@ -1,6 +1,6 @@
 ﻿namespace Data.Access.Repositories.Interfaces;
 
-public interface IReporsitory<TEntity> where TEntity : class
+public interface IRepository<TEntity> where TEntity : class
 {
     IQueryable<TEntity> GetAll();
     //IEnumerable<TEntity> GetAllEnum();

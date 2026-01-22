@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Access.Repositories;
 
-public class Repository<TEntity> : IReporsitory<TEntity> where TEntity : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     protected readonly AxionTechDB _axionTechDB;
     protected readonly DbSet<TEntity> _dbSet;

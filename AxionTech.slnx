@@ -5,6 +5,7 @@
   <Folder Name="/Business/" />
   <Folder Name="/Core/">
     <Project Path="Core.Dtos/Core.Dtos.csproj" />
+    <Project Path="Core.Enums/Core.Enums.csproj" Id="5b7b2bb8-eb64-4912-9149-8d14cc8e0bcb" />
     <Project Path="Core.Infrastructure/Core.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/Data/">

@@ -2,6 +2,6 @@
 
 namespace Data.Access.Repositories.Interfaces;
 
-public interface ICartRepository:IReporsitory<Cart>
+public interface ICartRepository:IRepository<Cart>
 {
 }
