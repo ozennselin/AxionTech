@@ -1,20 +1,14 @@
 ﻿using Business.Service.Interfaces;
-using Data.Access.Repositories.Interfaces;
+using Core.Models.Entities.Product;
+using Data.Access.Repositories.Interfaces; 
 
 namespace Business.Service;
 
 public class ProductService : IProductService
 {
-   
-
-    public ProductService(IProductRepository productrepository)
-    {
-        _productrepository = productrepository;
-    }
-
     public void Create(CreateProductRequestModel request)
     {
-        _productrepository.Add();
+        throw new NotImplementedException();
     }
 
     public void Delete(DeleteProductRequestModel request)
@@ -31,4 +25,5 @@ public class ProductService : IProductService
     {
         throw new NotImplementedException();
     }
+
 }

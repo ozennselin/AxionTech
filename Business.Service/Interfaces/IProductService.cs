@@ -1,4 +1,6 @@
-﻿namespace Business.Service.Interfaces;
+﻿using Core.Models.Entities.Product;
+
+namespace Business.Service.Interfaces;
 
  public interface IProductService
 {

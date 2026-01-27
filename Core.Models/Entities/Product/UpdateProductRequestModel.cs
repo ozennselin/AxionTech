@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Core.Models.Entities.Abstraction;
 
-namespace Core.Models.Entities.Product
+namespace Core.Models.Entities.Product;
+
+public class UpdateProductRequestModel:BaseUpdateModel
 {
-    internal class UpdateProductRequestModel
-    {
-    }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 }
