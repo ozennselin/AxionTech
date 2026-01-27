@@ -9,7 +9,6 @@ public interface ICategoryService
     //API katmanında bu operasyonlar çağırılacak ve Request /Response işlemleri yapılacak
     //Request=> istek, talepler
     //Response=> cevaplar, yanıtlar
-
     void Create(CreateCategoryRequestModel request);
     void Update(UpdateCategoryRequestModel request);
     void Delete(DeleteCategoryRequestModel request);
