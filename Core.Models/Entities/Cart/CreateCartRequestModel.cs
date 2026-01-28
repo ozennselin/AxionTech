@@ -1,5 +1,8 @@
-﻿namespace Core.Models.Entities.Cart;
+﻿using Core.Models.Entities.Abstraction;
 
-public class CreateCartRequestModel
+namespace Core.Models.Entities.Cart;
+
+public class CreateCartRequestModel:BaseCreateModel
 {
+    public int UserId { get; set; }
 }

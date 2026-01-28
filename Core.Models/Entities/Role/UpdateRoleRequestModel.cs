@@ -1,5 +1,8 @@
-﻿namespace Core.Models.Entities.Role;
+﻿using Core.Models.Entities.Abstraction;
 
-public class UpdateRoleRequestModel
+namespace Core.Models.Entities.Role;
+
+public class UpdateRoleRequestModel:BaseUpdateModel
 {
+    public string Name { get; set; } = string.Empty;
 }

@@ -1,5 +1,27 @@
-﻿namespace Business.Service;
+﻿using Business.Service.Interfaces;
+using Core.Models.Entities.CartItem;
 
-public class CartItemService
+namespace Business.Service;
+
+public class CartItemService : ICartItemService
 {
+    public void Create(CreateCartItemRequestModel request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Delete(DeleteCartItemRequestModel request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<CartItemResponseModel> GetByCartId(int cartId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Update(UpdateCartItemRequestModel request)
+    {
+        throw new NotImplementedException();
+    }
 }

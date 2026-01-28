@@ -1,5 +1,9 @@
-﻿namespace Core.Models.Entities.UserRole;
+﻿using Core.Models.Entities.Abstraction;
 
-public class CreateUserRoleRequestModel
+namespace Core.Models.Entities.UserRole;
+
+public class CreateUserRoleRequestModel:BaseCreateModel
 {
+    public int UserId { get; set; }
+    public int RoleId { get; set; }
 }

@@ -1,5 +1,8 @@
-﻿namespace Core.Models.Entities.Cart;
+﻿using Core.Models.Entities.Abstraction;
 
-public class UpdateCartRequestModel
+namespace Core.Models.Entities.Cart;
+
+public class UpdateCartRequestModel:BaseUpdateModel
 {
+    public int UserId { get; set; }
 }

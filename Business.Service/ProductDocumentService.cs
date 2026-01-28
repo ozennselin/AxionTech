@@ -1,17 +1,16 @@
 ﻿using Business.Service.Interfaces;
-using Core.Models.Entities.Product;
 using Core.Models.Entities.ProductDocument;
 
 namespace Business.Service;
 
 public class ProductDocumentService : IProductDocumentService
 {
-    public void Create(CreateProductRequestModel request)
+    public void Create(CreateProductDocumentRequestModel request)
     {
         throw new NotImplementedException();
     }
 
-    public void Delete(DeleteProductRequestModel request)
+    public void Delete(DeleteProductDocumentRequestModel request)
     {
         throw new NotImplementedException();
     }
@@ -21,7 +20,7 @@ public class ProductDocumentService : IProductDocumentService
         throw new NotImplementedException();
     }
 
-    public void Update(UpdateProductRequestModel request)
+    public void Update(UpdateProductDocumentRequestModel request)
     {
         throw new NotImplementedException();
     }

@@ -1,5 +1,13 @@
-﻿namespace Core.Models.Entities.Order;
+﻿using Core.Models.Entities.Abstraction;
 
-public class UpdateOrderRequestModel
+namespace Core.Models.Entities.Order;
+
+public class UpdateOrderRequestModel:BaseUpdateModel
 {
+    public string OrderNo { get; set; } = string.Empty;
+    public DateTime OrderDate { get; set; }
+    public decimal TotalAmount { get; set; }
+    public string Status { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+    public int UserId { get; set; }
 }

@@ -1,5 +1,27 @@
-﻿namespace Business.Service;
+﻿using Business.Service.Interfaces;
+using Core.Models.Entities.Customer;
 
-public class CustomerService
+namespace Business.Service;
+
+public class CustomerService : ICustomerService
 {
+    public void Create(CreateCustomerRequestModel request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Delete(DeleteCustomerRequestModel request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<CustomerResponseModel> List()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Update(UpdateCustomerRequestModel request)
+    {
+        throw new NotImplementedException();
+    }
 }
