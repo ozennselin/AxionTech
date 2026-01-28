@@ -20,7 +20,6 @@ public class ProductDocumentConfiguration:IEntityTypeConfiguration<ProductDocume
         builder.Property(x => x.CreatorId).IsRequired(true);
         builder.Property(x => x.UpdateDate).IsRequired(false);
         builder.Property(x => x.UpdaterId).IsRequired(false);
-
         builder.HasOne(x => x.Product)
                .WithMany(p => p.ProductDocuments)
                .HasForeignKey(x => x.ProductId)

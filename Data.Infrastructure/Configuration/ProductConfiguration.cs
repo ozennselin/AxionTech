@@ -20,6 +20,5 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(k => k.CreatorId).IsRequired(true);
         builder.Property(k => k.UpdateDate).IsRequired(false);
         builder.Property(k => k.UpdaterId).IsRequired(false);
-
     }
 }
