@@ -129,7 +129,7 @@ namespace Data.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Data.Infrastructure.Entities.Customer", b =>
