@@ -129,7 +129,7 @@ namespace Data.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Data.Infrastructure.Entities.Customer", b =>
@@ -377,7 +377,7 @@ namespace Data.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
@@ -674,7 +674,9 @@ namespace Data.Infrastructure.Migrations
                 {
                     b.HasOne("Data.Infrastructure.Entities.Category", null)
                         .WithMany("Product")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Data.Infrastructure.Entities.ProductDocument", b =>

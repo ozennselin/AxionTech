@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Infrastructure.Migrations
 {
     [DbContext(typeof(AxionTechDB))]
-    [Migration("20260128011543_RemoveCategoryIdFromProduct")]
-    partial class RemoveCategoryIdFromProduct
+    [Migration("20260128190019_AllTables")]
+    partial class AllTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -380,7 +380,7 @@ namespace Data.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
@@ -677,7 +677,9 @@ namespace Data.Infrastructure.Migrations
                 {
                     b.HasOne("Data.Infrastructure.Entities.Category", null)
                         .WithMany("Product")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Data.Infrastructure.Entities.ProductDocument", b =>
