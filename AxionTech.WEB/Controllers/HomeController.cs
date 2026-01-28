@@ -1,16 +1,15 @@
-using AxionTech.WEB.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
-namespace AxionTech.WEB.Controllers
+namespace AxionTech.WEB.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+   // https://html.design/download/igtu-electronics-ecommerce-template/
+   //templete bu linkten alýndý
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-   
+        return View();
     }
+
+
 }
