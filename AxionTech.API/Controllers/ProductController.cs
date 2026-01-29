@@ -6,10 +6,23 @@ namespace AxionTech.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult ProductInsert(string name,double unitPrice, int stock)
+
+        public ProductController()
         {
-            return Ok();
+            string islem = "";
+        }
+
+        // [HttpPost]
+        // public IActionResult ProductInsert([FromBody] ProductInsertRequest request)
+        //// public IActionResult ProductInsert([FromBody] string name,double price)??//Ayarlar mevcut
+        // {
+        //     return Ok("Adı "+request.Name+" olan ürünün fiyatı:"+request.Price);
+        // }
+
+        [HttpPost]
+        public IActionResult ProductInsert([FromBody]ProductInsertRequest request)
+        {
+            return Ok("Postman işlemi:" + request);
             /*
              Başarılı=> *******************************
             1.Durum)2xx=> Başarılı Mesajı***

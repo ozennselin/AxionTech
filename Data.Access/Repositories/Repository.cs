@@ -19,7 +19,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public void Add(TEntity entity)
     {
         _dbSet.Add(entity);
-
+        _axionTechDB.SaveChanges();
         //_axionTechDB.Products.Add(product);
     }
 

@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Data.Infrastructure;
+using Business.Service.Interfaces;
+using Business.Service;
+using Data.Access.Repositories.Interfaces;
+using Data.Access.Repositories;
 
 namespace AxionTech.API;
 
@@ -10,6 +14,13 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        //builder.Services.AddSingleton<ICategoryService, CategoryService>();//tek defa service aç
+        //builder.Services.AddTransient<ICategoryService, CategoryService>();//her istekte
+        builder.Services.AddScoped<ICategoryService, CategoryService>();//yaþam döngüsü boyunca
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();//yaþam döngüsü boyunca
+        builder.Services.AddScoped<IUserRepository, UserRepository>();//yaþam döngüsü boyunca
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();//yaþam döngüsü boyunca
+
 
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
