@@ -24,7 +24,8 @@ namespace AxionTech.API.Controllers
         [HttpGet("List")]
         public IActionResult List()
         {
-            return Ok();
+            var list=_categoryService.List();
+            return Ok(list);
         }
     }
 }

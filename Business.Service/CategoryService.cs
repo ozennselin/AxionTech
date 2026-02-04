@@ -37,7 +37,22 @@ public class CategoryService : ICategoryService
 
     public List<CategoryResponseModel> List()
     {
-        throw new NotImplementedException();
+        CategoryResponseModel categoryResponseModel = new CategoryResponseModel();
+        List<CategoryResponseModel> list = new List<CategoryResponseModel>();
+
+        var dbList = _categoryRepository.GetAll();
+        foreach (var item in dbList)
+        {
+            categoryResponseModel.Id = item.Id;
+            categoryResponseModel.Name = item.Name;
+            categoryResponseModel.Description = item.Description;
+            categoryResponseModel.UserNameLastname = "Admin";
+            categoryResponseModel.ProductCount = 0;
+
+            list.Add(categoryResponseModel);
+
+        }
+        return list;
     }
 
     public void Update(UpdateCategoryRequestModel request)
