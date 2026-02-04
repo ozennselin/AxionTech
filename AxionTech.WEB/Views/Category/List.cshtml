@@ -1,0 +1,20 @@
+﻿@using Core.Models.Entities.Category
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<CategoryResponseModel>
+
+
+
+<div>
+
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+
+            <li class="list-group-item">@item.Name</li>
+        }
+    </ul>
+</div>
+

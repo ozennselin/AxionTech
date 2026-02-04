@@ -38,20 +38,24 @@ public class CategoryService : ICategoryService
     public List<CategoryResponseModel> List()
     {
         CategoryResponseModel categoryResponseModel = new CategoryResponseModel();
-        List<CategoryResponseModel> list = new List<CategoryResponseModel>();
+        var list = new List<CategoryResponseModel>();
 
         var dbList = _categoryRepository.GetAll();
+
         foreach (var item in dbList)
         {
-            categoryResponseModel.Id = item.Id;
-            categoryResponseModel.Name = item.Name;
-            categoryResponseModel.Description = item.Description;
-            categoryResponseModel.UserNameLastname = "Admin";
-            categoryResponseModel.ProductCount = 0;
-
-            list.Add(categoryResponseModel);
-
+            var categoryResponseModelAdd = new CategoryResponseModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                UserNameLastname = "Admin",
+                ProductCount = 0,
+            };
+            list.Add(categoryResponseModelAdd);
         }
+
+
         return list;
     }
 
