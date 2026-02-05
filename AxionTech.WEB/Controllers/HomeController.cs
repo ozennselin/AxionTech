@@ -5,16 +5,14 @@ using System.Net.Http;
 
 namespace AxionTech.WEB.Controllers;
 
-public class HomeController : Controller
+public class HomeController : BaseController
 {
    // https://html.design/download/igtu-electronics-ecommerce-template/
    //templete bu linkten alýndý
 
-    HttpClient _httpClient;
 
-    public HomeController(HttpClient httpClient)
+    public HomeController(HttpClient httpClient) : base(httpClient)
     {
-        _httpClient = httpClient;
     }
 
     public IActionResult Index()

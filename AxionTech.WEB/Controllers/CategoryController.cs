@@ -5,14 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Controllers;
 
-public class CategoryController : Controller
+public class CategoryController : BaseController
 {
-    HttpClient _httpClient;
-
-    public CategoryController(HttpClient httpClient)
+    public CategoryController(HttpClient httpClient) : base(httpClient)
     {
-        _httpClient = httpClient; 
     }
+
     public IActionResult List()
     {
         var uriApiAdres = "https://localhost:7162/api/Category/List";
@@ -29,8 +27,9 @@ public class CategoryController : Controller
 
         //return View(dto);
         //2.Durum
-        var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
+        //var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
 
-        return View(response.Data);
+        //return View(response.Data);
+        return View();
     }
 }
