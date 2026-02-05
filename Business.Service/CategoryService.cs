@@ -47,6 +47,7 @@ public class CategoryService : ICategoryService
             var categoryResponseModelAdd = new CategoryResponseModel
             {
                 Id = item.Id,
+                ParentId = item.ParentId,
                 Name = item.Name,
                 Description = item.Description,
                 UserNameLastname = "Admin",

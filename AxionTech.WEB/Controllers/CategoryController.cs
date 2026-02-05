@@ -16,16 +16,21 @@ public class CategoryController : Controller
     public IActionResult List()
     {
         var uriApiAdres = "https://localhost:7162/api/Category/List";
-        var httpResponse = _httpClient.GetAsync(uriApiAdres).GetAwaiter().GetResult();
-        var raw = httpResponse.Content.ReadAsStringAsync().Result;
-        //GetFromJsonAsync()=> json datasını alır
+        //1.Durum
+        //var httpResponse = _httpClient.GetAsync(uriApiAdres).GetAwaiter().GetResult();
+        //var raw = httpResponse.Content.ReadAsStringAsync().Result;
+        ////GetFromJsonAsync()=> json datasını alır
 
-        var option = new System.Text.Json.JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-        };
-        var dto = System.Text.Json.JsonSerializer.Deserialize<List<CategoryResponseModel>>(raw, option);
+        //var option = new System.Text.Json.JsonSerializerOptions
+        //{
+        //    PropertyNameCaseInsensitive = true,
+        //};
+        //var dto = System.Text.Json.JsonSerializer.Deserialize<List<CategoryResponseModel>>(raw, option);
 
-        return View(dto);
+        //return View(dto);
+        //2.Durum
+        var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
+
+        return View(response.Data);
     }
 }

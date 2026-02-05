@@ -116,57 +116,39 @@
                             <ul class="dropdown-menu megamenu-content" role="menu">
                                 <li>
                                     <div class="row">
-                                        <div class="col-menu col-md-3">
-                                            <h6 class="title">Accessories</h6>
-                                            <div class="content">
-                                                <ul class="menu-col">
-                                                    <li><a href="~/Product/List">Computer Cases & Accessories</a></li>
-                                                    <li><a href="~/Product/List">Motherboards</a></li>
-                                                    <li><a href="~/Product/List">Sound Cards</a></li>
-                                                    <li><a href="~/Product/List">Heatsinks & Cooling</a></li>
-                                                    <li><a href="~/Product/List">Processors</a></li>
-                                                </ul>
+                                        @*      @{
+                                            var list = ViewBag.category;
+                                        }
+
+                                        @foreach (var item in list)
+                                        {
+                                        
+                                        }
+                                        *@
+
+                                        @foreach (var item in (IEnumerable<dynamic>)ViewBag.category)
+                                        {
+                                            <div class="col-menu col-md-3">
+                                                @if (item.ParentId == 0)
+                                                {
+
+                                                    <h6 class="title">@item.Name</h6>
+                                                    foreach (var altItem in (IEnumerable<dynamic>)ViewBag.category)
+                                                    {
+                                                        if (altItem.ParentId == item.Id)
+                                                        {
+                                                            <div class="content">
+                                                                <ul class="menu-col">
+                                                                    <li><a href="~/Product/List">@altItem.Name</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
                                             </div>
-                                        </div>
+                                        }
                                         <!-- end col-3 -->
-                                        <div class="col-menu col-md-3">
-                                            <h6 class="title">Tablets & Mobiles</h6>
-                                            <div class="content">
-                                                <ul class="menu-col">
-                                                    <li><a href="~/Product/List">Computer Cases & Accessories</a></li>
-                                                    <li><a href="~/Product/List">Motherboards</a></li>
-                                                    <li><a href="~/Product/List">Sound Cards</a></li>
-                                                    <li><a href="~/Product/List">Heatsinks & Cooling</a></li>
-                                                    <li><a href="~/Product/List">Processors</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- end col-3 -->
-                                        <div class="col-menu col-md-3">
-                                            <h6 class="title">TV & Audio</h6>
-                                            <div class="content">
-                                                <ul class="menu-col">
-                                                    <li><a href="~/Product/List">Computer Cases & Accessories</a></li>
-                                                    <li><a href="~/Product/List">Motherboards</a></li>
-                                                    <li><a href="~/Product/List">Sound Cards</a></li>
-                                                    <li><a href="~/Product/List">Heatsinks & Cooling</a></li>
-                                                    <li><a href="~/Product/List">Processors</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-menu col-md-3">
-                                            <h6 class="title">Computers</h6>
-                                            <div class="content">
-                                                <ul class="menu-col">
-                                                    <li><a href="~/Product/List">Computer Cases & Accessories</a></li>
-                                                    <li><a href="~/Product/List">Motherboards</a></li>
-                                                    <li><a href="~/Product/List">Sound Cards</a></li>
-                                                    <li><a href="~/Product/List">Heatsinks & Cooling</a></li>
-                                                    <li><a href="~/Product/List">Processors</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- end col-3 -->
+
                                     </div>
                                     <!-- end row -->
                                 </li>
@@ -183,8 +165,7 @@
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="~/Home/Service">Hizmetlerimiz</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Home/ContactUs">İletişim</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Category/List">Kategori</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -227,7 +208,6 @@
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
     @RenderBody()
 
 
@@ -419,7 +399,7 @@
     <script src="~/igtu/js/jquery.superslides.min.js"></script>
     <script src="~/igtu/js/bootstrap-select.js"></script>
     <script src="~/igtu/js/inewsticker.js"></script>
-    <script src="~/igtu/js/bootsnav.js."></script>
+    <script src="~/igtu/js/bootsnav.js"></script>
     <script src="~/igtu/js/images-loded.min.js"></script>
     <script src="~/igtu/js/isotope.min.js"></script>
     <script src="~/igtu/js/owl.carousel.min.js"></script>

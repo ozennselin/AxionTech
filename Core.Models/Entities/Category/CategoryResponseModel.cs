@@ -2,8 +2,9 @@
 
 public class CategoryResponseModel
 {
-
+    
     public int Id { get; set; }
+    public int ParentId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int ProductCount { get; set; }//her bir category de ürün sayısı list içinde verebiliriz

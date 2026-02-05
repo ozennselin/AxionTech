@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]//API'ye erişim için route a ihtiyaç vardır
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseAPIController
     {
         private ICategoryService _categoryService;
         public CategoryController(ICategoryService categoryService)
@@ -19,13 +19,13 @@ namespace AxionTech.API.Controllers
         public IActionResult Create([FromBody]CreateCategoryRequestModel request)
         {
             _categoryService.Create(request);
-            return Ok();
+            return ResultAPI(request);
         }
         [HttpGet("List")]
         public IActionResult List()
         {
             var list=_categoryService.List();
-            return Ok(list);
+            return ResultAPI(list);
         }
     }
 }

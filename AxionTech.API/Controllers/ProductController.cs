@@ -4,7 +4,7 @@ namespace AxionTech.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseAPIController// ControllerBase
     {
 
         public ProductController()
