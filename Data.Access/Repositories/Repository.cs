@@ -31,4 +31,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         //AsNoTracking() => db de kilitlenmeyi önler
         //AsQueryable() => IQueryable türüne dönüştürür
     }
+
+
+    public TEntity GetById(int id)
+    {
+        return _dbSet.Find(id);
+    }
 }

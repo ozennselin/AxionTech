@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.Category;
+using Core.Models.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Controllers
@@ -16,8 +17,12 @@ namespace AxionTech.WEB.Controllers
 
             var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
             ViewBag.category = response.Data;
+            //-----------------------
+            //ürün list işlemleri
+            var uriApiAdresPro = "https://localhost:7162/api/Product/List";
+            var responsePro = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>(uriApiAdresPro).Result;           
 
-            return View();
+            return View(responsePro.Data);
         }
         public IActionResult Detail()
         {

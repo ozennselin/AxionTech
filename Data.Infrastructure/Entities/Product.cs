@@ -15,4 +15,5 @@ public class Product:BaseEntity
 
     public ICollection<ProductPicture> ProductPictures { get; set; } = null;
     public ICollection<ProductDocument> ProductDocuments { get; set; } = null;
+    public ICollection<ProductPrice> ProductPrice { get; set; } = null;
 }

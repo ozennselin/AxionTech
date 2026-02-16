@@ -9,5 +9,6 @@ public interface IRepository<TEntity> where TEntity : class
 
     void Add(TEntity entity);
     //Task AddAsync(TEntity entity);
+    TEntity GetById(int id);
 
 }

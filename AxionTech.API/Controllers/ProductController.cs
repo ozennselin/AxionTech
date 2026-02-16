@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers
 {
@@ -7,9 +8,10 @@ namespace AxionTech.API.Controllers
     public class ProductController : BaseAPIController// ControllerBase
     {
 
-        public ProductController()
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-            string islem = "";
+            _productService = productService;
         }
 
         // [HttpPost]
@@ -35,6 +37,13 @@ namespace AxionTech.API.Controllers
             2.Durum)4xx=> Başarısız, nedeni? Stok ondalık olmaz, Name alanı zorunlu, ....
 
             */
+        }
+
+        [HttpGet("List")]
+        public IActionResult List()
+        {
+          var list=_productService.List();
+            return ResultAPI(list);
         }
     }
 }
