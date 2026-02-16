@@ -1,6 +1,5 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.Category;
-using Data.Infrastructure.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Controllers;
