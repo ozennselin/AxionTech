@@ -17,6 +17,7 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="KatmanliMimariTanim.txt" />
+    <File Path="Odevler.txt" />
   </Folder>
   <Project Path="AxionTech.WEB/AxionTech.WEB.csproj" Id="baab667c-b1bd-49c9-89b0-e135b3ac7ed1" />
 </Solution>

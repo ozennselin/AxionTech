@@ -1,0 +1,2 @@
+25 Þubat 
+bütün tablolarýn api ve web list iþlemleri yapýlacak
