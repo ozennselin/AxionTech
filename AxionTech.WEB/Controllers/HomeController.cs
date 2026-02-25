@@ -1,3 +1,4 @@
+using AxionTech.WEB.GetApi;
 using Core.Dtos;
 using Core.Models.Entities.Category;
 using Microsoft.AspNetCore.Mvc;
@@ -7,21 +8,22 @@ namespace AxionTech.WEB.Controllers;
 
 public class HomeController : BaseController
 {
-   // https://html.design/download/igtu-electronics-ecommerce-template/
-   //templete bu linkten alýndý
+    // https://html.design/download/igtu-electronics-ecommerce-template/
+    //templete bu linkten alýndý
+    private readonly CategoryApi _categoryApi;
 
-
-    public HomeController(HttpClient httpClient) : base(httpClient)
+    public HomeController(HttpClient httpClient, CategoryApi categoryApi) : base(httpClient)
     {
+        _categoryApi = categoryApi;
     }
 
     public IActionResult Index()
     {
-        var uriApiAdres = "https://localhost:7162/api/Category/List";
+        //var uriApiAdres = "https://localhost:7162/api/Category/List";
 
-        var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
-        ViewBag.category = response.Data;
-
+        //var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
+        //ViewBag.category = response.Data;
+        ViewBag.category = _categoryApi.List();
         return View();
     }
 
