@@ -1,2 +1,3 @@
 25 Þubat 
 bütün tablolarýn api ve web list iþlemleri yapýlacak
+ürünlist içinde sað tarafta kategori listesi gelicek
