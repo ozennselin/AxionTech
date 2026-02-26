@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Infrastructure.Migrations
 {
     [DbContext(typeof(AxionTechDB))]
-    [Migration("20260209174546_priceadded")]
-    partial class priceadded
+    [Migration("20260226135939_FirstLoadAfterFail")]
+    partial class FirstLoadAfterFail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -521,8 +521,8 @@ namespace Data.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

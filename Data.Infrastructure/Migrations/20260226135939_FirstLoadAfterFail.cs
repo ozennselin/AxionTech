@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AllTables : Migration
+    public partial class FirstLoadAfterFail : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,7 @@ namespace Data.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(600)", maxLength: 600, nullable: true),
+                    ParentId = table.Column<int>(type: "int", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorId = table.Column<int>(type: "int", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -331,6 +332,34 @@ namespace Data.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductPrice",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<int>(type: "int", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdaterId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductPrice", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductPrice_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalSchema: "dbo",
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartItem",
                 schema: "dbo",
                 columns: table => new
@@ -438,6 +467,12 @@ namespace Data.Infrastructure.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductPrice_ProductId",
+                schema: "dbo",
+                table: "ProductPrice",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_Email",
                 schema: "dbo",
                 table: "User",
@@ -479,6 +514,10 @@ namespace Data.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductPicture",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "ProductPrice",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
