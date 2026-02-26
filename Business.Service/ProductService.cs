@@ -3,6 +3,7 @@ using Core.Dtos.Entities.Product;
 using Core.Models.Entities.Product;
 using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
+using Data.Infrastructure.Entities;
 
 namespace Business.Service;
 
@@ -24,6 +25,20 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
+    public ProductResponseModel GetById(int Id)
+    {
+        var getProduct = _productRepository.GetById(Id);
+        ProductResponseModel response = new ProductResponseModel();
+        response.Id = getProduct.Id;
+        response.Name = getProduct.Name;
+        response.Description = getProduct.Description;
+        response.CategoryId = getProduct.CategoryId;
+        response.Picture = "Boş";
+        response.Price = 152.55m;
+
+        return response;
+    }
+
     public List<ProductResponseModel> List()
     {
         return _productRepository.GetAll().Select(p => new
@@ -34,7 +49,7 @@ public class ProductService : IProductService
             Description = p.Description,
             CategoryId = p.CategoryId,
             Picture = "Resim url",
-            Price = 100
+            Price = 125
 
         }).ToList();
     }

@@ -30,9 +30,12 @@ public class ProductController : BaseController
         ViewBag.category=_categoryApi.List();
         return View(_productApi.List());
     }
-    public IActionResult Detail()
+    
+    public IActionResult Detail(int Id)
     {
-        return View();
+        var productDetail=_productApi.Detail(Id);
+        ViewBag.category = _categoryApi.List();
+        return View(productDetail);
     }
     public IActionResult Cart()
     {
@@ -46,4 +49,5 @@ public class ProductController : BaseController
     {
         return View();
     }
+
 }

@@ -8,4 +8,5 @@ namespace Business.Service.Interfaces;
     void Update(UpdateProductRequestModel request);
     void Delete(DeleteProductRequestModel request);
     List<ProductResponseModel> List();
+    ProductResponseModel GetById(int Id);
 }

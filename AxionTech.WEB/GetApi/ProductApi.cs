@@ -17,4 +17,19 @@ public class ProductApi
         var responseProduct = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>("Product/List").Result;
         return responseProduct.Data;
     }
+    public ProductResponseModel Detail(int Id)
+    {
+        //get, post, put, delete
+        //var response = _httpClient.PutAsJsonAsync($"Product/Detail?id=",Id);
+        //var response = _httpClient.GetFromJsonAsync<APIResponseDTO< ProductResponseModel>>($"Product/Detail?id={Id}");
+        var response = _httpClient.GetAsync($"Product/Detail?id={Id}");
+        var content = response.Result.Content.ReadAsStringAsync();
+
+        if (response.Result.IsSuccessStatusCode == false)
+            return null;
+
+        //<APIResponseDTO<ProductResponseModel>>($"Product/Detail/{Id}").Result;
+        return null;
+    }
+
 }
