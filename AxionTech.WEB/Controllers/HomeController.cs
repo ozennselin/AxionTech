@@ -19,10 +19,12 @@ public class HomeController : BaseController
 
     public IActionResult Index()
     {
+        #region API baðlantýlarý, datalarýn çekilmesi dosya,class taþýnmadan önce
         //var uriApiAdres = "https://localhost:7162/api/Category/List";
-
         //var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
-        //ViewBag.category = response.Data;
+        //ViewBag.category = response.Data; 
+        #endregion
+
         ViewBag.category = _categoryApi.List();
         return View();
     }

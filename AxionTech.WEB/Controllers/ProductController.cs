@@ -18,14 +18,15 @@ public class ProductController : BaseController
 
     public IActionResult List()
     {
+        #region API bağlantıları, dataların çekilmesi dosya,class taşınmadan önce
         //var uriApiAdres = "https://localhost:7162/api/Category/List";
-
         //var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
         //ViewBag.category = response.Data;
         ////-----------------------
         ////ürün list işlemleri
         //var uriApiAdresPro = "https://localhost:7162/api/Product/List";
-        //var responsePro = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>(uriApiAdresPro).Result;           
+        //var responsePro = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>(uriApiAdresPro).Result;   
+        #endregion
         ViewBag.category=_categoryApi.List();
         return View(_productApi.List());
     }
