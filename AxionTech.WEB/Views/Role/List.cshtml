@@ -1,0 +1,14 @@
+﻿@using Core.Models.Entities.Role
+@model List<RoleResponseModel>
+
+@{
+    ViewData["Title"] = "Role List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">@item.Name</li>
+    }
+</ul>

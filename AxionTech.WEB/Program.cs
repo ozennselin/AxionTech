@@ -20,6 +20,18 @@ namespace AxionTech.WEB
             {
                 k.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
             });
+            builder.Services.AddHttpClient<CustomerApi>(k =>
+            {
+                k.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<RoleApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<UserApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
 
             var app = builder.Build();
 

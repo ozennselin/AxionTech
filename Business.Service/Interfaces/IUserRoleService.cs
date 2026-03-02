@@ -10,4 +10,6 @@ public interface IUserRoleService
     void Delete(DeleteUserRoleRequestModel request);
     List<UserRoleResponseModel> GetByUserId(int userId);
     List<UserRoleResponseModel> GetByRoleId(int roleId);
+
+    
 }

@@ -1,0 +1,19 @@
+﻿@using Core.Models.Entities.Customer
+
+@{
+    ViewData["Title"] = "Customer List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<CustomerResponseModel>
+
+<div>
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                @item.Email - @item.PhoneNumber - @item.City
+            </li>
+        }
+    </ul>
+</div>
