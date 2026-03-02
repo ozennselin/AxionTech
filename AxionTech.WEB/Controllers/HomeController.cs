@@ -1,25 +1,47 @@
-using AxionTech.WEB.Models;
+using AxionTech.WEB.GetApi;
+using Core.Dtos;
+using Core.Models.Entities.Category;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using System.Net.Http;
 
-namespace AxionTech.WEB.Controllers
+namespace AxionTech.WEB.Controllers;
+
+public class HomeController : BaseController
 {
-    public class HomeController : Controller
+    // https://html.design/download/igtu-electronics-ecommerce-template/
+    //templete bu linkten alýndý
+    private readonly CategoryApi _categoryApi;
+
+    public HomeController(HttpClient httpClient, CategoryApi categoryApi) : base(httpClient)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        _categoryApi = categoryApi;
     }
+
+    public IActionResult Index()
+    {
+        #region API baðlantýlarý, datalarýn çekilmesi dosya,class taþýnmadan önce
+        //var uriApiAdres = "https://localhost:7162/api/Category/List";
+        //var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
+        //ViewBag.category = response.Data; 
+        #endregion
+
+        ViewBag.category = _categoryApi.List();
+        return View();
+    }
+
+    public IActionResult About()
+    {
+        return View();
+    }
+
+    public IActionResult Service()
+    {
+        return View();
+    }
+    public IActionResult ContactUs()
+    {
+        return View();
+    }
+
+
 }

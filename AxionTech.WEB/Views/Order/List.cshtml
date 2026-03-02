@@ -1,0 +1,27 @@
+﻿@model List<Core.Models.Entities.Order.OrderResponseModel>
+
+<h2>Order List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order No</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>User Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OrderNo</td>
+                <td>@item.OrderDate</td>
+                <td>@item.TotalAmount</td>
+                <td>@item.Status</td>
+                <td>@item.UserId</td>
+            </tr>
+        }
+    </tbody>
+</table>

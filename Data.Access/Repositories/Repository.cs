@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Access.Repositories;
 
-public class Repository<TEntity> : IReporsitory<TEntity> where TEntity : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     protected readonly AxionTechDB _axionTechDB;
     protected readonly DbSet<TEntity> _dbSet;
@@ -19,7 +19,7 @@ public class Repository<TEntity> : IReporsitory<TEntity> where TEntity : class
     public void Add(TEntity entity)
     {
         _dbSet.Add(entity);
-
+        _axionTechDB.SaveChanges();
         //_axionTechDB.Products.Add(product);
     }
 
@@ -30,5 +30,11 @@ public class Repository<TEntity> : IReporsitory<TEntity> where TEntity : class
         //return _axionTechDB.Products.AsNoTracking().AsQueryable();
         //AsNoTracking() => db de kilitlenmeyi önler
         //AsQueryable() => IQueryable türüne dönüştürür
+    }
+
+
+    public TEntity GetById(int id)
+    {
+        return _dbSet.Find(id);
     }
 }

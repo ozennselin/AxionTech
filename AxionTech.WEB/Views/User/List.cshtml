@@ -1,0 +1,14 @@
+﻿@using Core.Models.Entities.User
+@model List<UserResponseModel>
+
+@{
+    ViewData["Title"] = "User List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">@item.UserName - @item.Email</li>
+    }
+</ul>

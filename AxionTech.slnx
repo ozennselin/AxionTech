@@ -2,10 +2,14 @@
   <Folder Name="/API/">
     <Project Path="AxionTech.API/AxionTech.API.csproj" />
   </Folder>
-  <Folder Name="/Business/" />
+  <Folder Name="/Business/">
+    <Project Path="Business.Service/Business.Service.csproj" Id="c0224989-2823-4b8d-ac02-a3598039cc10" />
+  </Folder>
   <Folder Name="/Core/">
     <Project Path="Core.Dtos/Core.Dtos.csproj" />
+    <Project Path="Core.Enums/Core.Enums.csproj" Id="5b7b2bb8-eb64-4912-9149-8d14cc8e0bcb" />
     <Project Path="Core.Infrastructure/Core.Infrastructure.csproj" />
+    <Project Path="Core.Models/Core.Models.csproj" Id="33bac3bf-26e1-41c0-8f50-f422c2afacfc" />
   </Folder>
   <Folder Name="/Data/">
     <Project Path="Data.Access/Data.Access.csproj" />
@@ -13,6 +17,7 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="KatmanliMimariTanim.txt" />
+    <File Path="Odevler.txt" />
   </Folder>
   <Project Path="AxionTech.WEB/AxionTech.WEB.csproj" Id="baab667c-b1bd-49c9-89b0-e135b3ac7ed1" />
 </Solution>

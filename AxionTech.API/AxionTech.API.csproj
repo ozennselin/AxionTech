@@ -14,9 +14,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Business.Service\Business.Service.csproj" />
+    <ProjectReference Include="..\Core.Dtos\Core.Dtos.csproj" />
     <ProjectReference Include="..\Data.Infrastructure\Data.Infrastructure.csproj" />
   </ItemGroup>
 

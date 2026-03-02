@@ -1,3 +1,5 @@
+using AxionTech.WEB.GetApi;
+
 namespace AxionTech.WEB
 {
     public class Program
@@ -8,6 +10,28 @@ namespace AxionTech.WEB
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpClient();
+
+            builder.Services.AddHttpClient<ProductApi>(k =>
+            {
+                k.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<CategoryApi>(k =>
+            {
+                k.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<CustomerApi>(k =>
+            {
+                k.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<RoleApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<UserApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
 
             var app = builder.Build();
 
