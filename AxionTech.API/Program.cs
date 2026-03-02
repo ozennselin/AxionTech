@@ -26,6 +26,9 @@ public class Program
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<IRoleService, RoleService>();
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+        builder.Services.AddScoped<IProductPictureRepository, ProductPictureRepository>();
+        builder.Services.AddScoped<IProductDocumentRepository, ProductDocumentRepository>();
+
         
        
 

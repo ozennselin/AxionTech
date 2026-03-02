@@ -10,10 +10,16 @@ namespace Business.Service;
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
-    public ProductService(IProductRepository productRepository)
+    private readonly ICategoryRepository _categoryRepository;
+    private readonly IProductDocumentRepository _productDocumentRepository;
+    private readonly IProductPictureRepository _productPictureRepository;
+    public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, IProductDocumentRepository productDocumentRepository, IProductPictureRepository productPictureRepository )
     {
         //bu method construction(yapıcı) methodtur.Ağağısındaki yapı DI(dependency injection) olarak isimlendirilir.    
         _productRepository = productRepository;
+        _categoryRepository = categoryRepository;
+        _productDocumentRepository = productDocumentRepository;
+        _productPictureRepository = productPictureRepository;
     }
     public void Create(CreateProductRequestModel request)
     {
@@ -33,7 +39,8 @@ public class ProductService : IProductService
         response.Name = getProduct.Name;
         response.Description = getProduct.Description;
         response.CategoryId = getProduct.CategoryId;
-        response.Picture = "Boş";
+        response.CategoryName = _categoryRepository.GetById(getProduct.CategoryId).Name;
+        response.Picture = _productPictureRepository.GetById(Id).Url;//?? devam edilecek, expresion tanımı gerekli Repoda
         response.Price = 152.55m;
 
         return response;
@@ -41,15 +48,24 @@ public class ProductService : IProductService
 
     public List<ProductResponseModel> List()
     {
-        return _productRepository.GetAll().Select(p => new
-        ProductResponseModel
+        //Open, Close=> her request kendisinden önce giden requestin bitmesini bekler
+
+        var productList = _productRepository.GetAll().ToList();
+
+        return productList.Select(p=>
         {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            CategoryId = p.CategoryId,
-            Picture = "Resim url",
-            Price = 125
+            var categoryName = _categoryRepository.GetById(p.CategoryId);
+
+                   return new ProductResponseModel
+                   {
+                       Id = p.Id,
+                       Name = p.Name,
+                       Description = p.Description,
+                       CategoryId = p.CategoryId,
+                       CategoryName = categoryName.Name,
+                       Picture = "",//_productPictureRepository.GetById(p.Id).Url,
+                       Price = 125
+                   };
 
         }).ToList();
     }

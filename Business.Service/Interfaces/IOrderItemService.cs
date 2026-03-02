@@ -8,4 +8,5 @@ public interface IOrderItemService
     void Update(UpdateOrderItemRequestModel request);
     void Delete(DeleteOrderItemRequestModel request);
     List<OrderItemResponseModel> GetByOrderId(int orderId);
+    void TestMethod(int Id);
 }
