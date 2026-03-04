@@ -10,10 +10,16 @@ public class ProductController : BaseController
 {
     private readonly ProductApi _productApi;
     private readonly CategoryApi _categoryApi;
-    public ProductController(HttpClient httpClient, ProductApi productApi, CategoryApi categoryApi) : base(httpClient)
+    private readonly ProductPriceApi _productPriceApi;
+    private readonly ProductPictureApi _productPictureApi;
+    private readonly ProductDocumentApi _productDocumentApi;
+    public ProductController(HttpClient httpClient, ProductApi productApi, CategoryApi categoryApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi) : base(httpClient)
     {
         _productApi = productApi;
         _categoryApi = categoryApi;
+        _productPriceApi = productPriceApi;
+        _productPictureApi = productPictureApi;
+        _productDocumentApi = productDocumentApi;
     }
 
     public IActionResult List()
@@ -35,6 +41,9 @@ public class ProductController : BaseController
     {
         var productDetail=_productApi.Detail(Id);
         ViewBag.category = _categoryApi.List();
+        ViewBag.productPrice = _productPriceApi.List();
+        ViewBag.productPicture = _productPictureApi.List();
+        ViewBag.productDocument = _productDocumentApi.List();
         return View(productDetail);
     }
     public IActionResult Cart()

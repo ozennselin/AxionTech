@@ -32,6 +32,18 @@ namespace AxionTech.WEB
             {
                 c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
             });
+            builder.Services.AddHttpClient<ProductPriceApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<ProductDocumentApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+            builder.Services.AddHttpClient<ProductPictureApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
 
             var app = builder.Build();
 
