@@ -1,4 +1,5 @@
 using AxionTech.WEB.GetApi;
+using System.Net;
 
 namespace AxionTech.WEB
 {
@@ -61,10 +62,18 @@ namespace AxionTech.WEB
             app.UseAuthorization();
 
             app.MapStaticAssets();
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+
+            app.MapAreaControllerRoute( 
+                  name: "Areas",
+                  areaName: "AdminPanel",
+                  pattern: "AdminPanel/{controller=ProductAP}/{action=List}/{id?}"
+                );
+
+         app.MapControllerRoute(
+         name: "default",
+         pattern: "{controller=Home}/{action=Index}/{id?}")
+         .WithStaticAssets();
+
 
             app.Run();
         }
