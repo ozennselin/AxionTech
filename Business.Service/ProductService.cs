@@ -40,7 +40,7 @@ public class ProductService : IProductService
         response.Description = getProduct.Description;
         response.CategoryId = getProduct.CategoryId;
         response.CategoryName = _categoryRepository.GetById(getProduct.CategoryId).Name;
-        response.Picture = _productPictureRepository.GetById(Id).Url;//?? devam edilecek, expresion tanımı gerekli Repoda
+        response.Picture = "";//_productPictureRepository.GetById(Id).Url;//?? devam edilecek, expresion tanımı gerekli Repoda
         response.Price = 152.55m;
 
         return response;

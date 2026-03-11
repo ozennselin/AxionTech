@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.Product;
+using Newtonsoft.Json;
 
 namespace AxionTech.WEB.GetApi;
 
@@ -20,16 +21,16 @@ public class ProductApi
     public ProductResponseModel Detail(int Id)
     {
         //get, post, put, delete
-        //var response = _httpClient.PutAsJsonAsync($"Product/Detail?id=",Id);
-        //var response = _httpClient.GetFromJsonAsync<APIResponseDTO< ProductResponseModel>>($"Product/Detail?id={Id}");
-        var response = _httpClient.GetAsync($"Product/Detail?id={Id}");
+
+        var response = _httpClient.GetAsync($"Product/GetById?id={Id}");
         var content = response.Result.Content.ReadAsStringAsync();
 
-        if (response.Result.IsSuccessStatusCode == false)
+        if (content.IsCompletedSuccessfully )
+        {
+            var responseContent=JsonConvert.DeserializeObject<APIResponseDTO<ProductResponseModel>>(content.Result);
+            return responseContent.Data;
+        }
             return null;
-
-        //<APIResponseDTO<ProductResponseModel>>($"Product/Detail/{Id}").Result;
-        return null;
     }
 
 }
