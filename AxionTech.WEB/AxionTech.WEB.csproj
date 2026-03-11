@@ -9,6 +9,14 @@
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Data\" />
     <Folder Include="Areas\AdminPanel\Models\" />
+    <Folder Include="Areas\KargoTakip\Controllers\" />
+    <Folder Include="Areas\KargoTakip\Data\" />
+    <Folder Include="Areas\KargoTakip\Models\" />
+    <Folder Include="Areas\KargoTakip\Views\" />
+    <Folder Include="Areas\Muhasebe\Controllers\" />
+    <Folder Include="Areas\Muhasebe\Data\" />
+    <Folder Include="Areas\Muhasebe\Models\" />
+    <Folder Include="Areas\Muhasebe\Views\" />
   </ItemGroup>
 
   <ItemGroup>
