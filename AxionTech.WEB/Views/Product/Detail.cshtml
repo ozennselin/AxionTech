@@ -1,7 +1,9 @@
-﻿@{
+﻿@using Core.Models.Entities.Product
+@{
     ViewData["Title"] = "Ürün Detayı";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model ProductDetailResponseModel
 <!-- Start Top Search -->
 <div class="top-search">
     <div class="container">
@@ -35,20 +37,26 @@
             <div class="col-xl-5 col-lg-5 col-md-6">
                 <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
                     <div class="carousel-inner" role="listbox">
-                        @{
+                     @*    @{
                             var pictures = ((IEnumerable<dynamic>)ViewBag.productPicture)
                             .Where(x => x.ProductId == Model.Id)
                             .ToList();
-                        }
+                        } *@
 
-                        @if (pictures.Any())
+                        @if (Model.ProductPicture.Any())
                         {
-                            for (int i = 0; i < pictures.Count; i++)
+                            for (int i = 0; i < Model.ProductPicture.Count; i++)
                             {
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <img class="d-block w-100" src="@pictures[i].PictureUrl" />
+                                    <img class="d-block w-100" src="@Model.ProductPicture[i]" />
                                 </div>
                             }
+                        }
+                        else
+                        {
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/igtu/images/no-image.svg" />
+                            </div>
                         }
                     </div>
                     <a class="carousel-control-prev" href="#carousel-example-1" role="button" data-slide="prev">
