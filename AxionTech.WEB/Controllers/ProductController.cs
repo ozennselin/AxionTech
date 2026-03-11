@@ -50,10 +50,10 @@ public class ProductController : BaseController
 
         var getProductDetail = new ProductDetailResponseModel
         {
-            ProductDetail= _productApi.GetById(Id)
-            //ProductPicture = _productPictureApi.List(),
-            //ProductDocument = _productDocumentApi.List(),
-            //ProductPrice = _productPriceApi.List()
+            ProductDetail= _productApi.GetById(Id),
+            ProductPicture = _productPictureApi.List(),
+            ProductDocument = _productDocumentApi.List(),
+            ProductPrice = _productPriceApi.List()
 
         };
 
