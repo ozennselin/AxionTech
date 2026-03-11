@@ -39,12 +39,12 @@ public class ProductController : BaseController
     
     public IActionResult Detail(int Id)
     {
-        var productDetail=_productApi.Detail(Id);
+        var getProduct=_productApi.GetById(Id);
         ViewBag.category = _categoryApi.List();
-        ViewBag.productPrice = _productPriceApi.List();
-        ViewBag.productPicture = _productPictureApi.List();
-        ViewBag.productDocument = _productDocumentApi.List();
-        return View(productDetail);
+        //ViewBag.productPrice = _productPriceApi.List();
+        //ViewBag.productPicture = _productPictureApi.List();
+        //ViewBag.productDocument = _productDocumentApi.List();
+        return View(getProduct);
     }
     public IActionResult Cart()
     {

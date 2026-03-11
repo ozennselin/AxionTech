@@ -28,10 +28,7 @@ public class Program
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
         builder.Services.AddScoped<IProductPictureRepository, ProductPictureRepository>();
         builder.Services.AddScoped<IProductDocumentRepository, ProductDocumentRepository>();
-
-        
-       
-
+        builder.Services.AddScoped<IProductPriceRepository, ProductPriceRepository>();
 
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

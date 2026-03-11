@@ -34,4 +34,10 @@ public class ProductRepository : Repository<Product>, IProductRepository
         }).ToList();
 
     }
+
+    //public IQueryable<Product> GetAllQuery()
+    //{
+    //    string test= _axionTechDB.ProductPicture.Where(k=>k.IsMain==true && k.Id==90).FirstOrDefault().Url;
+
+    //}
 }

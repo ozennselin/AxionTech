@@ -1,6 +1,7 @@
 ﻿using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Data.Access.Repositories;
 
@@ -31,10 +32,25 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         //AsNoTracking() => db de kilitlenmeyi önler
         //AsQueryable() => IQueryable türüne dönüştürür
     }
-
-
     public TEntity GetById(int id)
     {
         return _dbSet.Find(id);
     }
+    public  IQueryable<TEntity> GetAllQuery(Expression<Func<TEntity,bool>> query)
+    {
+        //IQueryable
+        //IEnumerable
+        return _dbSet.Where(query).AsNoTracking().AsQueryable();
+    }
+
+    public TEntity GetEntityQuery(Expression<Func<TEntity, bool>> query)
+    {
+        return _dbSet.Where(query).FirstOrDefault();
+    }
+
+    public bool Any(Expression<Func<TEntity, bool>> query)
+    {
+        return _dbSet.Any(query);
+    }
+
 }

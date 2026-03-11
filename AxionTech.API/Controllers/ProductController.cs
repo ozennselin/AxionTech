@@ -46,10 +46,18 @@ namespace AxionTech.API.Controllers
             return ResultAPI(list);
         }
 
-        [HttpPut("Detail")]
-        public IActionResult Detail(int Id) 
+        [HttpPut("Detail/{id}")]
+        public IActionResult Detail(int id) 
         {
-            var product = _productService.GetById(Id);
+            var product = _productService.GetById(id);
+            return ResultAPI(product);
+
+        }
+
+        [HttpGet("GetById")]
+        public IActionResult GetById(int id)
+        {
+            var product = _productService.GetById(id);
             return ResultAPI(product);
 
         }

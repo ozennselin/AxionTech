@@ -13,13 +13,15 @@ public class ProductService : IProductService
     private readonly ICategoryRepository _categoryRepository;
     private readonly IProductDocumentRepository _productDocumentRepository;
     private readonly IProductPictureRepository _productPictureRepository;
-    public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, IProductDocumentRepository productDocumentRepository, IProductPictureRepository productPictureRepository )
+    private readonly IProductPriceRepository _productPriceRepository;
+    public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, IProductDocumentRepository productDocumentRepository, IProductPictureRepository productPictureRepository, IProductPriceRepository productPriceRepository)
     {
         //bu method construction(yapıcı) methodtur.Ağağısındaki yapı DI(dependency injection) olarak isimlendirilir.    
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
         _productDocumentRepository = productDocumentRepository;
         _productPictureRepository = productPictureRepository;
+        _productPriceRepository = productPriceRepository;
     }
     public void Create(CreateProductRequestModel request)
     {
@@ -40,8 +42,9 @@ public class ProductService : IProductService
         response.Description = getProduct.Description;
         response.CategoryId = getProduct.CategoryId;
         response.CategoryName = _categoryRepository.GetById(getProduct.CategoryId).Name;
-        response.Picture = _productPictureRepository.GetById(Id).Url;//?? devam edilecek, expresion tanımı gerekli Repoda
-        response.Price = 152.55m;
+        response.Picture = _productPictureRepository.Any(k => k.ProductId == Id) ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == Id).Url : "";
+        //?? devam edilecek, expression tanımı gerekli Repoda=> Expression tanımı yapıldı
+        response.Price = _productPriceRepository.Any(k => k.ProductId == Id) ? _productPriceRepository.GetEntityQuery(k => k.IsActive && k.ProductId == Id).Price : 0;
 
         return response;
     }
@@ -52,20 +55,20 @@ public class ProductService : IProductService
 
         var productList = _productRepository.GetAll().ToList();
 
-        return productList.Select(p=>
+        return productList.Select(p =>
         {
             var categoryName = _categoryRepository.GetById(p.CategoryId);
 
-                   return new ProductResponseModel
-                   {
-                       Id = p.Id,
-                       Name = p.Name,
-                       Description = p.Description,
-                       CategoryId = p.CategoryId,
-                       CategoryName = categoryName.Name,
-                       Picture = "",//_productPictureRepository.GetById(p.Id).Url,
-                       Price = 125
-                   };
+            return new ProductResponseModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                CategoryId = p.CategoryId,
+                CategoryName = categoryName.Name,
+                Picture = _productPictureRepository.Any(k => k.ProductId == p.Id) ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == p.Id).Url : "",
+                Price = _productPriceRepository.Any(k => k.ProductId == p.Id) ? _productPriceRepository.GetEntityQuery(k => k.IsActive && k.ProductId == p.Id).Price : 0
+            };
 
         }).ToList();
     }
