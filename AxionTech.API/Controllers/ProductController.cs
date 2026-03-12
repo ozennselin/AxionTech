@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Models.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers
@@ -22,7 +23,7 @@ namespace AxionTech.API.Controllers
         // }
 
         [HttpPost]
-        public IActionResult ProductInsert([FromBody]ProductInsertRequest request)
+        public IActionResult ProductInsert([FromBody]ProductInsertRequestModel request)
         {
             return Ok("Postman işlemi:" + request);
             /*
