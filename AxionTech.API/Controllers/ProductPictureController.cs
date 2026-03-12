@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
 
-public class ProductPictureController : Controller
+public class ProductPictureController : BaseAPIController
 {
     public IActionResult Index()
     {
-        return View();
+        return Ok();
     }
 }

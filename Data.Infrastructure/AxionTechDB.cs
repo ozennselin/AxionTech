@@ -24,6 +24,7 @@ namespace Data.Infrastructure
         public DbSet<ProductDocument> ProductDocument { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<CustomerType> CustomerType { get; set; }
+        public DbSet<ProductPrice> ProductPrice { get; set; }//ProductId=10,active=true  price getir
 
 
 

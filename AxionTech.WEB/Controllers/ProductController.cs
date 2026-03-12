@@ -47,13 +47,16 @@ public class ProductController : BaseController
         //ViewBag.productDocument = _productDocumentApi.List();  
         yukardaki yapıları ViewBag ile tek tek göndermek yerine, ProductDetailResponseModel adında bir class oluşturup, içine istediğimiz dataları atarak tek bir Model (ProductDetailResponseModel) ile gönderebiliriz.
          */
+        var price= _productPriceApi.GetPriceByProductId(Id);
 
         var getProductDetail = new ProductDetailResponseModel
         {
             ProductDetail = _productApi.GetById(Id),
             //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
-            //ProductPrice = _productPriceApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument=null,
+            ProductPicture=null,
+            ProductPrice = price,
 
         };
 

@@ -17,20 +17,21 @@ public class Program
         //builder.Services.AddSingleton<ICategoryService, CategoryService>();//tek defa service aç
         //builder.Services.AddTransient<ICategoryService, CategoryService>();//her istekte
         builder.Services.AddScoped<ICategoryService, CategoryService>();//yaþam döngüsü boyunca
-        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();//yaþam döngüsü boyunca
         builder.Services.AddScoped<IProductService, ProductService>();
-        builder.Services.AddScoped<IProductRepository, ProductRepository>();//yaþam döngüsü boyunca
-        builder.Services.AddScoped<IUserRepository, UserRepository>();//yaþam döngüsü boyunca
         builder.Services.AddScoped<IUserService, UserService>(); 
         builder.Services.AddScoped<ICustomerService, CustomerService>();
-        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<IRoleService, RoleService>();
+        builder.Services.AddScoped<IProductPriceService, ProductPriceService>();
+
+
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();//yaþam döngüsü boyunca
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();//yaþam döngüsü boyunca
+        builder.Services.AddScoped<IUserRepository, UserRepository>();//yaþam döngüsü boyunca
+        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
         builder.Services.AddScoped<IProductPictureRepository, ProductPictureRepository>();
         builder.Services.AddScoped<IProductDocumentRepository, ProductDocumentRepository>();
         builder.Services.AddScoped<IProductPriceRepository, ProductPriceRepository>();
-
-
 
 
 

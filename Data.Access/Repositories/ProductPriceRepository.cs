@@ -13,4 +13,9 @@ public class ProductPriceRepository : Repository<ProductPrice>, IProductPriceRep
     {
     }
 
+    public ProductPrice GetByProductId(int productId)
+    {
+       //return _axionTechDB.ProductPrice.FirstOrDefault(k => k.ProductId == productId);
+     return _dbSet.FirstOrDefault(k => k.ProductId == productId && k.IsActive==true);
+    }
 }

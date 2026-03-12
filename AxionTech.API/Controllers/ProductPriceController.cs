@@ -1,11 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
 
-public class ProductPriceController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class ProductPriceController : BaseAPIController
 {
-    public IActionResult Index()
+    private readonly IProductPriceService _productPriceService;
+
+    public ProductPriceController(IProductPriceService productPriceService)
     {
-        return View();
+        _productPriceService = productPriceService;
+    }
+
+    [HttpGet("GetPriceByProductId")]
+    public IActionResult GetPriceByProductId(int Id)
+    {
+       var  getPrice= _productPriceService.GetByProductId(Id);
+        return ResultAPI(getPrice);//json formatında döner
+    }
+    public IActionResult List()
+    { 
+        return Ok();
     }
 }
