@@ -2,4 +2,5 @@
 
 public class DeleteProductDocumentRequestModel
 {
+    public int Id { get; set; }
 }

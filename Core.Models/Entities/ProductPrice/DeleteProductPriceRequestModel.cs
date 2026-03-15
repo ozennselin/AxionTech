@@ -6,5 +6,6 @@ namespace Core.Models.Entities.ProductPrice
 {
     public class DeleteProductPriceRequestModel
     {
+        public int ProductId { get; set; }
     }
 }

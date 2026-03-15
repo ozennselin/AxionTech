@@ -2,6 +2,7 @@
 using Core.Models.Entities.ProductDocument;
 using Core.Models.Entities.ProductPrice;
 using Data.Access.Repositories.Interfaces;
+using Data.Infrastructure.Entities;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,12 +19,25 @@ public class ProductPriceService : IProductPriceService
 
     public void Create(CreateProductPriceRequestModel request)
     {
-        throw new NotImplementedException();
+        var newPrice = new ProductPrice
+        {
+            ProductId = request.ProductId,
+            Price = request.Price,
+            Description = request.Description
+        };
+
+        _productPriceRepository.Add(newPrice);
     }
 
     public void Delete(DeleteProductPriceRequestModel request)
     {
-        throw new NotImplementedException();
+        var priceToDelete = _productPriceRepository.GetByProductId(request.ProductId);
+        if(priceToDelete == null)
+        {
+            throw new Exception("Price not found");
+            
+        }
+        _productPriceRepository.Delete(priceToDelete);
     }
 
     public ProductPriceResponseModel? GetByProductId(int productId)
@@ -44,6 +58,15 @@ public class ProductPriceService : IProductPriceService
 
     public void Update(UpdateProductPriceRequestModel request)
     {
-        throw new NotImplementedException();
+        var priceToUpdate = _productPriceRepository.GetByProductId(request.ProductId);
+        if (priceToUpdate == null)
+        {
+            throw new Exception("Price not found");
+
+        }
+        priceToUpdate.ProductId = request.ProductId;
+        priceToUpdate.Price = request.Price;
+        priceToUpdate.Description = request.Description;
+        _productPriceRepository.Update(priceToUpdate);
     }
 }
