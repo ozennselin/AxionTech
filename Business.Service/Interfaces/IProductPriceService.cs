@@ -11,5 +11,5 @@ public interface IProductPriceService
     void Create(CreateProductPriceRequestModel request);
     void Update(UpdateProductPriceRequestModel request);
     void Delete(DeleteProductPriceRequestModel request);
-    List<ProductPriceResponseModel> GetByProductId(int productId);
+    ProductPriceResponseModel GetByProductId(int productId);
 }

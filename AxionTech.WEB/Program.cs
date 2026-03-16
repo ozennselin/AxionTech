@@ -62,17 +62,16 @@ namespace AxionTech.WEB
             app.UseAuthorization();
 
             app.MapStaticAssets();
+            app.MapAreaControllerRoute(
+            name: "Areas",
+            areaName: "AdminPanel",
+            pattern: "AdminPanel/{controller=ProductAP}/{action=List}/{id?}"
+          );
 
-            app.MapAreaControllerRoute( 
-                  name: "Areas",
-                  areaName: "AdminPanel",
-                  pattern: "AdminPanel/{controller=ProductAP}/{action=List}/{id?}"
-                );
-
-         app.MapControllerRoute(
-         name: "default",
-         pattern: "{controller=Home}/{action=Index}/{id?}")
-         .WithStaticAssets();
+            app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}")
+            .WithStaticAssets();
 
 
             app.Run();

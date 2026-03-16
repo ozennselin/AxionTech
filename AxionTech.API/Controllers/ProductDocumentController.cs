@@ -1,11 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
 
-public class ProductDocumentController : Controller
+[Route("api/[controller]")]
+[ApiController]
+
+public class ProductDocumentController : BaseAPIController
 {
-    public IActionResult Index()
+    private readonly IProductDocumentService _productDocumentService;
+    public ProductDocumentController(IProductDocumentService productDocumentService)
     {
-        return View();
+        _productDocumentService = productDocumentService;
+    }
+    [HttpGet("GetByProductId")]
+    public IActionResult GetByProductId(int Id)
+    {
+        var getDocument = _productDocumentService.GetByProductId(Id);
+        return ResultAPI(getDocument);
+    }
+    public IActionResult List()
+    {
+        return Ok();
     }
 }

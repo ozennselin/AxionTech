@@ -39,7 +39,7 @@
                     <div class="carousel-inner" role="listbox">
                    
 
-                        @if (Model.ProductPicture.Any())
+                        @if (Model.ProductPicture!=null)
                         {
                            foreach (var item in Model.ProductPicture)
                             {
@@ -86,19 +86,15 @@
             <div class="col-xl-7 col-lg-7 col-md-6">
                 <div class="single-product-details">
                     <h2>@Model.ProductDetail.Name</h2>
-                    @foreach (var price in Model.ProductPrice)
-                    {
-                        if (price.ProductId == Model.ProductDetail.Id)
-                        {
-                            <h5>@price.Price ₺</h5>
-                        }
-                    }
+
+                    <h5>@Model.ProductPrice.Price.ToString("C") ₺</h5>                    
+                    
                     <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span>
                     <p>
                         <h4>@Model.ProductDetail.Description</h4>
                   
 
-                        @if (Model.ProductDocument.Any())
+                        @if (Model.ProductDocument!=null)
                         {
                             <ul>
                                 @foreach (var doc in Model.ProductDocument)

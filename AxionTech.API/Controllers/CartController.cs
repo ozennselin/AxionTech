@@ -2,10 +2,10 @@
 
 namespace AxionTech.API.Controllers;
 
-public class CartController : Controller
+public class CartController : BaseAPIController
 {
     public IActionResult Index()
     {
-        return View();
+        return Ok();
     }
 }
