@@ -24,15 +24,15 @@ public class ProductApi
         //get, post, put, delete
         //var response = _httpClient.PutAsJsonAsync($"Product/Detail?id=",Id);
         //var response = _httpClient.GetFromJsonAsync<APIResponseDTO< ProductResponseModel>>($"Product/Detail?id={Id}");
-        var response = _httpClient.GetAsync($"Product/Detail?id={Id}");
+        var response = _httpClient.GetAsync($"Product/Detail?id={id}");
         var content = response.Result.Content.ReadAsStringAsync();
 
-        if (content.IsCompletedSuccessfully )
+        if (content.IsCompletedSuccessfully)
         {
-            var responseContent=JsonConvert.DeserializeObject<APIResponseDTO<ProductResponseModel>>(content.Result);
+            var responseContent = JsonConvert.DeserializeObject<APIResponseDTO<ProductResponseModel>>(content.Result);
             return responseContent.Data;
         }
-            return null;
+        return null;
     }
     public ProductResponseModel GetById(int id)
     {
@@ -49,20 +49,20 @@ public class ProductApi
         return null;
     }
 
-    public ProductResponseModel GetById(int id)
-    {
-        var response = _httpClient.GetAsync($"Product/GetById?Id={id}").Result;
-        var content = response.Content.ReadAsStringAsync();
+    //public ProductResponseModel GetById(int id)
+    //{
+    //    var response = _httpClient.GetAsync($"Product/GetById?Id={id}").Result;
+    //    var content = response.Content.ReadAsStringAsync();
 
-        if (content.IsCompletedSuccessfully)
-        {
-         var responseContent= JsonConvert.DeserializeObject<APIResponseDTO<ProductResponseModel>>(content.Result);
-         var responseContent1= JsonConvert.DeserializeObject(content.Result);
-           return responseContent.Data;
-        }
-        //<APIResponseDTO<ProductResponseModel>>($"Product/Detail/{Id}").Result;
-        return null;
-    }
+    //    if (content.IsCompletedSuccessfully)
+    //    {
+    //     var responseContent= JsonConvert.DeserializeObject<APIResponseDTO<ProductResponseModel>>(content.Result);
+    //     var responseContent1= JsonConvert.DeserializeObject(content.Result);
+    //       return responseContent.Data;
+    //    }
+    //    //<APIResponseDTO<ProductResponseModel>>($"Product/Detail/{Id}").Result;
+    //    return null;
+    //}
 
 
 

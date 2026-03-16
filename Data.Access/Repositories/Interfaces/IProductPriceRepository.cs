@@ -7,4 +7,5 @@ namespace Data.Access.Repositories.Interfaces;
 
 public interface IProductPriceRepository:IRepository<ProductPrice>
 {
+    List<ProductPrice> GetByProductId(int productId);
 }

@@ -1,9 +1,6 @@
 ﻿using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure;
 using Data.Infrastructure.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Access.Repositories;
 
@@ -11,6 +8,11 @@ public class ProductPriceRepository : Repository<ProductPrice>, IProductPriceRep
 {
     public ProductPriceRepository(AxionTechDB axionTechDB) : base(axionTechDB)
     {
+    }
+
+    public List<ProductPrice> GetByProductId(int productId)
+    {
+        return _dbSet.Where(pp => pp.ProductId == productId).ToList();
     }
 
 }
