@@ -1,0 +1,76 @@
+﻿@using Core.Models.Entities.Product
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+@model ProductDetailResponseModel
+
+@* 1-Product info *@
+<!-- right column -->
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Detail</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-body">
+                    <label>ProductId</label>
+                    <input class="form-control" type="text" value="@Model.ProductDetail.Id" disabled>
+                    <label> Description</label>
+                    <input class="form-control" type="text" value="@Model.ProductDetail.Description" disabled>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <label>Product Name</label>
+                    <input class="form-control" type="text" value="@Model.ProductDetail.Name" disabled>
+                    <label> Category Name</label>
+                    <input class="form-control" type="text" value="@Model.ProductDetail.CategoryName" disabled>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* 2-product price info *@
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Price</h3>
+        </div>
+
+    </div>
+</div>
+
+@* 3-product picture info *@
+
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Picture</h3>
+        </div>
+        <div>
+            <img src="~/picture/p2.jpg" class="img-thumbnail w-25" alt="...">
+            <img src="~/picture/p3.jpg" class="img-thumbnail w-25" alt="...">
+            <img src="~/picture/p4.jpg" class="img-thumbnail w-25" alt="...">
+            <img src="~/picture/phone1.jpg" class="img-thumbnail w-25" alt="...">
+
+        </div>
+    </div>
+</div>
+
+@* 4- product document info *@
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Document</h3>
+        </div>
+
+    </div>
+</div>

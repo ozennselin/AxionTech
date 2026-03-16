@@ -1,0 +1,74 @@
+﻿@using Core.Models.Entities.Product
+@{
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+
+@model ProductDetailResponseModel
+
+@* 1-Product info *@
+<!-- right column -->
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Detail</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-body">
+                    <label>ProductId</label>
+                    <input class="form-control" type="text" value="" placeholder="" disabled>
+                    <label> Description</label>
+                    <input class="form-control" type="text" placeholder="Description" >
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <label>Product Name</label>
+                    <input class="form-control" type="text" placeholder="Product Name">
+                    <label> Category Name</label>
+                  @*   <input class="form-control" type="text" placeholder=" Category Name" /> 
+                      DDL=> Çoktan seçmeli
+
+                  *@
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-success" >Create</button>
+</div>
+
+
+@* 2-product price info *@
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Price</h3>
+        </div>
+
+    </div>
+</div>
+
+@* 3-product picture info *@
+
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Picture</h3>
+        </div>
+        <div>
+    </div>
+</div>
+
+@* 4- product document info *@
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Document</h3>
+        </div>
+
+    </div>
+</div>
