@@ -1,14 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AxionTech.WEB.GetApi;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
-    public class ProductAPController : Controller
+public class ProductAPController : Controller
+{
+    private readonly ProductApi _productApi;
+
+    public ProductAPController(ProductApi productApi)
     {
-        public IActionResult List()
-        {
-            //ProductAP/Index
-            //CategoryAP/Index
-            return View();
-        }
+        _productApi = productApi;
+    }
+
+    public IActionResult List()
+    {
+        var list=_productApi.List();
+        return View(list);
     }
 }
+

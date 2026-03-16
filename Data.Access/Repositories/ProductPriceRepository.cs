@@ -10,11 +10,6 @@ public class ProductPriceRepository : Repository<ProductPrice>, IProductPriceRep
     {
     }
 
-    public List<ProductPrice> GetByProductId(int productId)
-    {
-        return _dbSet.Where(pp => pp.ProductId == productId).ToList();
-    }
-
     public void Delete(ProductPrice productPrice)
     {
         _dbSet.Remove(productPrice);
