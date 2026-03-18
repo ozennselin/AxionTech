@@ -7,9 +7,9 @@ namespace Business.Service;
 
 public class CategoryService : ICategoryService
 {
-    ICategoryRepository _categoryRepository;
-    IUserRepository _userRepository;
-    IProductRepository _productRepository;
+    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IProductRepository _productRepository;
 
     public CategoryService(ICategoryRepository categoryRepository, IUserRepository userRepository, IProductRepository productRepository)
     {
@@ -32,7 +32,12 @@ public class CategoryService : ICategoryService
 
     public void Delete(DeleteCategoryRequestModel request)
     {
-        throw new NotImplementedException();
+        var categoryToDelete = _categoryRepository.GetById(request.Id);
+        if (categoryToDelete == null)
+        {
+            throw new Exception("Category not found");
+        }
+        _categoryRepository.Delete(categoryToDelete);
     }
 
     public List<CategoryResponseModel> List()
@@ -62,6 +67,13 @@ public class CategoryService : ICategoryService
 
     public void Update(UpdateCategoryRequestModel request)
     {
-        throw new NotImplementedException();
+       var categoryToUpdate = _categoryRepository.GetById(request.Id);
+        if (categoryToUpdate == null)
+        {
+            throw new Exception("Category not found");
+        }
+        categoryToUpdate.Name = request.Name;
+        categoryToUpdate.Description = request.Description;
+      _categoryRepository.Update(categoryToUpdate);
     }
 }

@@ -27,4 +27,16 @@ public class CategoryController : BaseAPIController
         var list=_categoryService.List();
         return ResultAPI(list);
     }
+    [HttpPost("Update")]
+    public IActionResult Update([FromBody]UpdateCategoryRequestModel request)
+    {
+        _categoryService.Update(request);
+        return ResultAPI(request);
+    }
+    [HttpPost("Delete")]
+    public IActionResult Delete([FromBody]DeleteCategoryRequestModel request)
+    {
+        _categoryService.Delete(request);
+        return ResultAPI(request);
+    }
 }

@@ -1,11 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Service.Interfaces;
+using Core.Models.Entities.OrderItem;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
 
-public class OrderItemController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class OrderItemController : BaseAPIController
 {
-    public IActionResult Index()
+    private readonly IOrderItemService _orderItemService;
+
+    public OrderItemController(IOrderItemService orderItemService)
     {
-        return View();
+        _orderItemService = orderItemService;
     }
+    [HttpPost("Create")]
+    public IActionResult Create(CreateOrderItemRequestModel request)
+    {
+        _orderItemService.Create(request);
+        return Ok();
+    }
+
+    [HttpPut("Update")]
+    public IActionResult Update(UpdateOrderItemRequestModel request)
+    {
+        _orderItemService.Update(request);
+        return Ok();
+    }
+
+    [HttpDelete("Delete")]
+    public IActionResult Delete(DeleteOrderItemRequestModel request)
+    {
+        _orderItemService.Delete(request);
+        return Ok();
+    }
+
+    [HttpGet("GetByOrderId")]
+    public IActionResult GetByOrderId(int orderId)
+    {
+        var result = _orderItemService.GetByOrderId(orderId);
+        return Ok(result);
+    }
+
+ 
 }

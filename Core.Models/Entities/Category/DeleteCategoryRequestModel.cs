@@ -2,4 +2,5 @@
 
 public class DeleteCategoryRequestModel
 {
+    public int Id { get; set; }
 }

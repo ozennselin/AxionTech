@@ -1,11 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Service.Interfaces;
+using Core.Models.Entities.CartItem;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
 
-public class CartItemController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class CartItemController : BaseAPIController
 {
-    public IActionResult Index()
+    private readonly ICartItemService _cartItemService;
+
+    public CartItemController(ICartItemService cartItemService)
     {
-        return View();
+        _cartItemService = cartItemService;
+    }
+
+    [HttpPost]
+    public IActionResult Create(CreateCartItemRequestModel request)
+    {
+        _cartItemService.Create(request);
+        return Ok();
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(DeleteCartItemRequestModel request)
+    {
+        _cartItemService.Delete(request);
+        return Ok();
+    }
+
+    [HttpGet("{cartId}")]
+    public IActionResult GetByCartId(int cartId)
+    {
+        var result = _cartItemService.GetByCartId(cartId);
+        return Ok(result);
+    }
+
+    [HttpPut]
+    public IActionResult Update(UpdateCartItemRequestModel request)
+    {
+        _cartItemService.Update(request);
+        return Ok();
     }
 }

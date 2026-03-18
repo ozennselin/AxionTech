@@ -1,6 +1,7 @@
 ﻿using Business.Service.Interfaces;
 using Core.Models.Entities.Order;
 using Data.Access.Repositories.Interfaces;
+using Data.Infrastructure.Entities;
 
 namespace Business.Service;
 
@@ -14,12 +15,26 @@ public class OrderService : IOrderService
     }
     public void Create(CreateOrderRequestModel request)
     {
-        throw new NotImplementedException();
+        var createOrder = new Order
+        {
+            OrderNo = request.OrderNo,
+            OrderDate = request.OrderDate,
+            TotalAmount = request.TotalAmount,
+            Status = request.Status,
+            Address = request.Address,
+            UserId = request.UserId
+        };
+
+        _orderRepository.Add(createOrder);
     }
 
     public void Delete(DeleteOrderRequestModel request)
     {
-        throw new NotImplementedException();
+        var ordertodelete = _orderRepository.GetById(request.Id);
+        if (ordertodelete == null)
+        {
+            _orderRepository.Delete(ordertodelete);
+        }
     }
 
     public List<OrderResponseModel> List()
@@ -40,6 +55,16 @@ public class OrderService : IOrderService
 
     public void Update(UpdateOrderRequestModel request)
     {
-        throw new NotImplementedException();
+        var ordertoUpdate = _orderRepository.GetById(request.Id);
+      if (ordertoUpdate == null)
+        {
+            ordertoUpdate.OrderNo = request.OrderNo;
+            ordertoUpdate.OrderDate = request.OrderDate;
+            ordertoUpdate.TotalAmount = request.TotalAmount;
+            ordertoUpdate.Status = request.Status;
+            ordertoUpdate.Address = request.Address;
+            ordertoUpdate.UserId = request.UserId;
+            _orderRepository.Update(ordertoUpdate);
+        }
     }
 }

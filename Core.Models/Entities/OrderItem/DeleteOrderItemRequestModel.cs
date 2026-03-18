@@ -2,4 +2,5 @@
 
 public class DeleteOrderItemRequestModel
 {
+    public int Id { get; set; }
 }

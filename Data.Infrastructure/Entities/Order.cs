@@ -11,5 +11,5 @@ public class Order:BaseEntity
     public string Address { get; set; } = string.Empty;
     public int UserId { get; set; }
 
-    public ICollection<OrderItem> OrderItems { get; set; } = null;
+    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }
