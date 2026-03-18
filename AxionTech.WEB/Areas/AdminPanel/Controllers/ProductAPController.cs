@@ -11,7 +11,7 @@ public class ProductAPController : Controller
         private readonly ProductPictureApi _productPictureApi;
         private readonly ProductDocumentApi _productDocumentApi;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi = null, ProductPictureApi productPictureApi = null, ProductDocumentApi productDocumentApi = null)
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi , ProductPictureApi productPictureApi , ProductDocumentApi productDocumentApi )
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;

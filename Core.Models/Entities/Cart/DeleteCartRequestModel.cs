@@ -1,6 +1,8 @@
-﻿namespace Core.Models.Entities.Cart;
+﻿using Core.Models.Entities.Abstraction;
 
-public class DeleteCartRequestModel
+namespace Core.Models.Entities.Cart;
+
+public class DeleteCartRequestModel: BaseDelete
 {
-    public int Id { get; set; }
+    
 }

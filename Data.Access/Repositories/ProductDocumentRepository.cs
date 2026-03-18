@@ -14,14 +14,5 @@ public class ProductDocumentRepository : Repository<ProductDocument>, IProductDo
     {
         return _dbSet.Where(pd => pd.ProductId == productId).ToList();
     }
-    public void Delete(ProductDocument productDocument) 
-    { 
-        _dbSet.Remove(productDocument);
-        _axionTechDB.SaveChanges();
-    }
-    public void Update(ProductDocument productDocument)
-    {
-        _dbSet.Update(productDocument);
-        _axionTechDB.SaveChanges();
-    }
+  
 }

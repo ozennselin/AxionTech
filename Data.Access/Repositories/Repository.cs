@@ -53,4 +53,20 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         return _dbSet.Any(query);
     }
 
+    public void Delete(TEntity entity)
+    {
+        _dbSet.Remove(entity);
+        _axionTechDB.SaveChanges();
+    }
+
+    public void Update(TEntity entity)
+    {
+        _dbSet.Update(entity);
+        _axionTechDB.SaveChanges();
+    }
+    public void Create(TEntity entity)
+    {
+        _dbSet.Add(entity);
+        _axionTechDB.SaveChanges();
+    }
 }

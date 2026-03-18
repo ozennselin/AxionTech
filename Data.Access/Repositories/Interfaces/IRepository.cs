@@ -15,5 +15,7 @@ public interface IRepository<TEntity> where TEntity : class
     IQueryable<TEntity> GetAllQuery(Expression<Func<TEntity, bool>> query);
     TEntity GetEntityQuery(Expression<Func<TEntity, bool>> query);
     bool Any(Expression<Func<TEntity, bool>> query);
-
+     void Delete(TEntity entity);
+    void Update(TEntity entity);
+    void Create(TEntity entity);
 }

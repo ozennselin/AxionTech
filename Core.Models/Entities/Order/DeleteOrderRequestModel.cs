@@ -1,6 +1,7 @@
-﻿namespace Core.Models.Entities.Order;
+﻿using Core.Models.Entities.Abstraction;
 
-public class DeleteOrderRequestModel
+namespace Core.Models.Entities.Order;
+
+public class DeleteOrderRequestModel: BaseDelete
 {
-    public int Id { get; set; }
 }

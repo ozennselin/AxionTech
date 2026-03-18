@@ -1,6 +1,7 @@
-﻿namespace Core.Models.Entities.Category;
+﻿using Core.Models.Entities.Abstraction;
 
-public class DeleteCategoryRequestModel
+namespace Core.Models.Entities.Category;
+
+public class DeleteCategoryRequestModel: BaseDelete
 {
-    public int Id { get; set; }
 }

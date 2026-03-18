@@ -1,5 +1,7 @@
-﻿namespace Core.Models.Entities.Customer;
+﻿using Core.Models.Entities.Abstraction;
 
-public class DeleteCustomerRequestModel
+namespace Core.Models.Entities.Customer;
+
+public class DeleteCustomerRequestModel: BaseDelete
 {
 }

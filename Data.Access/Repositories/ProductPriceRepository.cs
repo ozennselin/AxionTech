@@ -8,23 +8,11 @@ public class ProductPriceRepository : Repository<ProductPrice>, IProductPriceRep
 {
     public ProductPriceRepository(AxionTechDB axionTechDB) : base(axionTechDB)
     {
-    }
-
-    public void Delete(ProductPrice productPrice)
-    {
-        _dbSet.Remove(productPrice);
-        _axionTechDB.SaveChanges();
-    }
+    }  
 
     public ProductPrice GetByProductId(int productId)
     {
        //return _axionTechDB.ProductPrice.FirstOrDefault(k => k.ProductId == productId);
      return _dbSet.FirstOrDefault(k => k.ProductId == productId && k.IsActive==true);
-    }
-
-    public void Update(ProductPrice productPrice)
-    {
-        _dbSet.Update(productPrice);
-        _axionTechDB.SaveChanges();
     }
 }

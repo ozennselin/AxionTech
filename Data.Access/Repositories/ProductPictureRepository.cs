@@ -13,14 +13,5 @@ public class ProductPictureRepository : Repository<ProductPicture>, IProductPict
     {
         return _dbSet.Where(pp => pp.ProductId == productId).ToList();
     }
-    public void Delete(ProductPicture productPicture)
-    {
-        _dbSet.Remove(productPicture);
-        _axionTechDB.SaveChanges();
-    }
-    public void Update(ProductPicture productPicture)
-    {
-        _dbSet.Update(productPicture);
-        _axionTechDB.SaveChanges();
-    }
+
 }

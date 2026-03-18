@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Core.Models.Entities.Abstraction;
 
-namespace Core.Models.Entities.ProductPrice
+namespace Core.Models.Entities.ProductPrice;
+
+public class DeleteProductPriceRequestModel: BaseDelete
 {
-    public class DeleteProductPriceRequestModel
-    {
-        public int ProductId { get; set; }
-    }
 }

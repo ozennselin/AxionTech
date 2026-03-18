@@ -1,5 +1,7 @@
-﻿namespace Core.Models.Entities.ProductPicture;
+﻿using Core.Models.Entities.Abstraction;
 
-public class DeleteProductPictureRequestModel
-{ public int Id { get; set; }
+namespace Core.Models.Entities.ProductPicture;
+
+public class DeleteProductPictureRequestModel: BaseDelete
+{ 
 }

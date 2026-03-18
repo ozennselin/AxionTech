@@ -1,6 +1,7 @@
-﻿namespace Core.Models.Entities.ProductDocument;
+﻿using Core.Models.Entities.Abstraction;
 
-public class DeleteProductDocumentRequestModel
+namespace Core.Models.Entities.ProductDocument;
+
+public class DeleteProductDocumentRequestModel: BaseDelete
 {
-    public int Id { get; set; }
 }

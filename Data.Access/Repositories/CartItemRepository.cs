@@ -10,15 +10,15 @@ public class CartItemRepository : Repository<CartItem>, ICartItemRepository
     {
     }
 
-    public void Delete(CartItem cartItem)
-    {
-        _dbSet.Remove(cartItem);
-        _axionTechDB.SaveChanges();
-    }
+    //public void Delete(CartItem cartItem)
+    //{
+    //    _dbSet.Remove(cartItem);
+    //    _axionTechDB.SaveChanges();
+    //}
 
-    public void Update(CartItem cartItem)
-    {
-       _dbSet.Update(cartItem);
-        _axionTechDB.SaveChanges();
-    }
+    //public void Update(CartItem cartItem)
+    //{
+    //   _dbSet.Update(cartItem);
+    //    _axionTechDB.SaveChanges();
+    //}
 }
