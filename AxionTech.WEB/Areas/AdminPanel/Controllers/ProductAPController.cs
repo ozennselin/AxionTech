@@ -7,11 +7,11 @@ namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 public class ProductAPController : Controller
 {
     private readonly ProductApi _productApi;
-        private readonly ProductPriceApi _productPriceApi;
-        private readonly ProductPictureApi _productPictureApi;
-        private readonly ProductDocumentApi _productDocumentApi;
+    private readonly ProductPriceApi _productPriceApi;
+    private readonly ProductPictureApi _productPictureApi;
+    private readonly ProductDocumentApi _productDocumentApi;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi , ProductPictureApi productPictureApi , ProductDocumentApi productDocumentApi )
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi)
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;
@@ -47,6 +47,22 @@ public class ProductAPController : Controller
 
     public IActionResult Create()
     {
+        return View();
+    }
+    public IActionResult Update(int Id)
+    {
+        var product = _productApi.GetById(Id);
+        return View(product);
+    }
+
+    [HttpPost]
+    public IActionResult Update(UpdateProductRequestModel request)
+    {
+        var updateProduct = _productApi.Update(request);
+        if (updateProduct)
+        {
+            return RedirectToAction("List");
+;        }
         return View();
     }
 }

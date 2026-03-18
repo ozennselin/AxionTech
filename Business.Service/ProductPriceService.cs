@@ -31,7 +31,7 @@ public class ProductPriceService : IProductPriceService
 
     public void Delete(DeleteProductPriceRequestModel request)
     {
-        var priceToDelete = _productPriceRepository.GetByProductId(request.ProductId);
+        var priceToDelete = _productPriceRepository.GetById(request.Id);
         if(priceToDelete == null)
         {
             throw new Exception("Price not found");

@@ -6,60 +6,51 @@
 }
 
 @model List<ProductResponseModel>
-    <div class="card card-info">
-        <div class="card-header">
+<div class="card card-info">
+    <div class="card-header">
         <div class="text-xl-left"> <h3 class="card-title">Product List</h3></div>
-            <div class="text-md-right">
-         @*    <form asp-controller="~/AdminPanel/ProductAP" asp-action="~/AdminPanel/ProductAP/Create" method="post">
-
-                <input type="button" class="btn btn-success" value="Create" />
-                </form> *@
-                <a class="btn btn-success" href="~/AdminPanel/ProductAP/Create">Createee</a>
-            </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Category Name</th>
-                        <th>Detail</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var item in Model)
-                    {
-
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Name</td>
-                            <td>@item.Description</td>
-                            <td> @item.CategoryName</td>
-                            <td><a class="btn btn-block btn-primary btn-sm"  href="~/AdminPanel/ProductAP/Detail/@item.Id" ><i class="fa fa-eye"></i> </a></td>
-                            <td>
-                            <a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/ProductAP/Update/@item.Id"><i class="fa fa-pen"></i> </a>
-                            </td>
-                        <td><a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/ProductAP/Delete/@item.Id"><i class="fa fa-pen"></i> </a></td>
-                        </tr>
-                    }
-
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Category Name</th>
-                        <th>Detail</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="text-md-right">
+            <a class="btn btn-success" href="~/AdminPanel/ProductAP/Create">Createee</a>
         </div>
     </div>
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category Name</th>
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td> @item.CategoryName</td>
+                        <td><a class="btn btn-block btn-primary btn-sm" href="~/AdminPanel/ProductAP/Detail/@item.Id"><i class="fa fa-eye"></i></a></td>
+                        <td><a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/ProductAP/Update/@item.Id"><i class="fa fa-pen"></i></a></td>
+                        <td><a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/ProductAP/Delete/@item.Id"><i class="fa fa-pen"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category Name</th>
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

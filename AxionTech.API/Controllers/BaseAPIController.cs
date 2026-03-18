@@ -9,6 +9,7 @@ public  class BaseAPIController : ControllerBase
 {
     //API request ve response ları bu BaseAPIController ile data alışverişlerini kontrol edeceğiz
 
+    public string ResponseMessage { get; set; } = string.Empty;
     [NonAction]//herhangi bir controllera bağlı olmadığını belirtir
     public IActionResult SelectResponseResult<TEntity>(APIResponseDTO<TEntity> responseDTO)
     {

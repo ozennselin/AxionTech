@@ -23,7 +23,7 @@ namespace AxionTech.API.Controllers
         // }
 
         [HttpPost]
-        public IActionResult ProductInsert([FromBody]ProductInsertRequestModel request)
+        public IActionResult ProductInsert([FromBody] ProductInsertRequestModel request)
         {
             return Ok("Postman işlemi:" + request);
             /*
@@ -43,12 +43,12 @@ namespace AxionTech.API.Controllers
         [HttpGet("List")]
         public IActionResult List()
         {
-          var list=_productService.List();
+            var list = _productService.List();
             return ResultAPI(list);
         }
 
         [HttpPut("Detail/{id}")]
-        public IActionResult Detail(int id) 
+        public IActionResult Detail(int id)
         {
             var product = _productService.GetById(id);
             return ResultAPI(product);
@@ -60,7 +60,13 @@ namespace AxionTech.API.Controllers
         {
             var product = _productService.GetById(id);
             return ResultAPI(product);
+        }
 
+        [HttpPut("Update")]
+        public IActionResult Update(UpdateProductRequestModel request)
+        {
+            var result = _productService.Update(request);
+            return ResultAPI(result);
         }
     }
 }

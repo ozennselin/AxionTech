@@ -1,5 +1,6 @@
 ﻿using Business.Service.Interfaces;
 using Core.Dtos.Entities.Product;
+using Core.Enums;
 using Core.Models.Entities.Product;
 using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
@@ -73,9 +74,32 @@ public class ProductService : IProductService
         }).ToList();
     }
 
-    public void Update(UpdateProductRequestModel request)
+    public ResponseMessageEnum Update(UpdateProductRequestModel request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var getProduct = _productRepository.GetById(request.Id);
+
+            if (getProduct == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            getProduct.Name = request.Name;
+            getProduct.Description = request.Description;
+            getProduct.CategoryId = _categoryRepository.GetEntityQuery(k => k.Name == request.CategoryName).Id;
+            getProduct.UpdateDate = DateTime.Now;
+            getProduct.UpdaterId = 1;
+
+            _productRepository.Update(getProduct);
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception ex)
+        {
+            //log işlemi yapılabilir. Sadece hata mesajını döndürüyoruz.
+            //var log=ex.Message;//zaman,Class,method//örnek
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 
 }
