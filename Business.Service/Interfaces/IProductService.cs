@@ -6,7 +6,7 @@ namespace Business.Service.Interfaces;
  public interface IProductService
 {
     void Create(CreateProductRequestModel request);
-    ResponseMessageEnum Update(UpdateProductRequestModel request);
+    (UpdateProductRequestModel model, ResponseMessageEnum messge) Update(UpdateProductRequestModel request);
     void Delete(DeleteProductRequestModel request);
     List<ProductResponseModel> List();
     ProductResponseModel GetById(int Id);

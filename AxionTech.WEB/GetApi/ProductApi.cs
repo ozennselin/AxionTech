@@ -55,6 +55,7 @@ public class ProductApi
 
         if (response.IsSuccessStatusCode==true)
         {
+            var result= response.Content.ReadFromJsonAsync<APIResponseDTO<bool>>().Result;  
             return true;
         }
         return false;

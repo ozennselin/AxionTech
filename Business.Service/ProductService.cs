@@ -74,7 +74,7 @@ public class ProductService : IProductService
         }).ToList();
     }
 
-    public ResponseMessageEnum Update(UpdateProductRequestModel request)
+    public (UpdateProductRequestModel model, ResponseMessageEnum messge ) Update(UpdateProductRequestModel request)
     {
         try
         {
@@ -82,7 +82,7 @@ public class ProductService : IProductService
 
             if (getProduct == null)
             {
-                return ResponseMessageEnum.NotFound;
+                return (null,ResponseMessageEnum.NotFound);
             }
 
             getProduct.Name = request.Name;
@@ -92,13 +92,13 @@ public class ProductService : IProductService
             getProduct.UpdaterId = 1;
 
             _productRepository.Update(getProduct);
-            return ResponseMessageEnum.UpdateSuccess;
+            return (request, ResponseMessageEnum.UpdateSuccess);
         }
         catch (Exception ex)
         {
             //log işlemi yapılabilir. Sadece hata mesajını döndürüyoruz.
             //var log=ex.Message;//zaman,Class,method//örnek
-            return ResponseMessageEnum.UpdateErrorWithMessage;
+            return (null,ResponseMessageEnum.UpdateErrorWithMessage);
         }
     }
 
