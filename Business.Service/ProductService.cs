@@ -29,9 +29,23 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public void Delete(DeleteProductRequestModel request)
+    public ResponseMessageEnum Delete(DeleteProductRequestModel request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var getProduct = _productRepository.GetById(request.Id);
+            if (getProduct == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+            _productRepository.Delete(getProduct);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+
+             return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
     }
 
     public ProductResponseModel GetById(int Id)

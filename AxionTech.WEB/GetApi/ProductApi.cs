@@ -60,6 +60,17 @@ public class ProductApi
         return false;
     }
 
+    public bool Delete(DeleteProductRequestModel request)
+    {
+        //var response = _httpClient.DeleteAsync($"Product/Delete?id={Id}").Result;
+        var response = _httpClient.PutAsJsonAsync($"Product/Delete", request).Result;
+
+        if (response.IsSuccessStatusCode == true)
+        {
+            return true;
+        }
+        return false;
+    }
 
 
 }

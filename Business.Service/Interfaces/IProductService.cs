@@ -7,7 +7,7 @@ namespace Business.Service.Interfaces;
 {
     void Create(CreateProductRequestModel request);
     ResponseMessageEnum Update(UpdateProductRequestModel request);
-    void Delete(DeleteProductRequestModel request);
+    ResponseMessageEnum Delete(DeleteProductRequestModel request);
     List<ProductResponseModel> List();
     ProductResponseModel GetById(int Id);
 }
