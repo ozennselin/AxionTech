@@ -38,7 +38,8 @@ public class ProductService : IProductService
             {
                 return ResponseMessageEnum.NotFound;
             }
-            _productRepository.Delete(getProduct);
+            getProduct.IsActive = false;
+            _productRepository.Update(getProduct);
             return ResponseMessageEnum.Success;
         }
         catch (Exception)
@@ -68,7 +69,7 @@ public class ProductService : IProductService
     {
         //Open, Close=> her request kendisinden önce giden requestin bitmesini bekler
 
-        var productList = _productRepository.GetAll().ToList();
+        var productList = _productRepository.GetAll().Where(k=>k.IsActive==true).ToList();
 
         return productList.Select(p =>
         {
