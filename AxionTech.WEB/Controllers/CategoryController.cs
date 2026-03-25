@@ -28,6 +28,7 @@ public class CategoryController : BaseController
         //var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
         //return View(response.Data); 
         #endregion
-        return View();
+        var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>(uriApiAdres).Result;
+        return View(response.Data);
     }
 }

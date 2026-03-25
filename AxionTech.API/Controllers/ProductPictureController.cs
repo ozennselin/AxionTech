@@ -20,8 +20,4 @@ public class ProductPictureController : BaseAPIController
         return ResultAPI(getPicture);
     }
 
-    public IActionResult Index()
-    {
-        return Ok();
-    }
 }

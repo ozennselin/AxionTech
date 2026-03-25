@@ -19,8 +19,5 @@ public class ProductDocumentController : BaseAPIController
         var getDocument = _productDocumentService.GetByProductId(Id);
         return ResultAPI(getDocument);
     }
-    public IActionResult List()
-    {
-        return Ok();
-    }
+ 
 }

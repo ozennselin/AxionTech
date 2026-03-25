@@ -8,4 +8,5 @@ public interface ICartService
     void Update(UpdateCartRequestModel request);
     void Delete(DeleteCartRequestModel request);
     CartResponseModel GetByCartId(int cartId);
+    List<CartResponseModel> List();
 }
