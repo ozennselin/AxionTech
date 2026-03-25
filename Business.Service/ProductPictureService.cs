@@ -16,10 +16,10 @@ public class ProductPictureService : IProductPictureService
     {
         var newProductPicture = new ProductPicture
         {
-            ProductId = request.ProductId,
-            Url = request.Url,
-            IsMain = request.IsMain,
-            DisplayOrder = request.DisplayOrder
+            //ProductId = request.ProductId,
+            //Url = request.Url,
+            //IsMain = request.IsMain,
+            //DisplayOrder = request.DisplayOrder
         };
         _productPictureRepository.Add(newProductPicture);
     }

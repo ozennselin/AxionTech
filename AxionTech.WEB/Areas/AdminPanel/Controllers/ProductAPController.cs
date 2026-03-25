@@ -1,6 +1,8 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Models.Entities.Product;
+using Core.Models.Entities.ProductPicture;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Web;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
@@ -11,13 +13,15 @@ public class ProductAPController : Controller
     private readonly ProductPriceApi _productPriceApi;
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
+    private readonly IWebHostEnvironment _environment;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi)
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, IWebHostEnvironment environment)
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
+        _environment = environment;
     }
 
     public IActionResult List()
@@ -90,26 +94,36 @@ public class ProductAPController : Controller
     [HttpPost]
     public async Task<IActionResult> Upload(IFormFile file)
     {
-        if (file != null && file.Length > 0)
+        if (file == null || file.Length == 0)
+            return BadRequest("Dosya seçilmedi.");
+
+        // 1. Dosya Yolu Hazırlama
+        string uploadsFolder = Path.Combine(_environment.WebRootPath, "~/picture/");
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        // Benzersiz dosya adı oluşturma
+        string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        // 2. Fiziksel Kayıt
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
-            var fileName = Path.GetFileName(file.FileName);
-
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
-
-            if (!Directory.Exists(uploadPath))
-            {
-                Directory.CreateDirectory(uploadPath);
-            }
-
-            var path = Path.Combine(uploadPath, fileName);
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
+            await file.CopyToAsync(fileStream);
         }
 
-        return RedirectToAction("Update");
+        // 3. Veritabanı Kaydı
+        var productImage = new CreateProductPictureRequestModel
+        {
+            FileName = uniqueFileName,
+            FilePath = "/uploads/products/" + uniqueFileName,
+            CreateDate = DateTime.Now
+        };
+
+        //_context.ProductImages.Add(productImage);
+        //await _context.SaveChangesAsync();
+
+        return Json(new { success = true, path = productImage.FilePath });
     }
 }
 

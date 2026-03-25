@@ -1,7 +1,10 @@
-﻿
-<form action="/Product/Upload" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
-    <div class="fallback">
-        <input type="file" name="file" />
+﻿<div class="card">
+    <div class="card-body">
+        <form action="/ProductAP/Upload" class="dropzone" id="myDropzone" enctype="multipart/form-data">
+            <div class="dz-message">
+                <h3>Dosyaları buraya sürükleyin veya tıklayın.</h3>
+            </div>
+        </form>
+        <button id="submit-all" class="btn btn-primary mt-3">Yüklemeyi Başlat</button>
     </div>
-    <button type="submit" class="btn btn-primary">Upload</button>
-</form>
+</div>
