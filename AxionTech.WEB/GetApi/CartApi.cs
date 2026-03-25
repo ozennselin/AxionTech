@@ -13,8 +13,8 @@ public class CartApi
     }
     public List<CartResponseModel> List()
     {
-        var response = _httpClient.GetFromJsonAsync<List<CartResponseModel>>("Cart/List").Result;
-        var response1 = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartResponseModel>>>("Cart/List").Result;
-        return response ?? new List<CartResponseModel>();
+       // var response = _httpClient.GetFromJsonAsync<List<CartResponseModel>>("Cart/List").Result;
+        var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartResponseModel>>>("Cart/List").Result;
+        return response.Data;
     }
 }

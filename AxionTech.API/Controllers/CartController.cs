@@ -45,7 +45,7 @@ public class CartController : BaseAPIController
     public IActionResult List()
     {
         var result = _cartService.List();
-        return Ok(result);
+        return ResultAPI(result);
 
     }
 }

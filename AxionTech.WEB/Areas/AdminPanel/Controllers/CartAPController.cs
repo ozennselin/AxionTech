@@ -17,7 +17,10 @@ public class CartAPController : Controller
     public IActionResult List()
     {
         var carts = _cartApi.List();
-
+        if (carts==null)
+        {
+            return View();
+        }
         foreach (var cart in carts)
         {
             cart.Items = _cartItemApi.GetByCartId(cart.Id);
