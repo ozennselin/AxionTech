@@ -1,0 +1,44 @@
+﻿@using Core.Models.Entities.CartItem
+@model List<CartItemResponseModel>
+
+@{
+    ViewData["Title"] = "Cart Item List";
+    Layout = "/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<h1>Cart Item List</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Cart Id</th>
+            <th>Product Id</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Line Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CartId</td>
+                    <td>@item.ProductId</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.LineTotal</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">Kayıt bulunamadı.</td>
+            </tr>
+        }
+    </tbody>
+</table>

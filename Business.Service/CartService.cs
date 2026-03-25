@@ -1,5 +1,6 @@
 ﻿using Business.Service.Interfaces;
 using Core.Models.Entities.Cart;
+using Core.Models.Entities.CartItem;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
 
@@ -46,6 +47,29 @@ public class CartService : ICartService
             Id = getCart.Id,
             UserId = getCart.UserId
         };
+    }
+
+    public List<CartResponseModel> List()
+    {
+        var carts = _cartRepository.GetAll().ToList();
+
+        return carts.Select(c => new CartResponseModel
+        {
+            Id = c.Id,
+            UserId = c.UserId,
+            //Items = _cartItemRepository
+            //    .GetAllQuery(x => x.CartId == c.Id)
+            //    .Select(ci => new CartItemResponseModel
+            //    {
+            //        Id = ci.Id,
+            //        CartId = ci.CartId,
+            //        ProductId = ci.ProductId,
+            //        Quantity = ci.Quantity,
+            //        UnitPrice = ci.UnitPrice,
+            //        LineTotal = ci.LineTotal
+            //    })
+            //    .ToList()
+        }).ToList();
     }
 
     public void Update(UpdateCartRequestModel request)

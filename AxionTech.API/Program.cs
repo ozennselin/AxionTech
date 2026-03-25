@@ -22,6 +22,13 @@ public class Program
         builder.Services.AddScoped<ICustomerService, CustomerService>();
         builder.Services.AddScoped<IRoleService, RoleService>();
         builder.Services.AddScoped<IProductPriceService, ProductPriceService>();
+        builder.Services.AddScoped<ICartService, CartService>();
+        builder.Services.AddScoped<ICartItemService, CartItemService>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
+        builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+        builder.Services.AddScoped<IProductPictureService, ProductPictureService>();
+        builder.Services.AddScoped<IProductDocumentService, ProductDocumentService>();
+        builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 
 
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();//yaþam döngüsü boyunca
@@ -32,6 +39,11 @@ public class Program
         builder.Services.AddScoped<IProductPictureRepository, ProductPictureRepository>();
         builder.Services.AddScoped<IProductDocumentRepository, ProductDocumentRepository>();
         builder.Services.AddScoped<IProductPriceRepository, ProductPriceRepository>();
+        builder.Services.AddScoped<ICartRepository, CartRepository>();
+        builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+        builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+        builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+        builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
 
 

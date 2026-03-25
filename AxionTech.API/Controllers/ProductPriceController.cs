@@ -20,8 +20,5 @@ public class ProductPriceController : BaseAPIController
        var  getPrice= _productPriceService.GetByProductId(Id);
         return ResultAPI(getPrice);//json formatında döner
     }
-    public IActionResult List()
-    { 
-        return Ok();
-    }
+ 
 }

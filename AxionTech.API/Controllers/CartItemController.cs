@@ -42,4 +42,6 @@ public class CartItemController : BaseAPIController
         _cartItemService.Update(request);
         return Ok();
     }
+   
+
 }
