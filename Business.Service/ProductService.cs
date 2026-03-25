@@ -29,9 +29,24 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public void Delete(DeleteProductRequestModel request)
+    public ResponseMessageEnum Delete(DeleteProductRequestModel request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var getProduct = _productRepository.GetById(request.Id);
+            if (getProduct == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+            getProduct.IsActive = false;
+            _productRepository.Update(getProduct);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+
+             return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
     }
 
     public ProductResponseModel GetById(int Id)
@@ -54,7 +69,7 @@ public class ProductService : IProductService
     {
         //Open, Close=> her request kendisinden önce giden requestin bitmesini bekler
 
-        var productList = _productRepository.GetAll().ToList();
+        var productList = _productRepository.GetAll().Where(k=>k.IsActive==true).ToList();
 
         return productList.Select(p =>
         {

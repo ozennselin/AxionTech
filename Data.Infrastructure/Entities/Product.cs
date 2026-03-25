@@ -8,6 +8,7 @@ public class Product:BaseEntity
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int CategoryId { get; set; }
+    public bool IsActive { get; set; }
     //public DateTime CreateDate { get; set; }
     //public int CreatorId { get; set; }
     //public DateTime? UpdateDate { get; set; }

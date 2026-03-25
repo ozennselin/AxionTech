@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Infrastructure.Migrations
 {
     [DbContext(typeof(AxionTechDB))]
-    [Migration("20260226135939_FirstLoadAfterFail")]
-    partial class FirstLoadAfterFail
+    [Migration("20260319180242_RecoveryDB")]
+    partial class RecoveryDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -396,6 +396,9 @@ namespace Data.Infrastructure.Migrations
                         .HasMaxLength(600)
                         .HasColumnType("nvarchar(600)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -522,6 +525,7 @@ namespace Data.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductId")

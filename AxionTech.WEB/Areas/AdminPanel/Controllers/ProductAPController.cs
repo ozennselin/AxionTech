@@ -61,8 +61,27 @@ public class ProductAPController : Controller
         var updateProduct = _productApi.Update(request);
         if (updateProduct)
         {
+            return RedirectToAction("List");}
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var product = _productApi.GetById(id);
+       
+        return View(product);
+    }
+
+    [ActionName("Delete")]
+    [HttpPost]
+    public IActionResult DeleteProduct(DeleteProductRequestModel request)
+    {
+        var updateProduct = _productApi.Delete(request);
+        if (updateProduct)
+        {
             return RedirectToAction("List");
-;        }
+        }
         return View();
     }
 }

@@ -16,4 +16,5 @@ public enum ResponseMessageEnum
     DeleteSuccessWithData = 11,
     DeleteError = 12,
     NotFound = 13,
+    DeleteErrorWithMessage = 14
 }

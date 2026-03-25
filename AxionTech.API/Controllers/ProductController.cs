@@ -68,5 +68,14 @@ namespace AxionTech.API.Controllers
             var result = _productService.Update(request);
             return ResultAPI(result);
         }
+
+
+        [HttpPut("Delete")]
+        public IActionResult Delete(DeleteProductRequestModel request)
+        {
+            var result = _productService.Delete(request);
+            return ResultAPI(result);
+        }
+
     }
 }

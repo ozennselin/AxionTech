@@ -13,7 +13,7 @@ internal class ProductPriceConfiguration : IEntityTypeConfiguration<ProductPrice
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
         builder.Property(x => x.ProductId).IsRequired(true);
-        builder.Property(x => x.Price).IsRequired(true);
+        builder.Property(x => x.Price).IsRequired(true).HasPrecision(18, 2);
 
         builder.HasOne(x => x.Product).WithMany(x => x.ProductPrice).HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Cascade);
 

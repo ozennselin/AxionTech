@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstLoadAfterFail : Migration
+    public partial class RecoveryDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -131,6 +131,7 @@ namespace Data.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(600)", maxLength: 600, nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorId = table.Column<int>(type: "int", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -338,7 +339,7 @@ namespace Data.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
