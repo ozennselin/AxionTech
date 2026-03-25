@@ -35,6 +35,16 @@ public class ProductRepository : Repository<Product>, IProductRepository
 
     }
 
+    public bool GetProductWithName(string name)
+    {
+        var product = GetEntityQuery(k => k.Name == name);
+        if (product == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
     //public IQueryable<Product> GetAllQuery()
     //{
     //    string test= _axionTechDB.ProductPicture.Where(k=>k.IsMain==true && k.Id==90).FirstOrDefault().Url;

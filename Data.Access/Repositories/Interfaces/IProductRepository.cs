@@ -9,7 +9,7 @@ public interface IProductRepository:IRepository<Product>
 
     List<Product> ProductListWithCategory();
     List<ProductListDto> List();
-
+    bool GetProductWithName(string name);
 
 
 }

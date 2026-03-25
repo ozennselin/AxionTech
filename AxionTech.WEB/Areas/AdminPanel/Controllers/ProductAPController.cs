@@ -1,4 +1,6 @@
 ﻿using AxionTech.WEB.GetApi;
+using Core.Dtos;
+using Core.Models.Entities.Category;
 using Core.Models.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +12,15 @@ public class ProductAPController : Controller
     private readonly ProductPriceApi _productPriceApi;
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
+    private readonly CategoryApi _categoryApi;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi)
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, CategoryApi categoryApi = null)
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
+        _categoryApi = categoryApi;
     }
 
     public IActionResult List()
@@ -47,7 +51,42 @@ public class ProductAPController : Controller
 
     public IActionResult Create()
     {
-        return View();
+        var getProductDetail = new ProductCreateUpdateResponseModel
+        {
+            ProductDetail = null,
+            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            ProductPicture = null,
+            ProductPrice = null,
+            Category= _categoryApi.List()
+
+        };
+
+        return View(getProductDetail);
+    }
+
+    [HttpPost]
+    public IActionResult Create(CreateProductRequestModel request)
+    {
+      bool result=  _productApi.Create(request);
+        if (result)
+        {
+            return RedirectToAction("List");
+        }
+        ViewBag.error = "Ürün oluşturulurken bir hata oluştu.";
+        var getProductDetail = new ProductCreateUpdateResponseModel
+        {
+            ProductDetail = null,
+            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            ProductPicture = null,
+            ProductPrice = null,
+            Category = _categoryApi.List()
+
+        };
+        return View(getProductDetail);
     }
     public IActionResult Update(int Id)
     {

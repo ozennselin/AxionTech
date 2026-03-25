@@ -4,42 +4,56 @@
 }
 
 
-@model ProductDetailResponseModel
+@model ProductCreateUpdateResponseModel
 
 @* 1-Product info *@
 <!-- right column -->
-<div class="col-md-12">
-    <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Product Detail</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card-body">
-                    <label>ProductId</label>
-                    <input class="form-control" type="text" value="" placeholder="" disabled>
-                    <label> Description</label>
-                    <input class="form-control" type="text" placeholder="Description" >
-
-                </div>
-                <!-- /.card-body -->
+<form method="post" action="~/AdminPanel/ProductAP/Create">
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Product Detail</h3>
             </div>
-            <div class="col-md-6">
-                <div class="card-body">
-                    <label>Product Name</label>
-                    <input class="form-control" type="text" placeholder="Product Name">
-                    <label> Category Name</label>
-                  @*   <input class="form-control" type="text" placeholder=" Category Name" /> 
-                      DDL=> Çoktan seçmeli
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label for="productName" class="form-label">Product Name</label>
+                        <input id="productName" name="Name" class="form-control" type="text" placeholder="Product Name">
 
-                  *@
+                        <label for="categoryId" class="form-label">Category Name</label>
+                        <select id="categoryId" name="CategoryId" class="form-control">
+
+                            <option value="">Kategori Seçiniz</option>
+
+                            @if (Model.Category != null && Model.Category.Any())
+                            {
+                                foreach (var item in Model.Category)
+                                {
+                                    if (item.ParentId == 0)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+
+
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
                 </div>
-                <!-- /.card-body -->
+                <div class="col-md-6">
+
+                    <div class="card-body">
+                        <label> Description</label>
+                        @* <input class="form-control" type="text" placeholder="Description"> *@
+                        <textarea name="description" class="form-control" type="text" rows="4" placeholder="Description"></textarea>
+                    </div>
+                </div>
             </div>
+            <p class="danger">@ViewBag.error</p>
         </div>
+        <button class="btn btn-success">Create</button>
     </div>
-    <button class="btn btn-success" >Create</button>
-</div>
+</form>
 
 
 @* 2-product price info *@
@@ -60,15 +74,22 @@
             <h3 class="card-title">Product Picture</h3>
         </div>
         <div>
+        </div>
     </div>
-</div>
 
 @* 4- product document info *@
-<div class="col-md-12">
-    <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Product Document</h3>
-        </div>
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Product Document</h3>
+            </div>
 
+        </div>
     </div>
-</div>
+
+@section _js{
+
+        <script>
+            //Parent Id değeri o olmayan bağlı kategorileri getirmek için kullanılacak
+        </script>
+}

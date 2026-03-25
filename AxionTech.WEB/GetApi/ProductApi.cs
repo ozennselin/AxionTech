@@ -14,6 +14,20 @@ public class ProductApi
         _httpClient = httpClient;
     }
 
+
+    public bool Create (CreateProductRequestModel request)
+    {
+        var response = _httpClient.PostAsJsonAsync($"Product/Create", request).Result;
+
+        if (response.IsSuccessStatusCode==true) 
+        {
+            return true;
+        }
+        return false;
+
+
+    }
+
     public List<ProductResponseModel> List()
     {
         var responseProduct = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>("Product/List").Result;
