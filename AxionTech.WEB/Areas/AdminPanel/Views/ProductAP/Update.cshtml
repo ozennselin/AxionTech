@@ -1,12 +1,15 @@
 ﻿@using Core.Models.Entities.Product
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "Update";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+@section _css {
+    <link rel="stylesheet" href="~/dropzone/dropzone.min.css" />
 }
 @model ProductResponseModel
 
 @* <form action="~/AdminPanel/ProductAP/Update"  method="post" > *@
-<form asp-area="AdminPanel" asp-controller="ProductAP" asp-action="Update"  method="post" >
+<form asp-area="AdminPanel" asp-controller="ProductAP" asp-action="Update" method="post">
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
@@ -31,7 +34,7 @@
                         <input class="form-control" type="text" name="categoryname" value="@Model.CategoryName" />
                     </div>
                 </div>
-                <input type="submit" class="btn btn-success"  value="Update" />
+                <input type="submit" class="btn btn-success" value="Update" />
 
             </div>
         </div>
@@ -49,8 +52,7 @@
 
 @* 3-product picture info *@
 
-@* @Html.Partial("_ProductPicturePartial",null) *@
-<partial name="_ProductPicturePartial" model="" />
+@Html.Partial("_ProductPicturePartial",null) 
 
 @* 4- product document info *@
 <div class="col-md-12">
@@ -61,3 +63,22 @@
 
     </div>
 </div>
+
+
+
+@section _js {
+    <script src="~/dropzone/dropzone.min.js"></script>
+    <script type=”text/javascript”>
+        $(document).ready(function () {
+            Dropzone.autoDiscover = false;
+
+            $("#my-great-dropzone").dropzone({
+                // Set any desired options for dropzone 
+                // For example, you can set upload URL and max file size url: 
+                @Url.Action("Upload", "Product")',
+                maxFilesize: 3,
+                maxFiles: 10 
+            }); 
+        });
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Models.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
@@ -61,7 +62,8 @@ public class ProductAPController : Controller
         var updateProduct = _productApi.Update(request);
         if (updateProduct)
         {
-            return RedirectToAction("List");}
+            return RedirectToAction("List");
+        }
         return View();
     }
 
@@ -69,7 +71,7 @@ public class ProductAPController : Controller
     public IActionResult Delete(int id)
     {
         var product = _productApi.GetById(id);
-       
+
         return View(product);
     }
 
@@ -83,6 +85,31 @@ public class ProductAPController : Controller
             return RedirectToAction("List");
         }
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Upload(IFormFile file)
+    {
+        if (file != null && file.Length > 0)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
+
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            var path = Path.Combine(uploadPath, fileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+        }
+
+        return RedirectToAction("Update");
     }
 }
 

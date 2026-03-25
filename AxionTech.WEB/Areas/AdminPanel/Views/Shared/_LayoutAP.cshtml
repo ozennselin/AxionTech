@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/adminlte/dist/css/adminlte.min.css">
+    @RenderSection("_css", required: false)
 </head>
 <!--
 `body` tag options:
@@ -295,5 +296,7 @@
           });
         });
     </script>
+    @RenderSection("_js", required: false)
+
 </body>
 </html>

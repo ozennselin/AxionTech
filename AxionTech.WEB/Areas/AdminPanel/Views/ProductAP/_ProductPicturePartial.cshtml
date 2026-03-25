@@ -1,15 +1,7 @@
 ﻿
-<div class="col-md-12">
-    <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Product Picture</h3>
-        </div>
-        <div>
-            <img src="~/picture/p2.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/p3.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/p4.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/phone1.jpg" class="img-thumbnail w-25" alt="...">
-
-        </div>
+<form action="/Product/Upload" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
+    <div class="fallback">
+        <input type="file" name="file" />
     </div>
-</div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
