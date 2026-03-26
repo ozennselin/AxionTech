@@ -3,7 +3,11 @@
     ViewData["Title"] = "List";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
-@model ProductResponseModel
+@section _css{
+    <link href="~/dropzone/dropzone.min.css" rel="stylesheet" />
+}
+
+@model ProductCreateUpdateResponseModel
 
 @* <form action="~/AdminPanel/ProductAP/Update"  method="post" > *@
 <form asp-area="AdminPanel" asp-controller="ProductAP" asp-action="Update"  method="post" >
@@ -16,9 +20,9 @@
                 <div class="col-md-6">
                     <div class="card-body">
                         <label>ProductId</label>
-                        <input class="form-control" name="id" type="text" value="@Model.Id" disabled>
+                        <input class="form-control" name="id" type="text" value="@Model.ProductDetail.Id" disabled>
                         <label> Description</label>
-                        <input class="form-control" name="description" type="text" value="@Model.Description">
+                        <input class="form-control" name="description" type="text" value="@Model.ProductDetail.Description">
 
                     </div>
                     <!-- /.card-body -->
@@ -26,9 +30,9 @@
                 <div class="col-md-6">
                     <div class="card-body">
                         <label>Product Name</label>
-                        <input class="form-control" type="text" name="name" value=" @Model.Name" />
+                        <input class="form-control" type="text" name="name" value=" @Model.ProductDetail.Name" />
                         <label> Category Name</label>
-                        <input class="form-control" type="text" name="categoryname" value="@Model.CategoryName" />
+                        <input class="form-control" type="text" name="categoryname" value="@Model.ProductDetail.CategoryName" />
                     </div>
                 </div>
                 <input type="submit" class="btn btn-success"  value="Update" />
@@ -49,20 +53,7 @@
 
 @* 3-product picture info *@
 
-<div class="col-md-12">
-    <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Product Picture</h3>
-        </div>
-        <div>
-            <img src="~/picture/p2.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/p3.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/p4.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/phone1.jpg" class="img-thumbnail w-25" alt="...">
-
-        </div>
-    </div>
-</div>
+@Html.Partial("_PicturePartial", null)
 
 @* 4- product document info *@
 <div class="col-md-12">
@@ -73,3 +64,45 @@
 
     </div>
 </div>
+
+@section _js{
+
+<script src="~/dropzone/dropzone.min.js"></script>
+    <script>
+        debugger;
+        Dropzone.option.myDropzone={
+            paramName:"file",//Controller method parametresi ile aynı isimde olmalı
+            maxFileSize:5,
+            acceptedFiles:".jpg,.jpeg,.png,.gif",
+            autoProcessQueue:false,
+            parallelUploads:10,
+            init: function(){
+                var submitButton=document.querySelector("#submit-all");
+
+               var myDropzone=this;
+
+               submitButton.addEventListener("click", function(){
+                   myDropzone.autoProcessQueue();//button basınca yükleme başlasın
+
+
+               });
+               this.on ("success",function(file, response){
+               console.log("Resimler başarılı bir şekilde yüklendi",response);
+               
+               });
+
+                   this.on ("failed",function(file, response){
+               console.log("Resimler  yüklenemedi",response);
+
+               })
+
+            }
+
+
+
+        }
+
+    </script>
+
+
+}

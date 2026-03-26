@@ -89,9 +89,19 @@ public class ProductAPController : Controller
         return View(getProductDetail);
     }
     public IActionResult Update(int Id)
-    {
-        var product = _productApi.GetById(Id);
-        return View(product);
+    {        
+        var getProductAllDetail = new ProductCreateUpdateResponseModel
+        {
+            ProductDetail = _productApi.GetById(Id),
+            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            ProductPicture = null,
+            ProductPrice = null,
+            Category = _categoryApi.List()
+
+        };
+        return View(getProductAllDetail);
     }
 
     [HttpPost]
@@ -122,6 +132,34 @@ public class ProductAPController : Controller
             return RedirectToAction("List");
         }
         return View();
+    }
+
+    public IActionResult Upload(IFormFile file)
+    {
+        //resim db y ekayıt işlemi brda yapılacak
+        if (file==null || file.Length==0)
+        {
+
+            return Json(new { success = false, message = "Dosya seçilmedi." });
+        }
+
+        
+
+        //resme benzersiz isim verme işlemi
+        var uniquePictureName = Guid.NewGuid().ToString() + "_"+file.Name;
+        var uploadFolder= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
+        string filePath= Path.Combine(uploadFolder, uniquePictureName);
+
+        //Fizikse Kayıt
+        using (var fileStream=new FileStream(filePath,FileMode.Create))
+        {
+            file.CopyTo(fileStream);
+        }
+
+        //Resmi DB ye  kaydetme işlemi
+
+
+        return Json(new { success = true, filePath = "/picture/" + uniquePictureName });
     }
 }
 
