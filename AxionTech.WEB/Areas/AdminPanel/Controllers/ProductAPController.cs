@@ -16,14 +16,17 @@ public class ProductAPController : Controller
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
     private readonly IWebHostEnvironment _environment;
+    private readonly CategoryApi _categoryApi;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, IWebHostEnvironment environment)
+
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, IWebHostEnvironment environment, CategoryApi categoryApi)
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
         _environment = environment;
+        _categoryApi = categoryApi;
     }
 
     public IActionResult List()
