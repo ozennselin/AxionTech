@@ -1,0 +1,20 @@
+﻿@* @using Core.Models.Entities.ProductPicture
+
+@model List<ProductPictureResponseModel> *@
+
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Picture</h3>
+        </div>
+        <form action="~/AdminPanel/productAP/Upload" class="dropzone" id="myDropzone" enctype="multipart/form-data">
+            <div class="dz-message">
+                <h4>Resimleri sürükleyin veya tıklayarak yükleyin</h4>
+                <image  ></image>
+            </div>
+
+     </form>
+     <button id="submit-all" class="btn btn-success mt-3"> Resimleri Yükle </button>
+
+    </div>
+</div>

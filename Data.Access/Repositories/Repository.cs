@@ -64,9 +64,5 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _dbSet.Update(entity);
         _axionTechDB.SaveChanges();
     }
-    public void Create(TEntity entity)
-    {
-        _dbSet.Add(entity);
-        _axionTechDB.SaveChanges();
-    }
+
 }

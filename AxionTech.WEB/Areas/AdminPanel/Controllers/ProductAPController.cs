@@ -1,4 +1,6 @@
 ﻿using AxionTech.WEB.GetApi;
+using Core.Dtos;
+using Core.Models.Entities.Category;
 using Core.Models.Entities.Product;
 using Core.Models.Entities.ProductPicture;
 using Microsoft.AspNetCore.Mvc;
@@ -52,12 +54,57 @@ public class ProductAPController : Controller
 
     public IActionResult Create()
     {
-        return View();
+        var getProductDetail = new ProductCreateUpdateResponseModel
+        {
+            ProductDetail = null,
+            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            ProductPicture = null,
+            ProductPrice = null,
+            Category= _categoryApi.List()
+
+        };
+
+        return View(getProductDetail);
+    }
+
+    [HttpPost]
+    public IActionResult Create(CreateProductRequestModel request)
+    {
+      bool result=  _productApi.Create(request);
+        if (result)
+        {
+            return RedirectToAction("List");
+        }
+        ViewBag.error = "Ürün oluşturulurken bir hata oluştu.";
+        var getProductDetail = new ProductCreateUpdateResponseModel
+        {
+            ProductDetail = null,
+            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            ProductPicture = null,
+            ProductPrice = null,
+            Category = _categoryApi.List()
+
+        };
+        return View(getProductDetail);
     }
     public IActionResult Update(int Id)
-    {
-        var product = _productApi.GetById(Id);
-        return View(product);
+    {        
+        var getProductAllDetail = new ProductCreateUpdateResponseModel
+        {
+            ProductDetail = _productApi.GetById(Id),
+            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            ProductPicture = null,
+            ProductPrice = null,
+            Category = _categoryApi.List()
+
+        };
+        return View(getProductAllDetail);
     }
 
     [HttpPost]

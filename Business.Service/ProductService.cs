@@ -24,9 +24,33 @@ public class ProductService : IProductService
         _productPictureRepository = productPictureRepository;
         _productPriceRepository = productPriceRepository;
     }
-    public void Create(CreateProductRequestModel request)
+    public ResponseMessageEnum Create(CreateProductRequestModel request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var existProduct = _productRepository.GetProductWithName(request.Name);
+
+            if (existProduct == true)
+            {
+                return ResponseMessageEnum.Exist;
+            }
+            Product product = new Product();
+
+            product.Name = request.Name;
+            product.Description = request.Description;
+            product.CategoryId = request.CategoryId;
+            product.UpdateDate = DateTime.Now;
+            product.UpdaterId = 1;
+            product.IsActive = true;
+
+            _productRepository.Add(product);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 
     public ResponseMessageEnum Delete(DeleteProductRequestModel request)
@@ -45,7 +69,7 @@ public class ProductService : IProductService
         catch (Exception)
         {
 
-             return ResponseMessageEnum.DeleteErrorWithMessage;
+            return ResponseMessageEnum.DeleteErrorWithMessage;
         }
     }
 
@@ -69,7 +93,7 @@ public class ProductService : IProductService
     {
         //Open, Close=> her request kendisinden önce giden requestin bitmesini bekler
 
-        var productList = _productRepository.GetAll().Where(k=>k.IsActive==true).ToList();
+        var productList = _productRepository.GetAll().Where(k => k.IsActive == true).ToList();
 
         return productList.Select(p =>
         {
@@ -116,5 +140,6 @@ public class ProductService : IProductService
             return ResponseMessageEnum.UpdateErrorWithMessage;
         }
     }
+
 
 }

@@ -9,6 +9,8 @@
 }
 @model ProductResponseModel
 
+@model ProductCreateUpdateResponseModel
+
 @* <form action="~/AdminPanel/ProductAP/Update"  method="post" > *@
 <form asp-area="AdminPanel" asp-controller="ProductAP" asp-action="Update" method="post">
     <div class="col-md-12">
@@ -20,9 +22,9 @@
                 <div class="col-md-6">
                     <div class="card-body">
                         <label>ProductId</label>
-                        <input class="form-control" name="id" type="text" value="@Model.Id" disabled>
+                        <input class="form-control" name="id" type="text" value="@Model.ProductDetail.Id" disabled>
                         <label> Description</label>
-                        <input class="form-control" name="description" type="text" value="@Model.Description">
+                        <input class="form-control" name="description" type="text" value="@Model.ProductDetail.Description">
 
                     </div>
                     <!-- /.card-body -->
@@ -30,9 +32,9 @@
                 <div class="col-md-6">
                     <div class="card-body">
                         <label>Product Name</label>
-                        <input class="form-control" type="text" name="name" value=" @Model.Name" />
+                        <input class="form-control" type="text" name="name" value=" @Model.ProductDetail.Name" />
                         <label> Category Name</label>
-                        <input class="form-control" type="text" name="categoryname" value="@Model.CategoryName" />
+                        <input class="form-control" type="text" name="categoryname" value="@Model.ProductDetail.CategoryName" />
                     </div>
                 </div>
                 <input type="submit" class="btn btn-success" value="Update" />

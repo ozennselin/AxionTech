@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,6 +76,18 @@ namespace AxionTech.API.Controllers
         {
             var result = _productService.Delete(request);
             return ResultAPI(result);
+        }
+
+        [HttpPost("Create")]
+        public IActionResult Create(CreateProductRequestModel request)
+        {
+            var result = _productService.Create(request);
+
+            if (result == ResponseMessageEnum.Success)
+            {
+                return ResultAPI(result);
+            }
+            return BadRequest(new { Message = ResponseMessageEnum.Exist, ErrorCode = result });
         }
 
     }
