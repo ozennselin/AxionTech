@@ -35,7 +35,7 @@ namespace Data.Infrastructure
 
             //Add configurations from the current assembly
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+            modelBuilder.Entity<ProductPicture>().ToTable(k => k.HasTrigger("tgr_Create"));//ProductPicture tablosuna tgr_Create adında bir trigger ekledik. Bu trigger, ProductPicture tablosuna yeni bir kayıt eklendiğinde çalışacak ve belirli işlemleri gerçekleştirecektir. Trigger'lar, veritabanı düzeyinde otomatik olarak tetiklenen özel prosedürlerdir ve genellikle veri bütünlüğünü sağlamak veya belirli iş kurallarını uygulamak için kullanılır.
             base.OnModelCreating(modelBuilder);
         }
 
