@@ -1,4 +1,8 @@
-﻿using Business.Service.Interfaces;
+﻿using Business.Service;
+using Business.Service.Interfaces;
+using Core.Enums;
+using Core.Models.Entities.Product;
+using Core.Models.Entities.ProductPicture;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
@@ -20,4 +24,23 @@ public class ProductPictureController : BaseAPIController
         return ResultAPI(getPicture);
     }
 
+    [HttpGet("List")]
+    public IActionResult List()
+    {
+        var list = _productPictureService.List();
+        return ResultAPI(list);
+    }
+
+
+    [HttpPost("Create")]
+    public IActionResult Create(CreateProductPictureRequestModel request)
+    {
+        var result = _productPictureService.Create(request);
+
+        if (result== ResponseMessageEnum.Success)
+        {
+            return ResultAPI(result);
+        }
+        return BadRequest(new { Message = ResponseMessageEnum.Exist, ErrorCode = result });
+    }
 }

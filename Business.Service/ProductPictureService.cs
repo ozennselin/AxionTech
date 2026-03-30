@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.ProductPicture;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
@@ -12,16 +13,29 @@ public class ProductPictureService : IProductPictureService
     {
         _productPictureRepository = productPictureRepository;
     }
-    public void Create(CreateProductPictureRequestModel request)
+    public ResponseMessageEnum Create(CreateProductPictureRequestModel request)
     {
-        var newProductPicture = new ProductPicture
+        try
         {
-            //ProductId = request.ProductId,
-            //Url = request.Url,
-            //IsMain = request.IsMain,
-            //DisplayOrder = request.DisplayOrder
-        };
-        _productPictureRepository.Add(newProductPicture);
+            var newProductPicture = new ProductPicture
+            {
+                ProductId = request.ProductId,
+                Url = request.Url,
+                IsMain = request.IsMain,
+                DisplayOrder = request.DisplayOrder,
+                Name = request.Name,
+                OrjinalName = request.OrjinalName,
+                CreateDate=DateTime.Now,
+                CreatorId=1
+            };
+            _productPictureRepository.Add(newProductPicture);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+
+            return ResponseMessageEnum.Error;
+        }
     }
 
     public void Delete(DeleteProductPictureRequestModel request)
@@ -59,5 +73,21 @@ public class ProductPictureService : IProductPictureService
         pictureToUpdate.IsMain = request.IsMain;
         pictureToUpdate.DisplayOrder = request.DisplayOrder;
         _productPictureRepository.Update(pictureToUpdate);
+    }
+
+    public List<ProductPictureResponseModel> List()
+    {
+        var list = _productPictureRepository.GetAll().ToList();
+      
+        return list.Select(p => new ProductPictureResponseModel
+            {
+                Id = p.Id,
+                ProductId = p.ProductId,
+                Url = p.Url,
+                IsMain = p.IsMain,
+                DisplayOrder = p.DisplayOrder,
+                Name = p.Name,
+                OrjinalName = p.OrjinalName
+        }).ToList();
     }
 }

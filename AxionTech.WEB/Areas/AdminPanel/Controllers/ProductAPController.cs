@@ -18,8 +18,9 @@ public class ProductAPController : Controller
     private readonly IWebHostEnvironment _environment;
     private readonly CategoryApi _categoryApi;
 
+    public static int productId;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, IWebHostEnvironment environment, CategoryApi categoryApi)
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, CategoryApi categoryApi = null)
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;
@@ -65,7 +66,7 @@ public class ProductAPController : Controller
             ProductDocument = null,
             ProductPicture = null,
             ProductPrice = null,
-            Category= _categoryApi.List()
+            Category = _categoryApi.List()
 
         };
 
@@ -75,7 +76,7 @@ public class ProductAPController : Controller
     [HttpPost]
     public IActionResult Create(CreateProductRequestModel request)
     {
-      bool result=  _productApi.Create(request);
+        bool result = _productApi.Create(request);
         if (result)
         {
             return RedirectToAction("List");
@@ -84,10 +85,9 @@ public class ProductAPController : Controller
         var getProductDetail = new ProductCreateUpdateResponseModel
         {
             ProductDetail = null,
-            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductPicture = _productPictureApi.List().Where(k => k.ProductId == request.Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
             ProductDocument = null,
-            ProductPicture = null,
             ProductPrice = null,
             Category = _categoryApi.List()
 
@@ -95,15 +95,14 @@ public class ProductAPController : Controller
         return View(getProductDetail);
     }
     public IActionResult Update(int Id)
-    {        
+    {
+        productId = Id;
         var getProductAllDetail = new ProductCreateUpdateResponseModel
         {
             ProductDetail = _productApi.GetById(Id),
-            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductPicture = _productPictureApi.List().Where(k => k.ProductId == Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
             ProductDocument = null,
-            ProductPicture = null,
-            ProductPrice = null,
             Category = _categoryApi.List()
 
         };
@@ -113,6 +112,7 @@ public class ProductAPController : Controller
     [HttpPost]
     public IActionResult Update(UpdateProductRequestModel request)
     {
+        
         var updateProduct = _productApi.Update(request);
         if (updateProduct)
         {
@@ -144,34 +144,38 @@ public class ProductAPController : Controller
     [HttpPost]
     public async Task<IActionResult> Upload(IFormFile file)
     {
+        //resim db y ekayıt işlemi brda yapılacak
         if (file == null || file.Length == 0)
-            return BadRequest("Dosya seçilmedi.");
+        {
+            return Json(new { success = false, message = "Dosya seçilmedi." });
+        }
 
-        // 1. Dosya Yolu Hazırlama
-        string uploadsFolder = Path.Combine(_environment.WebRootPath, "~/picture/");
-        if (!Directory.Exists(uploadsFolder))
-            Directory.CreateDirectory(uploadsFolder);
+        //resme benzersiz isim verme işlemi
+        var uniquePictureName = Guid.NewGuid().ToString() + "_" + file.FileName;
+        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
+        string filePath = Path.Combine(uploadFolder, uniquePictureName);
 
-        // Benzersiz dosya adı oluşturma
-        string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-        // 2. Fiziksel Kayıt
+        //Fizikse Kayıt
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
             await file.CopyToAsync(fileStream);
         }
-
-        // 3. Veritabanı Kaydı
-        var productImage = new CreateProductPictureRequestModel
+        //Resmi DB ye  kaydetme işlemi
+        var createProductPictureRequest = new CreateProductPictureRequestModel
         {
-            FileName = uniqueFileName,
-            FilePath = "/uploads/products/" + uniqueFileName,
-            CreateDate = DateTime.Now
+            ProductId = productId, //Bu değeri dinamik olarak belirlemeniz gerekecek
+            Url = "/picture/" + uniquePictureName,
+            //IsMain = false,//trigger
+            DisplayOrder = 0,//trigger
+            Name = uniquePictureName,
+            OrjinalName = file.FileName
         };
+        bool result = _productPictureApi.Create(createProductPictureRequest);
 
-        //_context.ProductImages.Add(productImage);
-        //await _context.SaveChangesAsync();
+        if (!result)
+        {
+            return Json(new { success = false, message = "Resim veritabanına kaydedilirken bir hata oluştu." });
+        }
 
         return Json(new { success = true, path = productImage.FilePath });
     }

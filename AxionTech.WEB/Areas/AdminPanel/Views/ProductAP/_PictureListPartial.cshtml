@@ -1,0 +1,24 @@
+﻿@using Core.Models.Entities.ProductPicture
+
+@model List< ProductPictureResponseModel>
+
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Picture List</h3>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-2">
+                    <a href="#" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
+                        <img src="~/picture/@item.Name" class="img-fluid mb-2" alt="white sample">
+                    </a>
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>
