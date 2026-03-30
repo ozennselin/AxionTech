@@ -50,8 +50,10 @@
                                             @foreach (var ci in item.Items)
                                             {
                                                 <tr>
-                                                    <td>@ci.ProductId</td>
+                                                    <td>@ci.ProductName</td>
+                                                    <td>@ci.UnitPrice</td>
                                                     <td>@ci.Quantity</td>
+                                                    <td>@ci.LineTotal</td>
                                                 </tr>
                                             }
                                         </tbody>
