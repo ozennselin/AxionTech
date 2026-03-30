@@ -15,7 +15,6 @@ public class ProductAPController : Controller
     private readonly ProductPriceApi _productPriceApi;
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
-    private readonly IWebHostEnvironment _environment;
     private readonly CategoryApi _categoryApi;
 
     public static int productId;
@@ -26,7 +25,6 @@ public class ProductAPController : Controller
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
-        _environment = environment;
         _categoryApi = categoryApi;
     }
 
@@ -112,7 +110,7 @@ public class ProductAPController : Controller
     [HttpPost]
     public IActionResult Update(UpdateProductRequestModel request)
     {
-        
+
         var updateProduct = _productApi.Update(request);
         if (updateProduct)
         {
@@ -177,7 +175,7 @@ public class ProductAPController : Controller
             return Json(new { success = false, message = "Resim veritabanına kaydedilirken bir hata oluştu." });
         }
 
-        return Json(new { success = true, path = productImage.FilePath });
+        return Json(new { success = true, path = createProductPictureRequest.Url });
     }
 }
 
