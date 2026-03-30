@@ -2,7 +2,10 @@
 using Core.Dtos;
 using Core.Models.Entities.Category;
 using Core.Models.Entities.Product;
+using Core.Models.Entities.ProductPicture;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Web;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
@@ -12,7 +15,10 @@ public class ProductAPController : Controller
     private readonly ProductPriceApi _productPriceApi;
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
+    private readonly IWebHostEnvironment _environment;
     private readonly CategoryApi _categoryApi;
+
+    public static int productId;
 
     public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, CategoryApi categoryApi = null)
     {
@@ -20,6 +26,7 @@ public class ProductAPController : Controller
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
+        _environment = environment;
         _categoryApi = categoryApi;
     }
 
@@ -59,7 +66,7 @@ public class ProductAPController : Controller
             ProductDocument = null,
             ProductPicture = null,
             ProductPrice = null,
-            Category= _categoryApi.List()
+            Category = _categoryApi.List()
 
         };
 
@@ -69,7 +76,7 @@ public class ProductAPController : Controller
     [HttpPost]
     public IActionResult Create(CreateProductRequestModel request)
     {
-      bool result=  _productApi.Create(request);
+        bool result = _productApi.Create(request);
         if (result)
         {
             return RedirectToAction("List");
@@ -78,10 +85,9 @@ public class ProductAPController : Controller
         var getProductDetail = new ProductCreateUpdateResponseModel
         {
             ProductDetail = null,
-            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductPicture = _productPictureApi.List().Where(k => k.ProductId == request.Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
             ProductDocument = null,
-            ProductPicture = null,
             ProductPrice = null,
             Category = _categoryApi.List()
 
@@ -89,15 +95,14 @@ public class ProductAPController : Controller
         return View(getProductDetail);
     }
     public IActionResult Update(int Id)
-    {        
+    {
+        productId = Id;
         var getProductAllDetail = new ProductCreateUpdateResponseModel
         {
             ProductDetail = _productApi.GetById(Id),
-            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductPicture = _productPictureApi.List().Where(k => k.ProductId == Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
             ProductDocument = null,
-            ProductPicture = null,
-            ProductPrice = null,
             Category = _categoryApi.List()
 
         };
@@ -107,10 +112,12 @@ public class ProductAPController : Controller
     [HttpPost]
     public IActionResult Update(UpdateProductRequestModel request)
     {
+        
         var updateProduct = _productApi.Update(request);
         if (updateProduct)
         {
-            return RedirectToAction("List");}
+            return RedirectToAction("List");
+        }
         return View();
     }
 
@@ -118,7 +125,7 @@ public class ProductAPController : Controller
     public IActionResult Delete(int id)
     {
         var product = _productApi.GetById(id);
-       
+
         return View(product);
     }
 
@@ -134,32 +141,43 @@ public class ProductAPController : Controller
         return View();
     }
 
-    public IActionResult Upload(IFormFile file)
+    [HttpPost]
+    public async Task<IActionResult> Upload(IFormFile file)
     {
         //resim db y ekayıt işlemi brda yapılacak
-        if (file==null || file.Length==0)
+        if (file == null || file.Length == 0)
         {
-
             return Json(new { success = false, message = "Dosya seçilmedi." });
         }
 
-        
-
         //resme benzersiz isim verme işlemi
-        var uniquePictureName = Guid.NewGuid().ToString() + "_"+file.Name;
-        var uploadFolder= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
-        string filePath= Path.Combine(uploadFolder, uniquePictureName);
+        var uniquePictureName = Guid.NewGuid().ToString() + "_" + file.FileName;
+        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
+        string filePath = Path.Combine(uploadFolder, uniquePictureName);
 
         //Fizikse Kayıt
-        using (var fileStream=new FileStream(filePath,FileMode.Create))
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
-            file.CopyTo(fileStream);
+            await file.CopyToAsync(fileStream);
+        }
+        //Resmi DB ye  kaydetme işlemi
+        var createProductPictureRequest = new CreateProductPictureRequestModel
+        {
+            ProductId = productId, //Bu değeri dinamik olarak belirlemeniz gerekecek
+            Url = "/picture/" + uniquePictureName,
+            //IsMain = false,//trigger
+            DisplayOrder = 0,//trigger
+            Name = uniquePictureName,
+            OrjinalName = file.FileName
+        };
+        bool result = _productPictureApi.Create(createProductPictureRequest);
+
+        if (!result)
+        {
+            return Json(new { success = false, message = "Resim veritabanına kaydedilirken bir hata oluştu." });
         }
 
-        //Resmi DB ye  kaydetme işlemi
-
-
-        return Json(new { success = true, filePath = "/picture/" + uniquePictureName });
+        return Json(new { success = true, path = productImage.FilePath });
     }
 }
 
