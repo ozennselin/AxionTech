@@ -26,8 +26,21 @@ public class ProductPictureApi
             return true;
         }
         return false;
-
-
     }
 
+    public bool Delete(DeleteProductPictureRequestModel request)
+    {
+        var response = _httpClient.PostAsJsonAsync($"ProductPicture/Delete", request).Result;
+        if (response.IsSuccessStatusCode == true)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public ProductPictureResponseModel GetById(int id)
+    {
+        var responseProductPicture = _httpClient.GetFromJsonAsync<APIResponseDTO<ProductPictureResponseModel>>($"ProductPicture/GetById/{id}").Result;
+        return responseProductPicture.Data;
+    }
 }

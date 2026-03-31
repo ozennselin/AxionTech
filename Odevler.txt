@@ -1,3 +1,8 @@
 25 Þubat 
 bütün tablolarýn api ve web list iþlemleri yapýlacak
 ürünlist içinde sað tarafta kategori listesi gelicek
+----------------------------------------------
+31 Mart 2026
+1) IQuerebler, IEnumarebler makale okuma
+2)Product  için Admin tarafýnda dopzone ile pdf, excei word eklemesini saðlamak
+

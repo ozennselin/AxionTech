@@ -52,11 +52,10 @@ public class ProductController : BaseController
         var getProductDetail = new ProductDetailResponseModel
         {
             ProductDetail = _productApi.GetById(Id),
-            //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
-            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
-            ProductDocument=null,
-            ProductPicture=null,
-            ProductPrice = price,
+            ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k => k.ProductId == Id).ToList(),
+            ProductDocument =null,
+           ProductPrice = price,
 
         };
 

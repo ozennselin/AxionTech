@@ -106,7 +106,7 @@ public class ProductService : IProductService
                 Description = p.Description,
                 CategoryId = p.CategoryId,
                 CategoryName = categoryName.Name,
-                //Picture = _productPictureRepository.Any(k => k.ProductId == p.Id) ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == p.Id).Url : "",
+                Picture = _productPictureRepository.Any(k => k.ProductId == p.Id) ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == p.Id).Url : "",
                 Price = _productPriceRepository.Any(k => k.ProductId == p.Id) ? _productPriceRepository.GetEntityQuery(k => k.IsActive && k.ProductId == p.Id).Price : 0
             };
 
