@@ -54,7 +54,8 @@
 @* 3-product picture info *@
 
 @Html.Partial("_PicturePartial", null)
-@Html.Partial("_PictureListPartial",Model.ProductPicture)
+@Html.Partial("_PictureListPartial", Model.ProductPicture)
+
 
 @* 4- product document info *@
 <div class="col-md-12">
@@ -70,8 +71,8 @@
 
 @section _js {
     <script src="~/dropzone/dropzone.min.js"></script>
-   @*  <script src="https://unpkg.com/dropzone@6.0.0-beta.2/dist/dropzone-min.js"></script> *@
-
+    @*  <script src="https://unpkg.com/dropzone@6.0.0-beta.2/dist/dropzone-min.js"></script> *@
+    <script src="~/adminlte/docs/assets/plugins/jquery/jquery.min.js"></script>
     <script>
         Dropzone.options.myDropzone = {
             paramName: "file", // Controller'daki parametre ismiyle aynı olmalı
@@ -92,5 +93,31 @@
                 });
             }
         };
+    </script>
+    <script>
+
+        function DeletePicture(Id){
+            if(!confirm("Bu resmi silmek istediğinize emin misiniz??:"+Id)){
+                return;
+            }
+
+            //ajax jquery olmadan çalışmaz
+            $.ajax({
+                url:'/AdminPanel/ProductAP/DeletePicture',
+                type:'POST',
+                data:{id:Id},
+                Success:function(response){
+
+                },
+                Error:function(){
+
+                }
+
+
+            });
+
+
+        }
+
     </script>
 }

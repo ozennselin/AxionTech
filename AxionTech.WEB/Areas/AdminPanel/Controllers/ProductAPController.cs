@@ -177,5 +177,28 @@ public class ProductAPController : Controller
 
         return Json(new { success = true, path = createProductPictureRequest.Url });
     }
+
+    [HttpPost]
+    public IActionResult DeletePicture(int id)
+    {
+        var picture = _productPictureApi.GetById(id);
+        if (picture == null)
+        {
+            return Json(new { success = false, message = "Resim bulunamadı." });
+        }
+        // Fiziksel dosyayı silme
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", picture.Url.TrimStart('/'));
+        if (System.IO.File.Exists(filePath))
+        {
+            System.IO.File.Delete(filePath);
+        }
+        // Veritabanından resmi silme
+        bool result = _productPictureApi.Delete(new DeleteProductPictureRequestModel { Id = id });
+        if (!result)
+        {
+            return Json(new { success = false, message = "Resim veritabanından silinirken bir hata oluştu." });
+        }
+        return Json(new { success = true, message = "Resim başarıyla silindi." });
+    }
 }
 

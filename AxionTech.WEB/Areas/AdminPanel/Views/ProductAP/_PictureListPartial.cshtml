@@ -13,10 +13,13 @@
             {
                 <div class="col-sm-2">
                     <a href="#" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
-                        <img src="~/picture/@item.Name" class="img-fluid mb-2" alt="white sample">
+                        <img src="~/picture/@item.Name" class="img-fluid mb-2 border rounded p-1" alt="white sample">
                     </a>
+                    <div style="position:absolute; top:0px; right:8px;">  
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button onclick="DeletePicture(@item.Id)" type="submit" class="btn btn-danger btn-sm">Sil</button>
+                    </div>
                 </div>
-
             }
         </div>
 
