@@ -3,6 +3,50 @@
     ViewData["Title"] = "Ürün Detayı";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section _cssScript {
+    
+    <style type="text/css">
+        <style >
+        .custom-thumbs {
+            position: static !important;
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding-left: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .custom-thumbs li {
+            width: 100px;
+            height: 110px;
+            margin: 0;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            text-indent: 0;
+            background: transparent;
+        }
+
+            .custom-thumbs li img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .custom-thumbs li.active {
+                border-color: #0d6efd;
+            }
+    </style>
+
+    </style>
+
+}
 @model ProductDetailResponseModel
 <!-- Start Top Search -->
 <div class="top-search">
@@ -72,18 +116,20 @@
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                         <span class="sr-only">Next</span>
                     </a>
-                    <ol class="carousel-indicators img-thumbnail" style="width:100%">
-                        @if (Model.ProductPicture != null)
+                    <ol class="carousel-indicators custom-thumbs">
+                        @if (Model.ProductPicture != null && Model.ProductPicture.Any())
                         {
-                            foreach (var item in Model.ProductPicture)
+                            for (int i = 0; i < Model.ProductPicture.Count; i++)
                             {
+                                var item = Model.ProductPicture[i];
 
-                                <li data-target="#carousel-example-1" data-slide-to="0" class="active">
-                                    <img class="d-block w-100 img-fluid" src="@item.Url" alt="" width="100" height="125" />
+                                <li data-target="#carousel-example-1"
+                                    data-slide-to="@i"
+                                    class="@(i == 0 ? "active" : "")">
+                                    <img src="@item.Url" alt="Product Image" />
                                 </li>
                             }
                         }
-
                     </ol>
                 </div>
             </div>
