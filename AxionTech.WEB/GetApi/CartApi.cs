@@ -17,4 +17,10 @@ public class CartApi
         var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartResponseModel>>>("Cart/List").Result;
         return response.Data;
     }
+
+    public bool  AddCart(int productId)
+    {
+        var response = _httpClient.GetAsync($"Cart/AddCart?productId={productId}").Result;
+        return response.IsSuccessStatusCode;
+    }
 }

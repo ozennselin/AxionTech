@@ -5,7 +5,7 @@ function DeletePicture(Id) {
         return;
     }
 
-    //ajax jquery olmadan çalışmaz
+    //$=> jquery// 
     $.ajax({
         url: '/AdminPanel/ProductAP/DeletePicture',
         type: 'POST',

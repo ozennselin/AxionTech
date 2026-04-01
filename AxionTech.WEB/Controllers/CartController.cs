@@ -18,4 +18,13 @@ public class CartController : Controller
         var list = _cartApi.List();
         return View(list);
     }
+
+  // public IActionResult AddCart(int id)
+    public JsonContent AddCart(int id)//giriş(Açık)
+    {
+        var result=_cartApi.AddCart(id);
+        //sepet için cookie işlemi, session işlemi  yapılabilir. Biz DB ye ekleme işlemi yaptık.
+
+        return Json(new { success = true ,data=});//bitiş-Kapatılacak
+    }
 }
