@@ -3,6 +3,7 @@ using Business.Service.Interfaces;
 using Core.Enums;
 using Core.Models.Entities.Product;
 using Core.Models.Entities.ProductPicture;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
@@ -17,10 +18,11 @@ public class ProductPictureController : BaseAPIController
     {
         _productPictureService = productPictureService;
     }
+   
     [HttpGet("GetByProductId")]
-    public IActionResult GetByProductId(int Id)
+    public IActionResult GetByProductId(int id)
     {
-        var getPicture = _productPictureService.GetByProductId(Id);
+        var getPicture = _productPictureService.GetByProductId(id);
         return ResultAPI(getPicture);
     }
 
@@ -37,10 +39,32 @@ public class ProductPictureController : BaseAPIController
     {
         var result = _productPictureService.Create(request);
 
-        if (result== ResponseMessageEnum.Success)
+        if (result == ResponseMessageEnum.Success)
         {
             return ResultAPI(result);
         }
-        return BadRequest(new { Message = ResponseMessageEnum.Exist, ErrorCode = result });
+        return BadRequest(new { Message = ResponseMessageEnum.NotExist, ErrorCode = result });
     }
+
+    [HttpPost("Delete")]
+    public IActionResult Delete(int Id)
+    {
+        var getPicture = _productPictureService.GetById(Id);
+        if (getPicture == null)
+        {
+            return BadRequest(new { Message = ResponseMessageEnum.Exist, ErrorCode = "Picture not fond" });
+        }
+        var request = _productPictureService.Delete(new DeleteProductPictureRequestModel { Id = Id });
+        return ResultAPI(request);
+    }
+
+
+    [HttpGet("GetById")]
+    public IActionResult GetById(int id)
+    {
+        var getPicture = _productPictureService.GetById(id);
+        return ResultAPI(getPicture);
+    }
+
+
 }

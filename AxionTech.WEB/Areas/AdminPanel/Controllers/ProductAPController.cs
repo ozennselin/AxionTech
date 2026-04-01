@@ -53,7 +53,6 @@ public class ProductAPController : Controller
         return View(getProductDetail);
     }
 
-
     public IActionResult Create()
     {
         var getProductDetail = new ProductCreateUpdateResponseModel
@@ -181,13 +180,13 @@ public class ProductAPController : Controller
     [HttpPost]
     public IActionResult DeletePicture(int id)
     {
-        var picture = _productPictureApi.GetById(id);
-        if (picture == null)
+        var getPicture = _productPictureApi.GetById(id);
+        if (getPicture == null)
         {
             return Json(new { success = false, message = "Resim bulunamadı." });
         }
         // Fiziksel dosyayı silme
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", picture.Url.TrimStart('/'));
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", getPicture.Url.TrimStart('/'));
         if (System.IO.File.Exists(filePath))
         {
             System.IO.File.Delete(filePath);
@@ -198,7 +197,7 @@ public class ProductAPController : Controller
         {
             return Json(new { success = false, message = "Resim veritabanından silinirken bir hata oluştu." });
         }
-        return Json(new { success = true, message = "Resim başarıyla silindi." });
+        return Json(new { success = true, message = "Resim başarıyla silindi.",data= getPicture });
     }
 }
 

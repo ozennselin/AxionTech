@@ -38,14 +38,15 @@ public class ProductPictureService : IProductPictureService
         }
     }
 
-    public void Delete(DeleteProductPictureRequestModel request)
+    public ResponseMessageEnum Delete(DeleteProductPictureRequestModel request)
     {
        var pictureToDelete = _productPictureRepository.GetById(request.Id);
         if (pictureToDelete == null)
          {
-             throw new Exception("Product picture not found.");
+             return ResponseMessageEnum.NotExist;
         }
-        _productPictureRepository.Delete(pictureToDelete);
+       _productPictureRepository.Delete(pictureToDelete);
+        return ResponseMessageEnum.Success;
     }
 
     public List<ProductPictureResponseModel> GetByProductId(int productId)
@@ -89,5 +90,22 @@ public class ProductPictureService : IProductPictureService
                 Name = p.Name,
                 OrjinalName = p.OrjinalName
         }).ToList();
+    }
+
+    public ProductPictureResponseModel GetById(int id)
+    {
+        var result = _productPictureRepository.GetById(id);
+
+        return new ProductPictureResponseModel
+        {
+            Id = result.Id,
+            ProductId = result.ProductId,
+            Url = result.Url,
+            IsMain = result.IsMain,
+            DisplayOrder = result.DisplayOrder,
+            Name = result.Name,
+            OrjinalName = result.OrjinalName
+        };
+
     }
 }

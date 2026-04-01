@@ -7,7 +7,8 @@ public interface IProductPictureService
 {
     ResponseMessageEnum Create(CreateProductPictureRequestModel request);
     void Update(UpdateProductPictureRequestModel request);
-    void Delete(DeleteProductPictureRequestModel request);
+    ResponseMessageEnum Delete(DeleteProductPictureRequestModel request);
     List<ProductPictureResponseModel> GetByProductId(int productId);
     List<ProductPictureResponseModel> List();
+    ProductPictureResponseModel GetById(int id);
 }

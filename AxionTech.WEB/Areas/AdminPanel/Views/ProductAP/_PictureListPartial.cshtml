@@ -11,7 +11,7 @@
         <div class="row">
             @foreach (var item in Model)
             {
-                <div class="col-sm-2">
+                <div class="col-sm-2" id="@item.Name">
                     <a href="#" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
                         <img src="~/picture/@item.Name" class="img-fluid mb-2 border rounded p-1" alt="white sample">
                     </a>
