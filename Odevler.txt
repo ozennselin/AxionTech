@@ -2,7 +2,12 @@
 bütün tablolarýn api ve web list iþlemleri yapýlacak
 ürünlist içinde sað tarafta kategori listesi gelicek
 ----------------------------------------------
-31 Mart 2026
+31 Mart 2026---------------------------------------
 1) IQuerebler, IEnumarebler makale okuma
-2)Product  için Admin tarafýnda dopzone ile pdf, excei word eklemesini saðlamak
+2)Product  için Admin tarafýnda dopzone ile pdf, excel word eklemesini saðlamak
+3)ProductPrice Create, update, Delete(Pasif) yapýlacak
+4)API , BusinessService te bütün tablolar için create,Update, Delete ve list yapýlacak
+5) Resim eklerken bir ürün için ayný resim ismi (OrjinalName) varsa ekleme yapýlayacak
+6)AdminPanel tarafýnda bütün tablolar için ProductList'e olduðu gibi list yapýlacak
+
 

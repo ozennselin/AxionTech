@@ -82,7 +82,8 @@ public class ProductService : IProductService
         response.Description = getProduct.Description;
         response.CategoryId = getProduct.CategoryId;
         response.CategoryName = _categoryRepository.GetById(getProduct.CategoryId).Name;
-        response.Picture = _productPictureRepository.Any(k => k.ProductId == Id) ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == Id).Url : "";
+        //response.Picture = _productPictureRepository.Any(k => k.ProductId == Id) ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == Id).Url : "";
+        response.Picture = _productPictureRepository.Any(k => k.ProductId == Id) ? _productPictureRepository.GetEntityQuery(k => k.ProductId == Id).Url : "";
         //?? devam edilecek, expression tanımı gerekli Repoda=> Expression tanımı yapıldı
         response.Price = _productPriceRepository.Any(k => k.ProductId == Id) ? _productPriceRepository.GetEntityQuery(k => k.IsActive && k.ProductId == Id).Price : 0;
 
@@ -106,7 +107,8 @@ public class ProductService : IProductService
                 Description = p.Description,
                 CategoryId = p.CategoryId,
                 CategoryName = categoryName.Name,
-                Picture = _productPictureRepository.PictureCountByProductId(p.Id)>0 ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == p.Id).Url : null,
+               // Picture = _productPictureRepository.PictureCountByProductId(p.Id)>0 ? _productPictureRepository.GetEntityQuery(k => k.IsMain == true && k.ProductId == p.Id).Url : null,
+                Picture = _productPictureRepository.PictureCountByProductId(p.Id)>0 ? _productPictureRepository.GetEntityQuery(k => k.ProductId == p.Id).Url : null,
                 Price = 0//_productPriceRepository.Any(k => k.ProductId == p.Id) ? _productPriceRepository.GetEntityQuery(k => k.IsActive && k.ProductId == p.Id).Price : 0
             };
 
