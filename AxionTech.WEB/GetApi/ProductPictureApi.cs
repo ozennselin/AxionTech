@@ -30,7 +30,7 @@ public class ProductPictureApi
 
     public bool Delete(DeleteProductPictureRequestModel request)
     {
-        var response = _httpClient.PostAsJsonAsync($"ProductPicture/Delete", request).Result;
+        var response = _httpClient.PostAsJsonAsync($"ProductPicture/Delete?Id={request.Id}",request).Result;
         if (response.IsSuccessStatusCode == true)
         {
             return true;
@@ -40,7 +40,7 @@ public class ProductPictureApi
 
     public ProductPictureResponseModel GetById(int id)
     {
-        var responseProductPicture = _httpClient.GetFromJsonAsync<APIResponseDTO<ProductPictureResponseModel>>($"ProductPicture/GetById/{id}").Result;
+        var responseProductPicture = _httpClient.GetFromJsonAsync<APIResponseDTO<ProductPictureResponseModel>>($"ProductPicture/GetById/?id={id}").Result;
         return responseProductPicture.Data;
     }
 }

@@ -18,4 +18,5 @@ public enum ResponseMessageEnum
     NotFound = 13,
     DeleteErrorWithMessage = 14,
     Exist = 15,
+    NotExist = 16,
 }

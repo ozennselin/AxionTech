@@ -73,9 +73,9 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                 <div class="row">
+
                                     @foreach (var item in Model)
                                     {
-
                                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                             <div class="products-single fix">
                                                 <div class="box-img-hover">
@@ -91,17 +91,15 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                             <li><a href="~/Product/Wishlist" data-toggle="tooltip" data-placement="right" title="Favorilere Ekle"><i class="far fa-heart"></i></a></li>
                                                         </ul>
-                                                        <a class="cart hvr-bounce-to-bottom" href="~/Product/Cart">Sepete Ekle</a>
+                                                        <a class="cart hvr-bounce-to-bottom" onclick="AddCart(@item.Id)" href="~/Product/Cart">Sepete Ekle</a>
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
                                                     <h4>
-                                                        <h4>
                                                             <a href="@Url.Action("Detail", "Product", new { id = item.Id })">
                                                                 @item.Name
                                                             </a>
                                                         </h4>
-                                                    </h4>
                                                     <h5>@item.Price</h5>
                                                 </div>
                                             </div>
@@ -320,3 +318,7 @@
     </div>
 </div>
 <!-- End Shop Page -->
+@section _js{
+    <script src="~/igtu/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/cartprocess.js" ></script>
+}

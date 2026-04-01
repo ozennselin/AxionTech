@@ -14,4 +14,15 @@ public class ProductPictureRepository : Repository<ProductPicture>, IProductPict
         return _dbSet.Where(pp => pp.ProductId == productId).ToList();
     }
 
+    public int PictureCountByProductId(int productId)
+    {
+        try
+        {
+        return _dbSet.Count(pp => pp.ProductId == productId);
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
 }
