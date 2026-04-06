@@ -71,27 +71,37 @@
 
 @section _js {
     <script src="~/adminlte/docs/assets/plugins/jquery/jquery.min.js"></script>
-    @* <script src="~/dropzone/dropzone.min.js"></script>
+    <script src="~/dropzone/dropzone.min.js"></script>
     <script>
-        Dropzone.options.myDropzone = {
-            paramName: "file", // Controller'daki parametre ismiyle aynı olmalı
-            maxFilesize: 5, // MB
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoProcessQueue: false,
-            parallelUploads: 10,
-            init: function() {
-                var submitButton = document.querySelector("#submit-all");
-                var myDropzone = this;
+        document.addEventListener("DOMContentLoaded", function() {
 
-                submitButton.addEventListener("click", function() {
-                    myDropzone.processQueue(); // Butona basınca yüklemeyi başlat
-                });
+        if (typeof Dropzone !== 'undefined') {
 
-                this.on("success", function(file, response) {
-                    console.log("Başarıyla kaydedildi:", response);
-                });
-            }
-        };
-    </script> *@
+            Dropzone.options.myDropzone = {
+                paramName: "file", // Controller'daki parametre ismiyle aynı olmalı
+                maxFilesize: 5, // MB
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                autoProcessQueue: false,
+                parallelUploads: 10,
+                init: function() {
+                    var submitButton = document.querySelector("#submit-all");
+                    var myDropzone = this;
+
+                    submitButton.addEventListener("click", function() {
+                        myDropzone.processQueue(); // Butona basınca yüklemeyi başlat
+                    });
+
+                    this.on("success", function(file, response) {
+                        console.log("Başarıyla kaydedildi:", response);
+                    });
+                }
+            };  
+        }
+        else{
+            console.error("Dropzone kütüphanesi yüklenemedi!");
+        }
+    });
+
+    </script>
     <script src="~/js/deletepicture.js"></script>
 }

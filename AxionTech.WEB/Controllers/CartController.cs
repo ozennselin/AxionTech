@@ -20,11 +20,11 @@ public class CartController : Controller
     }
 
   // public IActionResult AddCart(int id)
-    public JsonContent AddCart(int id)//giriş(Açık)
+    public JsonResult AddCart(int id)//giriş(Açık)
     {
         var result=_cartApi.AddCart(id);
         //sepet için cookie işlemi, session işlemi  yapılabilir. Biz DB ye ekleme işlemi yaptık.
 
-        return Json(new { success = true ,data=});//bitiş-Kapatılacak
+        return Json(new { success = true ,data=result});//bitiş-Kapatılacak
     }
 }
