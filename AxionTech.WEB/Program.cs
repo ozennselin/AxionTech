@@ -80,6 +80,7 @@ namespace AxionTech.WEB
             pattern: "AdminPanel/{controller=ProductAP}/{action=List}/{id?}"
           );
 
+
             app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}")

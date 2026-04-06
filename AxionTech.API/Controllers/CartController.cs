@@ -14,7 +14,8 @@ public class CartController : BaseAPIController
     {
         _cartService = cartService;
     }
-    [HttpPost]
+    
+    [HttpPost("Create")]
     public IActionResult Create(CreateCartRequestModel request)
     {
         var result=_cartService.Create(request);

@@ -22,12 +22,39 @@ public class CartService : ICartService
     {
         try
         {
-            var createCart = new Cart
-            {
-                UserId = request.UserId
-            };
+            bool cartExists = _cartRepository.GetAllQuery(c => c.UserId == request.UserId).Any();
 
-            _cartRepository.Add(createCart);
+            if (cartExists)
+            {
+                var createCartItem = new CartItem
+                {
+                    ProductId = request.ProductId,
+                    Quantity = 1,
+                    UnitPrice = request.UnitPrice,
+
+                };
+               
+            }
+            else
+            {
+                var createCart = new Cart
+                {
+                    UserId = request.UserId
+                };
+                _cartRepository.Add(createCart);
+
+                var createCartItem = new CartItem
+                {
+                    CartId=1,
+                    ProductId = request.ProductId,
+                    Quantity = 1,
+                    UnitPrice = request.UnitPrice,
+                };
+            }
+        
+
+
+            
             return ResponseMessageEnum.UpdateSuccess;
         }
         catch (Exception)

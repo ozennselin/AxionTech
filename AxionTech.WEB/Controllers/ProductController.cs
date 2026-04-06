@@ -61,10 +61,7 @@ public class ProductController : BaseController
 
         return View(getProductDetail);
     }
-    public IActionResult Cart()
-    {
-        return View();
-    }
+
     public IActionResult Checkout()
     {
         return View();

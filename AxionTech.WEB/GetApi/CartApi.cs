@@ -18,9 +18,9 @@ public class CartApi
         return response.Data;
     }
 
-    public bool  AddCart(int productId)
+    public bool  AddCart(CreateCartRequestModel request)
     {
-        var response = _httpClient.GetAsync($"Cart/AddCart?productId={productId}").Result;
+        var response = _httpClient.PostAsJsonAsync($"Cart/Create", request).Result;
         return response.IsSuccessStatusCode;
     }
     public CartResponseModel GetByCartId(int id)
