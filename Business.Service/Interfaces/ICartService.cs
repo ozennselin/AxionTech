@@ -1,12 +1,13 @@
-﻿using Core.Models.Entities.Cart;
+﻿using Core.Enums;
+using Core.Models.Entities.Cart;
 
 namespace Business.Service.Interfaces;
 
 public interface ICartService
 {
-    void Create(CreateCartRequestModel request);
-    void Update(UpdateCartRequestModel request);
-    void Delete(DeleteCartRequestModel request);
-    CartResponseModel GetByCartId(int cartId);
+    ResponseMessageEnum Create(CreateCartRequestModel request);
+    ResponseMessageEnum Update(UpdateCartRequestModel request);
+    ResponseMessageEnum Delete(DeleteCartRequestModel request);
+    CartResponseModel GetById(int id);
     List<CartResponseModel> List();
 }

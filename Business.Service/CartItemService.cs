@@ -20,7 +20,8 @@ public class CartItemService : ICartItemService
             CartId = request.CartId,
             ProductId = request.ProductId,
             Quantity = request.Quantity,
-            UnitPrice = request.UnitPrice
+            UnitPrice = request.UnitPrice,
+            LineTotal = request.Quantity * request.UnitPrice
         };
         _cartItemRepository.Add(newCartItem);
     }
@@ -62,6 +63,7 @@ public class CartItemService : ICartItemService
 
         cartItemToUpdate.Quantity = request.Quantity;
         cartItemToUpdate.UnitPrice = request.UnitPrice;
+        cartItemToUpdate.LineTotal = request.Quantity * request.UnitPrice;
         _cartItemRepository.Update(cartItemToUpdate);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.Cart;
 using Core.Models.Entities.CartItem;
 using Data.Access.Repositories.Interfaces;
@@ -17,31 +18,53 @@ public class CartService : ICartService
         _cartItemRepository = cartItemRepository;
     }
 
-    public void Create(CreateCartRequestModel request)
+    public ResponseMessageEnum Create(CreateCartRequestModel request)
     {
-       var createCart = new Cart
+        try
         {
-            UserId = request.UserId
-        };
-        _cartRepository.Add(createCart);
-    }
+            var createCart = new Cart
+            {
+                UserId = request.UserId
+            };
 
-    public void Delete(DeleteCartRequestModel request)
-    {
-        var carttoDelete = _cartRepository.GetById(request.Id);
-        if (carttoDelete == null)
+            _cartRepository.Add(createCart);
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
         {
-            _cartRepository.Delete(carttoDelete);
+            return ResponseMessageEnum.UpdateErrorWithMessage;
         }
     }
 
-    public CartResponseModel GetByCartId(int cartId)
+    public ResponseMessageEnum Delete(DeleteCartRequestModel request)
     {
-        var getCart = _cartRepository.GetById(cartId);
+        try
+        {
+            var cartToDelete = _cartRepository.GetById(request.Id);
+
+            if (cartToDelete == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            _cartRepository.Delete(cartToDelete);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
+    }
+
+    public CartResponseModel GetById(int id)
+    {
+        var getCart = _cartRepository.GetById(id);
+
         if (getCart == null)
         {
-           throw new Exception("Cart not found");
+            return null;
         }
+
         return new CartResponseModel
         {
             Id = getCart.Id,
@@ -72,14 +95,25 @@ public class CartService : ICartService
         }).ToList();
     }
 
-    public void Update(UpdateCartRequestModel request)
+    public ResponseMessageEnum Update(UpdateCartRequestModel request)
     {
-        var carttoUpdate = _cartRepository.GetById(request.Id);
-        if(carttoUpdate == null)
+        try
         {
-            throw new Exception("Cart not found");
+            var cartToUpdate = _cartRepository.GetById(request.Id);
+
+            if (cartToUpdate == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            cartToUpdate.UserId = request.UserId;
+
+            _cartRepository.Update(cartToUpdate);
+            return ResponseMessageEnum.UpdateSuccess;
         }
-        carttoUpdate.UserId = request.UserId;
-        _cartRepository.Update(carttoUpdate);
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 }

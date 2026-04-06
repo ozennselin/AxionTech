@@ -1,0 +1,96 @@
+﻿@using Core.Models.Entities.Cart
+@model CartDetailResponseModel
+
+@{
+    ViewData["Title"] = "Cart Detail";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<!-- 1- Cart Info -->
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Cart Info</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <!-- SOL TARAF -->
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Cart Id</label>
+                        <input class="form-control" value="@Model.CartDetail.Id" disabled />
+
+                        <label>User</label>
+                        <input class="form-control" value="User #@Model.CartDetail.UserId" disabled />
+                    </div>
+                </div>
+
+                <!-- SAĞ TARAF -->
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Total Items</label>
+                        <input class="form-control" value="@(Model.Items != null ? Model.Items.Count : 0)" disabled />
+
+                        <label>Total Amount</label>
+                        <input class="form-control" value="@(Model.Items != null ? Model.Items.Sum(x => x.LineTotal) : 0) ₺" disabled />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2- Cart Items -->
+<div class="col-md-12">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Cart Items</h3>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Items != null && Model.Items.Any())
+                    {
+                        foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/picture/default.png" class="img-thumbnail" style="width:60px;" />
+                                </td>
+
+                                <td>@item.ProductName</td>
+
+                                <td>@item.Quantity</td>
+
+                                <td>@item.UnitPrice ₺</td>
+
+                                <td>@item.LineTotal ₺</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-danger">
+                                Sepette ürün yok
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,7 @@
             <h3 class="card-title">Cart List</h3>
         </div>
         <div class="text-md-right">
-            <a class="btn btn-success" href="~/AdminPanel/CartAP/Create">Createee</a>
+            <a class="btn btn-success" href="~/AdminPanel/CartAP/Create">Create</a>
         </div>
     </div>
 
@@ -20,8 +20,11 @@
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>User Id</th>
+                    <th>Cart No</th>
+                    <th>Customer</th>
+                    <th>Products</th>
+                    <th>Total Items</th>
+                    <th>Total Amount</th>
                     <th>Detail</th>
                     <th>Update</th>
                     <th>Delete</th>
@@ -33,21 +36,46 @@
                 {
                     foreach (var item in Model)
                     {
+                        var itemCount = item.Items != null ? item.Items.Count : 0;
+                        decimal totalPrice = item.Items != null ? item.Items.Sum(x => x.LineTotal) : 0;
+
                         <tr>
                             <td>@item.Id</td>
-                            <td>@item.UserId</td>
-                            <td></td>
-                            <td><a class="btn btn-block btn-primary btn-sm" href="~/AdminPanel/CartAP/Detail/@item.Id"><i class="fa fa-eye"></i></a></td>
-                            <td><a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/CartAP/Update/@item.Id"><i class="fa fa-pen"></i></a></td>
-                            <td><a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/CartAP/Delete/@item.Id"><i class="fa fa-trash"></i></a></td>
-                            
+                            <td>User #@item.UserId</td>
+
+                            <td>
+                                @(item.Items != null && item.Items.Any()
+                                                        ? string.Join(", ", item.Items.Select(x => x.ProductName))
+                                                        : "No product")
+                            </td>
+
+                            <td>@itemCount</td>
+                            <td>@totalPrice ₺</td>
+
+                            <td>
+                                <a class="btn btn-block btn-primary btn-sm" href="~/AdminPanel/CartAP/Detail/@item.Id">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/CartAP/Update/@item.Id">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/CartAP/Delete/@item.Id">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="3" class="text-center text-danger">
+                        <td colspan="8" class="text-center text-danger">
                             Kayıt bulunamadı.
                         </td>
                     </tr>

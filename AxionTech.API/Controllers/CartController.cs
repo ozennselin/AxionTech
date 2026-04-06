@@ -17,29 +17,29 @@ public class CartController : BaseAPIController
     [HttpPost]
     public IActionResult Create(CreateCartRequestModel request)
     {
-        _cartService.Create(request);
-        return Ok();
+        var result=_cartService.Create(request);
+        return ResultAPI(result);
     }
 
     [HttpPut]
     public IActionResult Update(UpdateCartRequestModel request)
     {
-        _cartService.Update(request);
-        return Ok();
+        var result = _cartService.Update(request);
+        return ResultAPI(result);
     }
 
     [HttpDelete]
     public IActionResult Delete(DeleteCartRequestModel request)
     {
-        _cartService.Delete(request);
-        return Ok();
+        var result = _cartService.Delete(request);
+        return ResultAPI(result);
     }
 
     [HttpGet("{cartId}")]
     public IActionResult GetByCartId(int cartId)
     {
-        var result = _cartService.GetByCartId(cartId);
-        return Ok(result);
+        var result = _cartService.GetById(cartId);
+        return ResultAPI(result);
     }
     [HttpGet("List")]
     public IActionResult List()

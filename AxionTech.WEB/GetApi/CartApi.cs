@@ -23,4 +23,24 @@ public class CartApi
         var response = _httpClient.GetAsync($"Cart/AddCart?productId={productId}").Result;
         return response.IsSuccessStatusCode;
     }
+    public CartResponseModel GetByCartId(int id)
+    {
+        var response = _httpClient
+            .GetFromJsonAsync<CartResponseModel>($"Cart/{id}")
+            .Result;
+
+        return response;
+    }
+    public bool Delete(DeleteCartRequestModel request)
+    {
+        var response = _httpClient.PutAsJsonAsync("Cart/Delete", request).Result;
+
+        return response.IsSuccessStatusCode;
+    }
+    public bool Update(UpdateCartRequestModel request)
+    {
+        var response = _httpClient.PutAsJsonAsync("Cart/Update", request).Result;
+
+        return response.IsSuccessStatusCode;
+    }
 }

@@ -28,4 +28,10 @@ public class CartItemApi
 
         return response ?? new List<CartItemResponseModel>();
     }
+    public bool Delete(DeleteCartItemRequestModel request)
+    {
+        var response = _httpClient.PutAsJsonAsync("CartItem/Delete", request).Result;
+
+        return response.IsSuccessStatusCode;
+    }
 }
