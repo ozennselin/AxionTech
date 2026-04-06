@@ -174,7 +174,7 @@ public class ProductAPController : Controller
             return Json(new { success = false, message = "Resim veritabanına kaydedilirken bir hata oluştu." });
         }
 
-        return Json(new { success = true, path = createProductPictureRequest.Url });
+        return Json(new { success = true, data = createProductPictureRequest });
     }
 
     [HttpPost]
