@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Models.Entities.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Controllers;
 
@@ -10,8 +11,10 @@ public class LoginController : Controller
         return View();
     }
 
-    public IActionResult Login(string user)
+    [HttpPost]
+    public IActionResult Login(UserLoginModel loginModel)
     {
+
         return View();
     }
 }

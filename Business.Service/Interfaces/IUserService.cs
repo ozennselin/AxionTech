@@ -9,4 +9,5 @@ public interface IUserService
     void Delete(DeleteUserRequestModel request);
     List<UserResponseModel> List();
     UserResponseModel? GetById(int id);
+    LoginResponse Login(UserLoginModel request);
 }

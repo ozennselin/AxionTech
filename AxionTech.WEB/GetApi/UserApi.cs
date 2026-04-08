@@ -20,5 +20,7 @@ namespace AxionTech.WEB.GetApi;
 
             return response.Data;
         }
+
+
     }
 

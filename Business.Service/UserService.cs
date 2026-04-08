@@ -47,6 +47,11 @@ public class UserService : IUserService
         }).ToList();
     }
 
+    public LoginResponse Login(UserLoginModel request)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Update(UpdateUserRequestModel request)
     {
         throw new NotImplementedException();
