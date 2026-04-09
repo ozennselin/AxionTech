@@ -24,7 +24,7 @@ public class CartService : ICartService
         {
             bool cartExists = _cartRepository.GetAllQuery(c => c.UserId == request.UserId).Any();
 
-            if (cartExists)
+            if (cartExists)//daha önce sepete en az bir ürün ekleydiyse Cart tablosuna bu User için kayıt vardır anlamına gelir
             {
                 var createCartItem = new CartItem
                 {
@@ -35,7 +35,7 @@ public class CartService : ICartService
                 };
                
             }
-            else
+            else//sepete ilk ürün eklenirken bu kısım çalışacak,2. ürün ve sonrası için bu kısım çalışmaz
             {
                 var createCart = new Cart
                 {
@@ -52,8 +52,6 @@ public class CartService : ICartService
                 };
             }
         
-
-
             
             return ResponseMessageEnum.UpdateSuccess;
         }
