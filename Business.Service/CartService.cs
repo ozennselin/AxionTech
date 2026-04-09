@@ -4,6 +4,7 @@ using Core.Models.Entities.Cart;
 using Core.Models.Entities.CartItem;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Business.Service;
 
@@ -23,36 +24,47 @@ public class CartService : ICartService
         try
         {
             bool cartExists = _cartRepository.GetAllQuery(c => c.UserId == request.UserId).Any();
+            var createCartItem = new CartItem();
 
-            if (cartExists)//daha önce sepete en az bir ürün ekleydiyse Cart tablosuna bu User için kayıt vardır anlamına gelir
-            {
-                var createCartItem = new CartItem
-                {
-                    ProductId = request.ProductId,
-                    Quantity = 1,
-                    UnitPrice = request.UnitPrice,
-
-                };
-               
-            }
-            else//sepete ilk ürün eklenirken bu kısım çalışacak,2. ürün ve sonrası için bu kısım çalışmaz
+            if (!cartExists)//sepete ilk ürün eklenirken bu kısım çalışacak,2. ürün ve sonrası için bu kısım çalışmaz
             {
                 var createCart = new Cart
                 {
-                    UserId = request.UserId
+                    UserId = request.UserId,
+                    CreateDate = DateTime.Now,
+                    CreatorId = request.UserId
                 };
-                _cartRepository.Add(createCart);
 
-                var createCartItem = new CartItem
+                _cartRepository.Add(createCart);
+            }
+            var getCartId = _cartRepository.GetEntityQuery(c => c.UserId == request.UserId).Id;
+
+            var getSameProduct = _cartItemRepository.GetEntityQuery(k => k.CartId == getCartId && k.ProductId == request.ProductId);
+            if (getSameProduct != null)//aynı üründe sepette varsa yeni data eklenmiyecek, Quantity 1 artırılacak
+            {
+                getSameProduct.Quantity = getSameProduct.Quantity + 1;
+                getSameProduct.UpdateDate = DateTime.Now;
+                getSameProduct.UpdaterId = request.UserId;
+
+                _cartItemRepository.Update(createCartItem);
+
+            }
+            else
+            {
+                createCartItem = new CartItem
                 {
-                    CartId=1,
+                    CartId = getCartId,
                     ProductId = request.ProductId,
                     Quantity = 1,
                     UnitPrice = request.UnitPrice,
+                    CreateDate = DateTime.Now,
+                    CreatorId = request.UserId
                 };
+
+                _cartItemRepository.Add(createCartItem);
+
             }
-        
-            
+
             return ResponseMessageEnum.UpdateSuccess;
         }
         catch (Exception)
