@@ -47,7 +47,26 @@ public class UserService : IUserService
 
     public UserResponseModel? GetById(int id)
     {
-        throw new NotImplementedException();
+        var user = _userRepository.GetAll()
+     .FirstOrDefault(x => x.Id == id);
+
+        if (user == null)
+            return null;
+
+        return new UserResponseModel
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            PasswordHash = user.PasswordHash,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            DateOfBirth = user.DateOfBirth,
+            Gender = user.Gender,
+            IsActive = user.IsActive,
+            IsEmailConfirmed = user.IsEmailConfirmed
+        };
     }
 
     public List<UserResponseModel> List()

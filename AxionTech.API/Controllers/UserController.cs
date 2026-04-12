@@ -45,4 +45,17 @@ public class UserController : BaseAPIController
         _userService.Delete(request);
         return Ok("Kullanıcı pasife alındı");
     }
+
+    [HttpGet("GetById/{id}")]
+    public IActionResult GetById(int id)
+    {
+        var user = _userService.GetById(id);
+
+        if (user == null)
+        {
+            return NotFound("Kullanıcı bulunamadı");
+        }
+
+        return Ok(user);
+    }
 }
