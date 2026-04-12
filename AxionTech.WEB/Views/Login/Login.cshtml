@@ -18,21 +18,28 @@
                         </div>
                         <div class="card-body">
                             <p class="login-box-msg">Kullanıcı adı ve şifreniz ile giriş yapınız</p>
-
+                            @if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
                             <form action="~/Login/Login" method="post">
                                 <div class="input-group mb-3">
-                                    <input type="email" class="form-control" autocomplete="on" name="UserName" placeholder="E-mail">
+                                    <input type="text" class="form-control"  name="UserName" placeholder="Kullanıcı Adı">
                                     <div class="input-group-append">
                                         <div class="input-group-text"><span class="fas fa-envelope"></span></div>
                                     </div>
                                 </div>
                                 <div class="input-group mb-3">
                                     <input type="password" class="form-control" name="Password" placeholder="Şifre">
+                        
                                     <div class="input-group-append">
                                         <div class="input-group-text"><span class="fas fa-lock"></span>
                                         </div>
                                     </div>
                                 </div>
+                    <input type="hidden" name="Token" value="">
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="icheck-primary">

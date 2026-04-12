@@ -1,6 +1,7 @@
 ﻿using Business.Service.Interfaces;
 using Core.Models.Entities.User;
 using Data.Access.Repositories.Interfaces;
+using Data.Infrastructure.Entities;
 
 namespace Business.Service;
 
@@ -49,7 +50,37 @@ public class UserService : IUserService
 
     public LoginResponse Login(UserLoginModel request)
     {
-        throw new NotImplementedException();
+        var user = _userRepository.GetAll()
+            .FirstOrDefault(x => x.UserName == request.UserName);
+
+        if (user == null)
+        {
+            return new LoginResponse
+            {
+                Id = -1,
+                UserName = "KULLANICI_YOK",
+                Rule = "HATA"
+            };
+        }
+
+        if (user.PasswordHash != request.Password)
+        {
+            return new LoginResponse
+            {
+                Id = -2,
+                UserName = "SIFRE_HATALI",
+                Rule = "HATA"
+            };
+        }
+
+        var response = new LoginResponse
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Rule = "User"
+        };
+
+        return response;
     }
 
     public void Update(UpdateUserRequestModel request)

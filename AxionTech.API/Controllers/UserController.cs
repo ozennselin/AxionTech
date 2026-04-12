@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Models.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
@@ -19,5 +20,11 @@ public class UserController : BaseAPIController
     {
         var list = _userService.List();
         return ResultAPI(list);
+    }
+    [HttpPost("Login")]
+    public IActionResult Login(UserLoginModel request)
+    {
+        var result = _userService.Login(request);
+        return Ok(result);
     }
 }
