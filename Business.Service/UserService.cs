@@ -15,12 +15,34 @@ public class UserService : IUserService
     }
     public void Create(CreateUserRequestModel request)
     {
-        throw new NotImplementedException();
+        var user = new User
+        {
+            UserName = request.UserName,
+            Email = request.Email,
+            PhoneNumber = request.PhoneNumber,
+            PasswordHash = request.PasswordHash,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            DateOfBirth = request.DateOfBirth,
+            Gender = request.Gender,
+            IsActive = true,
+            IsEmailConfirmed = false
+        };
+
+        _userRepository.Add(user);
     }
 
     public void Delete(DeleteUserRequestModel request)
     {
-        throw new NotImplementedException();
+        var user = _userRepository.GetAll()
+        .FirstOrDefault(x => x.Id == request.Id);
+
+        if (user == null)
+            return;
+
+        user.IsActive = false;
+
+        _userRepository.Update(user);
     }
 
     public UserResponseModel? GetById(int id)
@@ -85,6 +107,23 @@ public class UserService : IUserService
 
     public void Update(UpdateUserRequestModel request)
     {
-        throw new NotImplementedException();
+        var user = _userRepository.GetAll()
+      .FirstOrDefault(x => x.Id == request.Id);
+
+        if (user == null)
+            return;
+
+        user.UserName = request.UserName;
+        user.Email = request.Email;
+        user.PhoneNumber = request.PhoneNumber;
+        user.PasswordHash = request.PasswordHash;
+        user.FirstName = request.FirstName;
+        user.LastName = request.LastName;
+        user.DateOfBirth = request.DateOfBirth;
+        user.Gender = request.Gender;
+        user.IsActive = request.IsActive;
+        user.IsEmailConfirmed = request.IsEmailConfirmed;
+
+        _userRepository.Update(user);
     }
 }

@@ -1,0 +1,22 @@
+﻿@model Core.Models.Entities.User.CreateUserRequestModel
+
+<h2>Kayıt Ol</h2>
+
+<form method="post" action="/Login/Register">
+
+    <input type="text" name="UserName" placeholder="Kullanıcı Adı" /><br />
+    <input type="text" name="Email" placeholder="Email" /><br />
+    <input type="text" name="FirstName" placeholder="Ad" /><br />
+    <input type="text" name="LastName" placeholder="Soyad" /><br />
+    <input type="password" name="PasswordHash" placeholder="Şifre" /><br />
+
+    <button type="submit">Kayıt Ol</button>
+
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div style="color:red">
+        @ViewBag.Error
+    </div>
+}

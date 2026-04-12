@@ -56,4 +56,29 @@ public class LoginController : Controller
         ViewBag.Error = responseContent;
         return View(loginModel);
     }
+
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(CreateUserRequestModel request)
+    {
+        using var httpClient = new HttpClient();
+
+        var jsonData = JsonSerializer.Serialize(request);
+        var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+        var response = await httpClient.PostAsync("https://localhost:7162/api/User/Create", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return RedirectToAction("Login", "Login");
+        }
+
+        ViewBag.Error = "Kayıt işlemi başarısız";
+        return View(request);
+    }
 }

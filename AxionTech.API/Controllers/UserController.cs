@@ -27,4 +27,22 @@ public class UserController : BaseAPIController
         var result = _userService.Login(request);
         return Ok(result);
     }
+    [HttpPost("Create")]
+    public IActionResult Create(CreateUserRequestModel request)
+    {
+        _userService.Create(request);
+        return Ok("Kullanıcı eklendi");
+    }
+    [HttpPost("Update")]
+    public IActionResult Update(UpdateUserRequestModel request)
+    {
+        _userService.Update(request);
+        return Ok("Kullanıcı güncellendi");
+    }
+    [HttpPost("Delete")]
+    public IActionResult Delete(DeleteUserRequestModel request)
+    {
+        _userService.Delete(request);
+        return Ok("Kullanıcı pasife alındı");
+    }
 }

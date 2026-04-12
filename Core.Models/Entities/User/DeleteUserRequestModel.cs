@@ -2,4 +2,5 @@
 
 public class DeleteUserRequestModel
 {
+    public int Id { get; set; }
 }
