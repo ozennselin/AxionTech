@@ -1,10 +1,11 @@
-﻿using Core.Models.Entities.Customer;
+﻿using Core.Enums;
+using Core.Models.Entities.Customer;
 
 namespace Business.Service.Interfaces;
 
 public interface ICustomerService
 {
-    void Create(CreateCustomerRequestModel request);
+    ResponseMessageEnum Create(CreateCustomerRequestModel request);
     void Update(UpdateCustomerRequestModel request);
     void Delete(DeleteCustomerRequestModel request);
     List<CustomerResponseModel> List();

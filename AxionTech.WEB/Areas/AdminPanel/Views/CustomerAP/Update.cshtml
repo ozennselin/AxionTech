@@ -2,10 +2,12 @@
 @model CustomerResponseModel
 
 @{
+    ViewData["Title"] = "Customer Update";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
 
-<form method="post" action="~/AdminPanel/CustomerAP/Update">
+<form method="post">
+
     <input type="hidden" name="Id" value="@Model.Id" />
 
     <div class="col-md-12">
@@ -17,36 +19,131 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card-body">
-
                         <label>Email</label>
-                        <input class="form-control" name="Email" value="@Model.Email" />
+                        <input name="Email" value="@Model.Email" class="form-control" />
 
-                        <label>Phone</label>
-                        <input class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" />
+                        <label>Telefon</label>
+                        <input name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />
 
-                        <label>City</label>
-                        <input class="form-control" name="City" value="@Model.City" />
+                        <label>Şehir</label>
+                        <input name="City" value="@Model.City" class="form-control" />
 
+                        <label>Ülke</label>
+                        <input name="Country" value="@Model.Country" class="form-control" />
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="card-body">
+                        <label>Adres</label>
+                        <input name="AddressLine1" value="@Model.AddressLine1" class="form-control" />
 
-                        <label>Address</label>
-                        <input class="form-control" name="AddressLine1" value="@Model.AddressLine1" />
+                        <label>Adres 2</label>
+                        <input name="AddressLine2" value="@Model.AddressLine2" class="form-control" />
 
-                        <label>First Name</label>
-                        <input class="form-control" name="FirstName" value="@Model.FirstName" />
+                        <label>Posta Kodu</label>
+                        <input name="PostalCode" value="@Model.PostalCode" class="form-control" />
 
-                        <label>Last Name</label>
-                        <input class="form-control" name="LastName" value="@Model.LastName" />
-
+                        <label>Müşteri Tipi</label>
+                        <select name="CustomerType" id="customerType" class="form-control" onchange="toggleCustomerFields()">
+                            <option value="1" @(Model.CustomerType == 1 ? "selected" : null)>Bireysel</option>
+                            <option value="2" @(Model.CustomerType == 2 ? "selected" : null)>Kurumsal</option>
+                        </select>
                     </div>
                 </div>
             </div>
-
-            <button class="btn btn-success">Update</button>
         </div>
     </div>
+
+    <div class="col-md-12" id="individualCard">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Bireysel Bilgiler</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Ad</label>
+                        <input name="FirstName" value="@Model.FirstName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Soyad</label>
+                        <input name="LastName" value="@Model.LastName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>TCKN</label>
+                        <input name="TCKN" value="@Model.TCKN" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12" id="corporateCard">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">Kurumsal Bilgiler</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Firma Adı</label>
+                        <input name="CompanyName" value="@Model.CompanyName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Vergi Dairesi</label>
+                        <input name="TaxOffice" value="@Model.TaxOffice" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Vergi No</label>
+                        <input name="TaxNumber" value="@Model.TaxNumber" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-warning">Update</button>
 </form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}
+
+@section _js
+{
+    <script>
+        function toggleCustomerFields() {
+            var type = document.getElementById("customerType").value;
+            var individualCard = document.getElementById("individualCard");
+            var corporateCard = document.getElementById("corporateCard");
+
+            if (type == "1") {
+                individualCard.style.display = "block";
+                corporateCard.style.display = "none";
+            } else {
+                individualCard.style.display = "none";
+                corporateCard.style.display = "block";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleCustomerFields();
+        });
+    </script>
+}

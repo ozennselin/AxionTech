@@ -2,10 +2,12 @@
 @model CustomerResponseModel
 
 @{
+    ViewData["Title"] = "Customer Delete";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
 
-<form method="post" action="~/AdminPanel/CustomerAP/Delete">
+<form method="post">
+
     <input type="hidden" name="Id" value="@Model.Id" />
 
     <div class="col-md-12">
@@ -16,10 +18,40 @@
 
             <div class="card-body">
                 <h5>Silmek istediğine emin misin?</h5>
-                <p><b>@Model.Email</b></p>
+
+                <label>Müşteri Tipi</label>
+                <input class="form-control"
+                       value="@(Model.CustomerType == 1 ? "Bireysel" :
+                                                      Model.CustomerType == 2 ? "Kurumsal" : "Belirsiz")"
+                       disabled />
+
+                @if (Model.CustomerType == 1)
+                {
+                    <label>Ad Soyad</label>
+                    <input class="form-control" value="@Model.FirstName @Model.LastName" disabled />
+
+                    <label>TCKN</label>
+                    <input class="form-control" value="@Model.TCKN" disabled />
+                }
+                else if (Model.CustomerType == 2)
+                {
+                    <label>Firma Adı</label>
+                    <input class="form-control" value="@Model.CompanyName" disabled />
+
+                    <label>Vergi Dairesi</label>
+                    <input class="form-control" value="@Model.TaxOffice" disabled />
+
+                    <label>Vergi No</label>
+                    <input class="form-control" value="@Model.TaxNumber" disabled />
+                }
+
+                <label>Email</label>
+                <input class="form-control" value="@Model.Email" disabled />
             </div>
 
-            <button class="btn btn-danger">Delete</button>
+            <div class="card-footer">
+                <button class="btn btn-danger">Delete</button>
+            </div>
         </div>
     </div>
 </form>

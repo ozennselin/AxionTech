@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.Customer;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,8 +19,14 @@ public class CustomerController : BaseAPIController
     [HttpPost("Create")]
     public IActionResult Create([FromBody] CreateCustomerRequestModel request)
     {
-        _customerService.Create(request);
-        return ResultAPI(request);
+        var result = _customerService.Create(request);
+
+        if (result == ResponseMessageEnum.Success)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new { Message = "Customer oluşturulamadı", ErrorCode = result });
     }
 
     [HttpGet("List")]

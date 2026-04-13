@@ -2,6 +2,7 @@
 @model CreateCustomerRequestModel
 
 @{
+    ViewData["Title"] = "Customer Create";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
 
@@ -9,17 +10,13 @@
 
     <div class="col-md-12">
         <div class="card card-info">
-
             <div class="card-header">
                 <h3 class="card-title">Customer Create</h3>
             </div>
 
             <div class="row">
-
-                <!-- SOL -->
                 <div class="col-md-6">
                     <div class="card-body">
-
                         <label>Email</label>
                         <input name="Email" class="form-control" />
 
@@ -31,62 +28,120 @@
 
                         <label>Ülke</label>
                         <input name="Country" class="form-control" />
-
                     </div>
                 </div>
 
-                <!-- SAĞ -->
                 <div class="col-md-6">
                     <div class="card-body">
-
                         <label>Adres</label>
                         <input name="AddressLine1" class="form-control" />
+
+                        <label>Adres 2</label>
+                        <input name="AddressLine2" class="form-control" />
 
                         <label>Posta Kodu</label>
                         <input name="PostalCode" class="form-control" />
 
                         <label>Müşteri Tipi</label>
-                        <select name="CustomerType" class="form-control">
+                        <select name="CustomerType" id="customerType" class="form-control" onchange="toggleCustomerFields()">
                             <option value="1">Bireysel</option>
                             <option value="2">Kurumsal</option>
                         </select>
-
                     </div>
                 </div>
-
             </div>
-
-            <!-- ALT -->
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div class="card-body">
-
-                        <label>Ad</label>
-                        <input name="FirstName" class="form-control" />
-
-                        <label>Soyad</label>
-                        <input name="LastName" class="form-control" />
-
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card-body">
-
-                        <label>Firma Adı</label>
-                        <input name="CompanyName" class="form-control" />
-
-                        <label>Vergi No</label>
-                        <input name="TaxNumber" class="form-control" />
-
-                    </div>
-                </div>
-
-            </div>
-
-            <button class="btn btn-success">Create</button>
-
         </div>
     </div>
+
+    <div class="col-md-12" id="individualCard">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Bireysel Bilgiler</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Ad</label>
+                        <input name="FirstName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Soyad</label>
+                        <input name="LastName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>TCKN</label>
+                        <input name="TCKN" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12" id="corporateCard">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">Kurumsal Bilgiler</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Firma Adı</label>
+                        <input name="CompanyName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Vergi Dairesi</label>
+                        <input name="TaxOffice" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <label>Vergi No</label>
+                        <input name="TaxNumber" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-success">Create</button>
 </form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}
+
+@section _js
+{
+    <script>
+        function toggleCustomerFields() {
+            var type = document.getElementById("customerType").value;
+            var individualCard = document.getElementById("individualCard");
+            var corporateCard = document.getElementById("corporateCard");
+
+            if (type == "1") {
+                individualCard.style.display = "block";
+                corporateCard.style.display = "none";
+            } else {
+                individualCard.style.display = "none";
+                corporateCard.style.display = "block";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleCustomerFields();
+        });
+    </script>
+}

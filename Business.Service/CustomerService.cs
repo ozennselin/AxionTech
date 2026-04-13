@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.Customer;
 using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
@@ -13,28 +14,36 @@ public class CustomerService : ICustomerService
     {
         _customerRepository=customerRepository;
     }
-    public void Create(CreateCustomerRequestModel request)
+    public ResponseMessageEnum Create(CreateCustomerRequestModel request)
     {
-        var customer = new Customer
+        try
         {
-            CustomerType = (Core.Enums.CustomerTypeEnum)request.CustomerType,
-            Email = request.Email,
-            PhoneNumber = request.PhoneNumber,
-            AddressLine1 = request.AddressLine1,
-            AddressLine2 = request.AddressLine2,
-            City = request.City,
-            Country = request.Country,
-            PostalCode = request.PostalCode,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            TCKN = request.TCKN,
-            CompanyName = request.CompanyName,
-            TaxOffice = request.TaxOffice,
-            TaxNumber = request.TaxNumber,
-            IsActive = true
-        };
+            var customer = new Customer
+            {
+                CustomerType = (Core.Enums.CustomerTypeEnum)request.CustomerType,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                AddressLine1 = request.AddressLine1,
+                AddressLine2 = request.AddressLine2,
+                City = request.City,
+                Country = request.Country,
+                PostalCode = request.PostalCode,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                TCKN = request.TCKN,
+                CompanyName = request.CompanyName,
+                TaxOffice = request.TaxOffice,
+                TaxNumber = request.TaxNumber,
+                IsActive = true
+            };
 
-        _customerRepository.Add(customer);
+            _customerRepository.Add(customer);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 
     public void Delete(DeleteCustomerRequestModel request)
