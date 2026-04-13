@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.Cart;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AxionTech.WEB.GetApi;
 
@@ -13,15 +14,21 @@ public class CartApi
     }
     public List<CartResponseModel> List()
     {
-       // var response = _httpClient.GetFromJsonAsync<List<CartResponseModel>>("Cart/List").Result;
+        // var response = _httpClient.GetFromJsonAsync<List<CartResponseModel>>("Cart/List").Result;
         var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartResponseModel>>>("Cart/List").Result;
         return response.Data;
     }
 
-    public bool  AddCart(CreateCartRequestModel request)
+    public bool AddCart(CreateCartRequestModel request)
     {
         var response = _httpClient.PostAsJsonAsync($"Cart/Create", request).Result;
-        return response.IsSuccessStatusCode;
+
+        if (response != null)
+        {
+            return response.IsSuccessStatusCode;
+        }
+
+        return false;
     }
     public CartResponseModel GetByCartId(int id)
     {

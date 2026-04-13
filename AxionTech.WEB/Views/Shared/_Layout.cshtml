@@ -170,39 +170,7 @@
                 </div>
                 <!-- /.navbar-collapse -->
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
-                            </a>
-                            <ul class="dropdown-menu cart-list">
-                                <li>
-                                    <a href="#" class="photo"><img src="~/igtu/images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                                    <h6><a href="#">Delica omtantur </a></h6>
-                                    <p>1x - <span class="price">$10.00</span></p>
-                                </li>
-                                <li>
-                                    <a href="#" class="photo"><img src="~/igtu/images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                                    <h6><a href="#">Omnes ocurreret</a></h6>
-                                    <p>1x - <span class="price">$20.00</span></p>
-                                </li>
-                                <li>
-                                    <a href="#" class="photo"><img src="~/igtu/images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                                    <h6><a href="#">Agam facilisis</a></h6>
-                                    <p>1x - <span class="price">$30.00</span></p>
-                                </li>
-                                <li class="total">
-                                    <span class="float-right"><strong>Total</strong>: $60.00</span>
-                                    <a href="~/Cart/List" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End Atribute Navigation -->
+                @Html.Partial("_CartPartial")
             </div>
         </nav>
         <!-- End Navigation -->
