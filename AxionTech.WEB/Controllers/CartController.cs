@@ -37,7 +37,7 @@ public class CartController : BaseController
         if (result)
         {
            //giriş yapan kullanıcı için sepete eklediği bütün ürünleri getir
-            var getProduct = _productApi.GetById(id);
+            var getProduct = _productApi.GetById(id);//ürün sayısı db de CartItem da bir prop olarak tutulacak
 
             return Json(new { success = true, data = getProduct });//bitiş-Kapatılacak
         }
