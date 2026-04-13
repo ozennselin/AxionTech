@@ -4,7 +4,7 @@ namespace Core.Models.Entities.Customer;
 
 public class CreateCustomerRequestModel:BaseCreateModel
 {
-    public int CustomerTypeId { get; set; }
+    public int CustomerType { get; set; }
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string AddressLine1 { get; set; } = string.Empty;

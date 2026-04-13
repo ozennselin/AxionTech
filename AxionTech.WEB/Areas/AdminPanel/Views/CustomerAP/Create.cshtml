@@ -1,0 +1,92 @@
+﻿@using Core.Models.Entities.Customer
+@model CreateCustomerRequestModel
+
+@{
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<form method="post">
+
+    <div class="col-md-12">
+        <div class="card card-info">
+
+            <div class="card-header">
+                <h3 class="card-title">Customer Create</h3>
+            </div>
+
+            <div class="row">
+
+                <!-- SOL -->
+                <div class="col-md-6">
+                    <div class="card-body">
+
+                        <label>Email</label>
+                        <input name="Email" class="form-control" />
+
+                        <label>Telefon</label>
+                        <input name="PhoneNumber" class="form-control" />
+
+                        <label>Şehir</label>
+                        <input name="City" class="form-control" />
+
+                        <label>Ülke</label>
+                        <input name="Country" class="form-control" />
+
+                    </div>
+                </div>
+
+                <!-- SAĞ -->
+                <div class="col-md-6">
+                    <div class="card-body">
+
+                        <label>Adres</label>
+                        <input name="AddressLine1" class="form-control" />
+
+                        <label>Posta Kodu</label>
+                        <input name="PostalCode" class="form-control" />
+
+                        <label>Müşteri Tipi</label>
+                        <select name="CustomerType" class="form-control">
+                            <option value="1">Bireysel</option>
+                            <option value="2">Kurumsal</option>
+                        </select>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ALT -->
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="card-body">
+
+                        <label>Ad</label>
+                        <input name="FirstName" class="form-control" />
+
+                        <label>Soyad</label>
+                        <input name="LastName" class="form-control" />
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+
+                        <label>Firma Adı</label>
+                        <input name="CompanyName" class="form-control" />
+
+                        <label>Vergi No</label>
+                        <input name="TaxNumber" class="form-control" />
+
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="btn btn-success">Create</button>
+
+        </div>
+    </div>
+</form>

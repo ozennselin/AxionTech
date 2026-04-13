@@ -33,7 +33,9 @@
                         <input class="form-control" value="@(Model.Items != null ? Model.Items.Count : 0)" disabled />
 
                         <label>Total Amount</label>
-                        <input class="form-control" value="@(Model.Items != null ? Model.Items.Sum(x => x.LineTotal) : 0) ₺" disabled />
+                        <input class="form-control font-weight-bold text-success"
+                               value="@(Model.Items != null ? Model.Items.Sum(x => x.LineTotal) : 0) ₺"
+                               disabled />
                     </div>
                 </div>
 
@@ -53,6 +55,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th>Product Id</th>
                         <th>Image</th>
                         <th>Product</th>
                         <th>Quantity</th>
@@ -70,6 +73,7 @@
                                 <td>
                                     <img src="~/picture/default.png" class="img-thumbnail" style="width:60px;" />
                                 </td>
+                                <td>@item.ProductId</td>
 
                                 <td>@item.ProductName</td>
 

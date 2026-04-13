@@ -11,9 +11,6 @@
         <div class="text-xl-left">
             <h3 class="card-title">Cart List</h3>
         </div>
-        <div class="text-md-right">
-            <a class="btn btn-success" href="~/AdminPanel/CartAP/Create">Create</a>
-        </div>
     </div>
 
     <div class="card-body">
@@ -26,8 +23,6 @@
                     <th>Total Items</th>
                     <th>Total Amount</th>
                     <th>Detail</th>
-                    <th>Update</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
 
@@ -57,25 +52,13 @@
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </td>
-
-                            <td>
-                                <a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/CartAP/Update/@item.Id">
-                                    <i class="fa fa-pen"></i>
-                                </a>
-                            </td>
-
-                            <td>
-                                <a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/CartAP/Delete/@item.Id">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="8" class="text-center text-danger">
+                        <td colspan="6" class="text-center text-danger">
                             Kayıt bulunamadı.
                         </td>
                     </tr>

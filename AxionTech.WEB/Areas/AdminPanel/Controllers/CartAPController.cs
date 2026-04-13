@@ -52,43 +52,4 @@ public class CartAPController : Controller
 
         return View(getCartDetail);
     }
-    [HttpGet]
-    public IActionResult Delete(int id)
-    {
-        var cart = _cartApi.GetByCartId(id);
-        return View(cart);
-    }
-    [ActionName("Delete")]
-    [HttpPost]
-    public IActionResult DeleteCart(DeleteCartRequestModel request)
-    {
-        var deleteCart = _cartApi.Delete(request);
-        if (deleteCart)
-        {
-            return RedirectToAction("List");
-        }
-
-        return View();
-    }
-    public IActionResult Update(int id)
-    {
-        var cart = _cartApi.GetByCartId(id);
-        var cartItems = _cartItemApi.GetByCartId(id);
-
-        cart.Items = cartItems;
-
-        return View(cart);
-    }
-    [HttpPost]
-    public IActionResult Update(UpdateCartRequestModel request)
-    {
-        var updateCart = _cartApi.Update(request);
-
-        if (updateCart)
-        {
-            return RedirectToAction("List");
-        }
-
-        return View();
-    }
 }

@@ -12,7 +12,7 @@ public class CustomerConfiguration:IEntityTypeConfiguration<Customer>
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
-        builder.Property(x => x.CustomerTypeId).IsRequired(true);
+        builder.Property(x => x.CustomerType).IsRequired(true);
         builder.Property(x => x.Email).IsRequired(true).HasMaxLength(250);
         builder.Property(x => x.PhoneNumber).IsRequired(false).HasMaxLength(30);
         builder.Property(x => x.AddressLine1).IsRequired(true).HasMaxLength(250);

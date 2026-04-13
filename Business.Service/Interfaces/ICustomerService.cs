@@ -8,4 +8,5 @@ public interface ICustomerService
     void Update(UpdateCustomerRequestModel request);
     void Delete(DeleteCustomerRequestModel request);
     List<CustomerResponseModel> List();
+    CustomerResponseModel GetById(int id);
 }

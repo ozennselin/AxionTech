@@ -1,0 +1,25 @@
+﻿@using Core.Models.Entities.Customer
+@model CustomerResponseModel
+
+@{
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<form method="post" action="~/AdminPanel/CustomerAP/Delete">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="col-md-12">
+        <div class="card card-danger">
+            <div class="card-header">
+                <h3 class="card-title">Customer Delete</h3>
+            </div>
+
+            <div class="card-body">
+                <h5>Silmek istediğine emin misin?</h5>
+                <p><b>@Model.Email</b></p>
+            </div>
+
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</form>

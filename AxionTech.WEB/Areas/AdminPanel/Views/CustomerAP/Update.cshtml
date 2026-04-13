@@ -1,0 +1,52 @@
+﻿@using Core.Models.Entities.Customer
+@model CustomerResponseModel
+
+@{
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<form method="post" action="~/AdminPanel/CustomerAP/Update">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Customer Update</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+
+                        <label>Email</label>
+                        <input class="form-control" name="Email" value="@Model.Email" />
+
+                        <label>Phone</label>
+                        <input class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" />
+
+                        <label>City</label>
+                        <input class="form-control" name="City" value="@Model.City" />
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+
+                        <label>Address</label>
+                        <input class="form-control" name="AddressLine1" value="@Model.AddressLine1" />
+
+                        <label>First Name</label>
+                        <input class="form-control" name="FirstName" value="@Model.FirstName" />
+
+                        <label>Last Name</label>
+                        <input class="form-control" name="LastName" value="@Model.LastName" />
+
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-success">Update</button>
+        </div>
+    </div>
+</form>

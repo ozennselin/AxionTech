@@ -28,4 +28,29 @@ public class CustomerController : BaseAPIController
         var list = _customerService.List();
         return ResultAPI(list);
     }
+
+    [HttpGet("GetById/{id}")]
+    public IActionResult GetById(int id)
+    {
+        var customer = _customerService.GetById(id);
+
+        if (customer == null)
+            return NotFound("Kayıt bulunamadı");
+
+        return ResultAPI(customer);
+    }
+    [HttpPost("Update")]
+    public IActionResult Update(UpdateCustomerRequestModel request)
+    {
+        _customerService.Update(request);
+        return ResultAPI(request);
+    }
+
+    [HttpPost("Delete")]
+    public IActionResult Delete(DeleteCustomerRequestModel request)
+    {
+        _customerService.Delete(request);
+        return ResultAPI(request);
+    }
+
 }

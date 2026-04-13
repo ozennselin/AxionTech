@@ -5,7 +5,6 @@ namespace Data.Infrastructure.Entities;
 
 public class Customer : BaseEntity
 {
-    public int CustomerTypeId { get; set; }
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string AddressLine1 { get; set; } = string.Empty;

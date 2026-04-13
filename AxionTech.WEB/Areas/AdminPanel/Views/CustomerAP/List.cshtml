@@ -6,35 +6,81 @@
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
 
-<h1>Customer List</h1>
+<div class="card card-info">
+    <div class="card-header">
+        <div class="text-xl-left">
+            <h3 class="card-title">Customer List</h3>
+        </div>
+        <div class="text-md-right">
+            <a class="btn btn-success" href="~/AdminPanel/CustomerAP/Create">Create</a>
+        </div>
+    </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var item in Model)
-            {
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.FirstName</td>
-                    <td>@item.LastName</td>
-                    <td>@item.Email</td>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Customer Type</th>
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="4">Kayıt bulunamadı.</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.Email</td>
+                            <td>
+                                @(item.CustomerType == 1 ? "Bireysel" :
+                                                        item.CustomerType == 2 ? "Kurumsal" : "Belirsiz")
+                            </td>
+                            <td>
+                                <a class="btn btn-block btn-primary btn-sm" href="~/AdminPanel/CustomerAP/Detail/@item.Id">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/CustomerAP/Update/@item.Id">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/CustomerAP/Delete/@item.Id">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-danger">Kayıt bulunamadı.</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Customer Type</th>
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

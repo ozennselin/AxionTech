@@ -20,4 +20,28 @@ public class CustomerApi
 
         return responseCustomer.Data;
     }
+    public CustomerResponseModel GetById(int id)
+    {
+        var responseCustomer =
+            _httpClient.GetFromJsonAsync<APIResponseDTO<CustomerResponseModel>>
+            ($"Customer/GetById/{id}").Result;
+
+        return responseCustomer.Data;
+    }
+    public bool Update(UpdateCustomerRequestModel request)
+    {
+        var response = _httpClient.PostAsJsonAsync("Customer/Update", request).Result;
+        return response.IsSuccessStatusCode;
+    }
+
+    public bool Delete(DeleteCustomerRequestModel request)
+    {
+        var response = _httpClient.PostAsJsonAsync("Customer/Delete", request).Result;
+        return response.IsSuccessStatusCode;
+    }
+    public bool Create(CreateCustomerRequestModel request)
+    {
+        var response = _httpClient.PostAsJsonAsync("Customer/Create", request).Result;
+        return response.IsSuccessStatusCode;
+    }
 }
