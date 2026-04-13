@@ -21,7 +21,7 @@ public class CustomerController : BaseAPIController
     {
         var result = _customerService.Create(request);
 
-        if (result == ResponseMessageEnum.Success)
+        if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
         {
             return ResultAPI(result);
         }
@@ -46,18 +46,18 @@ public class CustomerController : BaseAPIController
 
         return ResultAPI(customer);
     }
+
     [HttpPost("Update")]
-    public IActionResult Update(UpdateCustomerRequestModel request)
+    public IActionResult Update([FromBody] UpdateCustomerRequestModel request)
     {
-        _customerService.Update(request);
-        return ResultAPI(request);
+        var result = _customerService.Update(request);
+        return ResultAPI(result);
     }
 
     [HttpPost("Delete")]
-    public IActionResult Delete(DeleteCustomerRequestModel request)
+    public IActionResult Delete([FromBody] DeleteCustomerRequestModel request)
     {
-        _customerService.Delete(request);
-        return ResultAPI(request);
+        var result = _customerService.Delete(request);
+        return ResultAPI(result);
     }
-
 }

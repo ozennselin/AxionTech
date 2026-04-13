@@ -28,10 +28,17 @@ public class CustomerApi
 
         return responseCustomer.Data;
     }
-    public bool Update(UpdateCustomerRequestModel request)
+    public string Update(UpdateCustomerRequestModel request)
     {
         var response = _httpClient.PostAsJsonAsync("Customer/Update", request).Result;
-        return response.IsSuccessStatusCode;
+        var content = response.Content.ReadAsStringAsync().Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            return "SUCCESS";
+        }
+
+        return content;
     }
 
     public bool Delete(DeleteCustomerRequestModel request)

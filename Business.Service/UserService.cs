@@ -1,5 +1,7 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.User;
+using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
 
@@ -8,41 +10,60 @@ namespace Business.Service;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IRoleRepository _roleRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
     {
         _userRepository = userRepository;
+        _roleRepository = roleRepository;
     }
-    public void Create(CreateUserRequestModel request)
+    public ResponseMessageEnum Create(CreateUserRequestModel request)
     {
-        var user = new User
+        try
         {
-            UserName = request.UserName,
-            Email = request.Email,
-            PhoneNumber = request.PhoneNumber,
-            PasswordHash = request.PasswordHash,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            DateOfBirth = request.DateOfBirth,
-            Gender = request.Gender,
-            IsActive = true,
-            IsEmailConfirmed = false
-        };
+            User user = new User();
 
-        _userRepository.Add(user);
+            user.UserName = request.UserName;
+            user.Email = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+            user.PasswordHash = request.PasswordHash;
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.DateOfBirth = request.DateOfBirth;
+            user.Gender = request.Gender;
+            user.IsActive = true;
+            user.IsEmailConfirmed = false;
+
+            _userRepository.Add(user);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 
-    public void Delete(DeleteUserRequestModel request)
+    public ResponseMessageEnum Delete(DeleteUserRequestModel request)
     {
-        var user = _userRepository.GetAll()
-        .FirstOrDefault(x => x.Id == request.Id);
+        try
+        {
+            var getUser = _userRepository.GetById(request.Id);
 
-        if (user == null)
-            return;
+            if (getUser == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
 
-        user.IsActive = false;
+            getUser.IsActive = false;
+            _userRepository.Update(getUser);
 
-        _userRepository.Update(user);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
     }
 
     public UserResponseModel? GetById(int id)
@@ -71,7 +92,10 @@ public class UserService : IUserService
 
     public List<UserResponseModel> List()
     {
-        var users = _userRepository.GetAll().ToList();
+        var users = _userRepository
+            .GetAll()
+            .Where(x => x.IsActive == true)
+            .ToList();
 
         return users.Select(x => new UserResponseModel
         {
@@ -85,7 +109,11 @@ public class UserService : IUserService
             DateOfBirth = x.DateOfBirth,
             Gender = x.Gender,
             IsActive = x.IsActive,
-            IsEmailConfirmed = x.IsEmailConfirmed
+            IsEmailConfirmed = x.IsEmailConfirmed,
+            RoleName = x.UserRoles
+                .Select(r => r.Role.Name)
+                .FirstOrDefault()
+
         }).ToList();
     }
 
@@ -124,25 +152,34 @@ public class UserService : IUserService
         return response;
     }
 
-    public void Update(UpdateUserRequestModel request)
+    public ResponseMessageEnum Update(UpdateUserRequestModel request)
     {
-        var user = _userRepository.GetAll()
-      .FirstOrDefault(x => x.Id == request.Id);
+        try
+        {
+            var getUser = _userRepository.GetById(request.Id);
 
-        if (user == null)
-            return;
+            if (getUser == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
 
-        user.UserName = request.UserName;
-        user.Email = request.Email;
-        user.PhoneNumber = request.PhoneNumber;
-        user.PasswordHash = request.PasswordHash;
-        user.FirstName = request.FirstName;
-        user.LastName = request.LastName;
-        user.DateOfBirth = request.DateOfBirth;
-        user.Gender = request.Gender;
-        user.IsActive = request.IsActive;
-        user.IsEmailConfirmed = request.IsEmailConfirmed;
+            getUser.UserName = request.UserName;
+            getUser.Email = request.Email;
+            getUser.PhoneNumber = request.PhoneNumber;
+            getUser.PasswordHash = request.PasswordHash;
+            getUser.FirstName = request.FirstName;
+            getUser.LastName = request.LastName;
+            getUser.DateOfBirth = request.DateOfBirth;
+            getUser.Gender = request.Gender;
+            getUser.IsActive = request.IsActive;
+            getUser.IsEmailConfirmed = request.IsEmailConfirmed;
 
-        _userRepository.Update(user);
+            _userRepository.Update(getUser);
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 }

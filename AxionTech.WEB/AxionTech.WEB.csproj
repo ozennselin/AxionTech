@@ -50,6 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core.Dtos\Core.Dtos.csproj" />
+    <ProjectReference Include="..\Core.Enums\Core.Enums.csproj" />
     <ProjectReference Include="..\Core.Models\Core.Models.csproj" />
   </ItemGroup>
 

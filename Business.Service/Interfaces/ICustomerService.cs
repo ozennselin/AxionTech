@@ -5,9 +5,9 @@ namespace Business.Service.Interfaces;
 
 public interface ICustomerService
 {
-    ResponseMessageEnum Create(CreateCustomerRequestModel request);
-    void Update(UpdateCustomerRequestModel request);
-    void Delete(DeleteCustomerRequestModel request);
+    public ResponseMessageEnum Create(CreateCustomerRequestModel request);
+    ResponseMessageEnum Update(UpdateCustomerRequestModel request);
+    ResponseMessageEnum Delete(DeleteCustomerRequestModel request);
     List<CustomerResponseModel> List();
     CustomerResponseModel GetById(int id);
 }

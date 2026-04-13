@@ -1,0 +1,81 @@
+﻿@using Core.Models.Entities.User
+@model CreateUserRequestModel
+
+@{
+    ViewData["Title"] = "User Create";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<form method="post">
+
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">User Create</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>UserName</label>
+                        <input name="UserName" class="form-control" />
+
+                        <label>Email</label>
+                        <input name="Email" class="form-control" />
+
+                        <label>Telefon</label>
+                        <input name="PhoneNumber" class="form-control" />
+
+                        <label>Şifre</label>
+                        <input name="PasswordHash" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Ad</label>
+                        <input name="FirstName" class="form-control" />
+
+                        <label>Soyad</label>
+                        <input name="LastName" class="form-control" />
+
+                        <label>Doğum Tarihi</label>
+                        <input name="DateOfBirth" type="date" class="form-control" />
+
+                        <label>Cinsiyet</label>
+                        <input name="Gender" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Aktif mi?</label>
+                        <select name="IsActive" class="form-control">
+                            <option value="true">Aktif</option>
+                            <option value="false">Pasif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Email Onaylı mı?</label>
+                        <select name="IsEmailConfirmed" class="form-control">
+                            <option value="true">Evet</option>
+                            <option value="false">Hayır</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-success">Create</button>
+        </div>
+    </div>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}

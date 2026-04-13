@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,29 +22,39 @@ public class UserController : BaseAPIController
         var list = _userService.List();
         return ResultAPI(list);
     }
+
     [HttpPost("Login")]
     public IActionResult Login(UserLoginModel request)
     {
         var result = _userService.Login(request);
         return Ok(result);
     }
+
     [HttpPost("Create")]
     public IActionResult Create(CreateUserRequestModel request)
     {
-        _userService.Create(request);
-        return Ok("Kullanıcı eklendi");
+        var result = _userService.Create(request);
+
+        if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new { Message = "Kullanıcı oluşturulamadı", ErrorCode = result });
     }
+
     [HttpPost("Update")]
     public IActionResult Update(UpdateUserRequestModel request)
     {
-        _userService.Update(request);
-        return Ok("Kullanıcı güncellendi");
+        var result = _userService.Update(request);
+        return ResultAPI(result);
     }
+
     [HttpPost("Delete")]
     public IActionResult Delete(DeleteUserRequestModel request)
     {
-        _userService.Delete(request);
-        return Ok("Kullanıcı pasife alındı");
+        var result = _userService.Delete(request);
+        return ResultAPI(result);
     }
 
     [HttpGet("GetById/{id}")]
@@ -56,6 +67,6 @@ public class UserController : BaseAPIController
             return NotFound("Kullanıcı bulunamadı");
         }
 
-        return Ok(user);
+        return ResultAPI(user);
     }
 }

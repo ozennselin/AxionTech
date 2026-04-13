@@ -1,0 +1,48 @@
+﻿@using Core.Models.Entities.User
+@model UserResponseModel
+
+@{
+    ViewData["Title"] = "User Detail";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="card card-info">
+
+        <div class="card-header">
+            <h3 class="card-title">User Detail</h3>
+        </div>
+
+        <div class="card-body">
+
+            <label>UserName</label>
+            <input class="form-control" value="@Model.UserName" disabled />
+
+            <label>Email</label>
+            <input class="form-control" value="@Model.Email" disabled />
+
+            <label>Telefon</label>
+            <input class="form-control" value="@Model.PhoneNumber" disabled />
+
+            <label>Ad</label>
+            <input class="form-control" value="@Model.FirstName" disabled />
+
+            <label>Soyad</label>
+            <input class="form-control" value="@Model.LastName" disabled />
+
+            <label>Doğum Tarihi</label>
+            <input class="form-control" value="@Model.DateOfBirth" disabled />
+
+            <label>Cinsiyet</label>
+            <input class="form-control" value="@Model.Gender" disabled />
+
+            <label>Aktif mi?</label>
+            <input class="form-control" value="@(Model.IsActive ? "Aktif" : "Pasif")" disabled />
+
+            <label>Email Onaylı mı?</label>
+            <input class="form-control" value="@(Model.IsEmailConfirmed ? "Evet" : "Hayır")" disabled />
+
+        </div>
+
+    </div>
+</div>

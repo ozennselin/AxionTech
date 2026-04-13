@@ -1,7 +1,6 @@
 ﻿using Business.Service.Interfaces;
 using Core.Enums;
 using Core.Models.Entities.Customer;
-using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
 
@@ -10,35 +9,37 @@ namespace Business.Service;
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
+
     public CustomerService(ICustomerRepository customerRepository)
     {
-        _customerRepository=customerRepository;
+        _customerRepository = customerRepository;
     }
+
     public ResponseMessageEnum Create(CreateCustomerRequestModel request)
     {
         try
         {
-            var customer = new Customer
-            {
-                CustomerType = (Core.Enums.CustomerTypeEnum)request.CustomerType,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                AddressLine1 = request.AddressLine1,
-                AddressLine2 = request.AddressLine2,
-                City = request.City,
-                Country = request.Country,
-                PostalCode = request.PostalCode,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                TCKN = request.TCKN,
-                CompanyName = request.CompanyName,
-                TaxOffice = request.TaxOffice,
-                TaxNumber = request.TaxNumber,
-                IsActive = true
-            };
+            Customer customer = new Customer();
+
+            customer.CustomerType = (Core.Enums.CustomerTypeEnum)request.CustomerType;
+            customer.Email = request.Email;
+            customer.PhoneNumber = request.PhoneNumber;
+            customer.AddressLine1 = request.AddressLine1;
+            customer.AddressLine2 = request.AddressLine2;
+            customer.City = request.City;
+            customer.Country = request.Country;
+            customer.PostalCode = request.PostalCode;
+            customer.FirstName = request.FirstName;
+            customer.LastName = request.LastName;
+            customer.TCKN = request.TCKN;
+            customer.CompanyName = request.CompanyName;
+            customer.TaxOffice = request.TaxOffice;
+            customer.TaxNumber = request.TaxNumber;
+            customer.IsActive = true;
 
             _customerRepository.Add(customer);
-            return ResponseMessageEnum.Success;
+
+            return ResponseMessageEnum.UpdateSuccess;
         }
         catch (Exception)
         {
@@ -46,20 +47,62 @@ public class CustomerService : ICustomerService
         }
     }
 
-    public void Delete(DeleteCustomerRequestModel request)
+    public ResponseMessageEnum Delete(DeleteCustomerRequestModel request)
     {
-        var customer = _customerRepository.GetById(request.Id);
+        try
+        {
+            var getCustomer = _customerRepository.GetById(request.Id);
 
-        if (customer == null) return;
+            if (getCustomer == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
 
-        _customerRepository.Delete(customer);
+            getCustomer.IsActive = false;
+            _customerRepository.Update(getCustomer);
+
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
+    }
+
+    public CustomerResponseModel GetById(int Id)
+    {
+        var getCustomer = _customerRepository.GetById(Id);
+
+        CustomerResponseModel response = new CustomerResponseModel();
+
+        response.Id = getCustomer.Id;
+        response.CustomerType = (int)getCustomer.CustomerType;
+        response.Email = getCustomer.Email;
+        response.PhoneNumber = getCustomer.PhoneNumber;
+        response.AddressLine1 = getCustomer.AddressLine1;
+        response.AddressLine2 = getCustomer.AddressLine2;
+        response.City = getCustomer.City;
+        response.Country = getCustomer.Country;
+        response.PostalCode = getCustomer.PostalCode;
+        response.FirstName = getCustomer.FirstName;
+        response.LastName = getCustomer.LastName;
+        response.TCKN = getCustomer.TCKN;
+        response.CompanyName = getCustomer.CompanyName;
+        response.TaxOffice = getCustomer.TaxOffice;
+        response.TaxNumber = getCustomer.TaxNumber;
+        response.IsActive = getCustomer.IsActive;
+
+        return response;
     }
 
     public List<CustomerResponseModel> List()
     {
-        var customers = _customerRepository.GetAll().ToList();
+        var customerList = _customerRepository
+            .GetAll()
+            .Where(x => x.IsActive == true)
+            .ToList();
 
-        return customers.Select(x => new CustomerResponseModel
+        return customerList.Select(x => new CustomerResponseModel
         {
             Id = x.Id,
             CustomerType = (int)x.CustomerType,
@@ -80,55 +123,39 @@ public class CustomerService : ICustomerService
         }).ToList();
     }
 
-    public void Update(UpdateCustomerRequestModel request)
+    public ResponseMessageEnum Update(UpdateCustomerRequestModel request)
     {
-        var customer = _customerRepository.GetById(request.Id);
-
-        if (customer == null) return;
-
-        customer.Email = request.Email;
-        customer.PhoneNumber = request.PhoneNumber;
-        customer.AddressLine1 = request.AddressLine1;
-        customer.AddressLine2 = request.AddressLine2;
-        customer.City = request.City;
-        customer.Country = request.Country;
-        customer.PostalCode = request.PostalCode;
-        customer.FirstName = request.FirstName;
-        customer.LastName = request.LastName;
-        customer.TCKN = request.TCKN;
-        customer.CompanyName = request.CompanyName;
-        customer.TaxOffice = request.TaxOffice;
-        customer.TaxNumber = request.TaxNumber;
-        customer.IsActive = request.IsActive;
-
-        _customerRepository.Update(customer);
-    }
-
-    public CustomerResponseModel GetById(int id)
-    {
-        var customer = _customerRepository.GetById(id);
-
-        if (customer == null)
-            return null;
-
-        return new CustomerResponseModel
+        try
         {
-            Id = customer.Id,
-            CustomerType = (int)customer.CustomerType,
-            Email = customer.Email,
-            PhoneNumber = customer.PhoneNumber,
-            AddressLine1 = customer.AddressLine1,
-            AddressLine2 = customer.AddressLine2,
-            City = customer.City,
-            Country = customer.Country,
-            PostalCode = customer.PostalCode,
-            FirstName = customer.FirstName,
-            LastName = customer.LastName,
-            TCKN = customer.TCKN,
-            CompanyName = customer.CompanyName,
-            TaxOffice = customer.TaxOffice,
-            TaxNumber = customer.TaxNumber,
-            IsActive = customer.IsActive
-        };
+            var getCustomer = _customerRepository.GetById(request.Id);
+
+            if (getCustomer == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            getCustomer.CustomerType = (Core.Enums.CustomerTypeEnum)request.CustomerType;
+            getCustomer.Email = request.Email;
+            getCustomer.PhoneNumber = request.PhoneNumber;
+            getCustomer.AddressLine1 = request.AddressLine1;
+            getCustomer.AddressLine2 = request.AddressLine2;
+            getCustomer.City = request.City;
+            getCustomer.Country = request.Country;
+            getCustomer.PostalCode = request.PostalCode;
+            getCustomer.FirstName = request.FirstName;
+            getCustomer.LastName = request.LastName;
+            getCustomer.TCKN = request.TCKN;
+            getCustomer.CompanyName = request.CompanyName;
+            getCustomer.TaxOffice = request.TaxOffice;
+            getCustomer.TaxNumber = request.TaxNumber;
+
+            _customerRepository.Update(getCustomer);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 }

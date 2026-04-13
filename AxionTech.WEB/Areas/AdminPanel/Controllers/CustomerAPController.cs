@@ -31,8 +31,16 @@ public class CustomerAPController: Controller
     [HttpPost]
     public IActionResult Update(UpdateCustomerRequestModel request)
     {
-        _customerApi.Update(request);
-        return RedirectToAction("List");
+        var result = _customerApi.Update(request);
+
+        if (result == "SUCCESS")
+        {
+            return RedirectToAction("List");
+        }
+
+        ViewBag.Error = result;
+        var customer = _customerApi.GetById(request.Id);
+        return View(customer);
     }
     public IActionResult Delete(int id)
     {

@@ -1,0 +1,78 @@
+﻿@using Core.Models.Entities.User
+@model UserResponseModel
+
+@{
+    ViewData["Title"] = "User Update";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<form method="post">
+
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">User Update</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>UserName</label>
+                        <input name="UserName" value="@Model.UserName" class="form-control" />
+
+                        <label>Email</label>
+                        <input name="Email" value="@Model.Email" class="form-control" />
+
+                        <label>Telefon</label>
+                        <input name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />
+
+                        <label>Şifre</label>
+                        <input name="PasswordHash" value="@Model.PasswordHash" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Ad</label>
+                        <input name="FirstName" value="@Model.FirstName" class="form-control" />
+
+                        <label>Soyad</label>
+                        <input name="LastName" value="@Model.LastName" class="form-control" />
+
+                        <label>Doğum Tarihi</label>
+                        <input name="DateOfBirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+
+                        <label>Cinsiyet</label>
+                        <input name="Gender" value="@Model.Gender" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Aktif mi?</label>
+                        <select name="IsActive" class="form-control">
+                            <option value="true" @(Model.IsActive ? "selected" : null)>Aktif</option>
+                            <option value="false" @(!Model.IsActive ? "selected" : null)>Pasif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Email Onaylı mı?</label>
+                        <select name="IsEmailConfirmed" class="form-control">
+                            <option value="true" @(Model.IsEmailConfirmed ? "selected" : null)>Evet</option>
+                            <option value="false" @(!Model.IsEmailConfirmed ? "selected" : null)>Hayır</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-warning">Update</button>
+        </div>
+    </div>
+</form>
