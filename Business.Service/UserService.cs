@@ -11,11 +11,13 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IRoleRepository _roleRepository;
+    private readonly IUserRoleRepository _userRoleRepository;
 
-    public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
+    public UserService(IUserRepository userRepository,IRoleRepository roleRepository,IUserRoleRepository userRoleRepository)
     {
         _userRepository = userRepository;
         _roleRepository = roleRepository;
+        _userRoleRepository = userRoleRepository;
     }
     public ResponseMessageEnum Create(CreateUserRequestModel request)
     {
@@ -35,6 +37,13 @@ public class UserService : IUserService
             user.IsEmailConfirmed = false;
 
             _userRepository.Add(user);
+            var userRole = new UserRole
+            {
+                UserId = user.Id,
+                RoleId = request.RoleId
+            };
+
+            _userRoleRepository.Add(userRole);
 
             return ResponseMessageEnum.UpdateSuccess;
         }
@@ -181,5 +190,9 @@ public class UserService : IUserService
         {
             return ResponseMessageEnum.UpdateErrorWithMessage;
         }
+    }
+    public List<Role> GetRoles()
+    {
+        return _roleRepository.GetAll().ToList();
     }
 }

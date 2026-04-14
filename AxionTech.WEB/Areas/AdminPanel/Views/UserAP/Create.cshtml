@@ -1,12 +1,15 @@
 ﻿@using Core.Models.Entities.User
+@using Data.Infrastructure.Entities
 @model CreateUserRequestModel
 
 @{
     ViewData["Title"] = "User Create";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+
+    var roles = ViewBag.Roles as List<Role>;
 }
 
-<form method="post">
+<form method="post" action="~/AdminPanel/UserAP/Create">
 
     <div class="col-md-12">
         <div class="card card-info">
@@ -70,7 +73,27 @@
                 </div>
             </div>
 
-            <button class="btn btn-success">Create</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <label>Rol</label>
+                        <select name="RoleId" class="form-control">
+                            <option value="">Rol Seçiniz</option>
+                            @if (roles != null && roles.Any())
+                            {
+                                foreach (var item in roles)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-success">Create</button>
+            </div>
         </div>
     </div>
 </form>

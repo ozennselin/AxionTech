@@ -1,5 +1,6 @@
 ﻿using Core.Models.Entities.ProductPicture;
 using Core.Models.Entities.UserRole;
+using Data.Infrastructure.Entities;
 
 namespace Business.Service.Interfaces;
 
@@ -11,5 +12,4 @@ public interface IUserRoleService
     List<UserRoleResponseModel> GetByUserId(int userId);
     List<UserRoleResponseModel> GetByRoleId(int roleId);
 
-    
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Enums;
 using Core.Models.Entities.User;
+using Data.Infrastructure.Entities;
 
 namespace Business.Service.Interfaces;
 
@@ -11,4 +12,5 @@ public interface IUserService
     List<UserResponseModel> List();
     UserResponseModel? GetById(int id);
     LoginResponse Login(UserLoginModel request);
+    List<Role> GetRoles();
 }

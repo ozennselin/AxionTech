@@ -28,6 +28,9 @@ public class UserAPController : Controller
 
     public IActionResult Create()
     {
+        var roles = _userApi.GetRoles();
+        ViewBag.Roles = roles;
+
         return View();
     }
 
@@ -47,6 +50,10 @@ public class UserAPController : Controller
     public IActionResult Update(int id)
     {
         var user = _userApi.GetById(id);
+        var roles = _userApi.GetRoles();
+
+        ViewBag.Roles = roles;
+
         return View(user);
     }
 

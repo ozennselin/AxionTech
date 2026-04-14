@@ -1,6 +1,7 @@
 ﻿using Core.Dtos;
 using Core.Enums;
 using Core.Models.Entities.User;
+using Data.Infrastructure.Entities;
 
 namespace AxionTech.WEB.GetApi;
 
@@ -50,5 +51,13 @@ public class UserApi
         var response = _httpClient.PostAsJsonAsync("User/Delete", request).Result;
         var result = response.Content.ReadFromJsonAsync<APIResponseDTO<ResponseMessageEnum>>().Result;
         return result.Data;
+    }
+    public List<Role> GetRoles()
+    {
+        var response = _httpClient
+            .GetFromJsonAsync<APIResponseDTO<List<Role>>>("User/GetRoles")
+            .Result;
+
+        return response.Data;
     }
 }

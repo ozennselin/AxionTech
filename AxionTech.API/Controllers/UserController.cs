@@ -69,4 +69,10 @@ public class UserController : BaseAPIController
 
         return ResultAPI(user);
     }
+    [HttpGet("GetRoles")]
+    public IActionResult GetRoles()
+    {
+        var roles = _userService.GetRoles();
+        return ResultAPI(roles);
+    }
 }
