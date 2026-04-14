@@ -1,7 +1,10 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.Order;
+using Core.Models.Entities.OrderItem;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Service;
 
@@ -13,37 +16,16 @@ public class OrderService : IOrderService
     {
         _orderRepository = orderRepository;
     }
-    public void Create(CreateOrderRequestModel request)
-    {
-        var createOrder = new Order
-        {
-            OrderNo = request.OrderNo,
-            OrderDate = request.OrderDate,
-            TotalAmount = request.TotalAmount,
-            Status = request.Status,
-            Address = request.Address,
-            UserId = request.UserId
-        };
-
-        _orderRepository.Add(createOrder);
-    }
-
-    public void Delete(DeleteOrderRequestModel request)
-    {
-        var ordertodelete = _orderRepository.GetById(request.Id);
-        if (ordertodelete == null)
-        {
-            _orderRepository.Delete(ordertodelete);
-        }
-    }
 
     public List<OrderResponseModel> List()
     {
-        var orders = _orderRepository.GetAll().ToList();
+        var orders = _orderRepository
+            .GetAll()
+            .ToList();
 
         return orders.Select(x => new OrderResponseModel
         {
-          
+            Id = x.Id,
             OrderNo = x.OrderNo,
             OrderDate = x.OrderDate,
             TotalAmount = x.TotalAmount,
@@ -53,18 +35,52 @@ public class OrderService : IOrderService
         }).ToList();
     }
 
-    public void Update(UpdateOrderRequestModel request)
+    public OrderResponseModel? GetById(int id)
     {
-        var ordertoUpdate = _orderRepository.GetById(request.Id);
-      if (ordertoUpdate == null)
+        var order = _orderRepository.GetAll().Include(x => x.OrderItems).ThenInclude(x => x.Product).FirstOrDefault(x => x.Id == id);
+
+        if (order == null)
+            return null;
+
+        return new OrderResponseModel
         {
-            ordertoUpdate.OrderNo = request.OrderNo;
-            ordertoUpdate.OrderDate = request.OrderDate;
-            ordertoUpdate.TotalAmount = request.TotalAmount;
-            ordertoUpdate.Status = request.Status;
-            ordertoUpdate.Address = request.Address;
-            ordertoUpdate.UserId = request.UserId;
-            _orderRepository.Update(ordertoUpdate);
+            Id = order.Id,
+            OrderNo = order.OrderNo,
+            OrderDate = order.OrderDate,
+            TotalAmount = order.TotalAmount,
+            Status = order.Status,
+            Address = order.Address,
+            UserId = order.UserId,
+
+            Items = order.OrderItems.Select(i => new OrderItemResponseModel
+            {
+                ProductId = i.ProductId,
+                ProductName = i.Product != null ? i.Product.Name : "",
+                Quantity = i.Quantity,
+                UnitPrice = i.UnitPrice,
+                LineTotal = i.LineTotal
+            }).ToList()
+        };
+    }
+
+    public ResponseMessageEnum UpdateStatus(int orderId, string status)
+    {
+        try
+        {
+            var order = _orderRepository.GetById(orderId);
+
+            if (order == null)
+                return ResponseMessageEnum.NotFound;
+
+            order.Status = status;
+
+            _orderRepository.Update(order);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
         }
     }
 }

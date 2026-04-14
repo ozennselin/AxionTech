@@ -12,6 +12,6 @@ public class OrderItem : BaseEntity
     public decimal UnitPrice { get; set; }
     public decimal LineTotal { get; set; }
 
-    public Order Order { get; set; } = null!;
-    public Product Product { get; set; } = null!;
+    public Order? Order { get; set; }   
+    public Product? Product { get; set; }
 }

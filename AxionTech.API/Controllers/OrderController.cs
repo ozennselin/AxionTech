@@ -1,5 +1,5 @@
 ﻿using Business.Service.Interfaces;
-using Core.Models.Entities.Order;
+using Core.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
@@ -18,26 +18,31 @@ public class OrderController : BaseAPIController
     [HttpGet("List")]
     public IActionResult List()
     {
-        var result = _orderService.List();
-        return Ok(result);
-    }
-    [HttpPost("Create")]
-    public IActionResult Create(CreateOrderRequestModel request)
-    {
-        _orderService.Create(request);
-        return Ok();
-    }
-    [HttpPut("Update")]
-    public IActionResult Update(UpdateOrderRequestModel request)
-    {
-        _orderService.Update(request);
-        return Ok();
-    }
-    [HttpDelete("Delete")]
-    public IActionResult Delete(DeleteOrderRequestModel request)
-    {
-        _orderService.Delete(request);
-        return Ok();
+        var list = _orderService.List();
+        return ResultAPI(list);
     }
 
+    [HttpGet("GetById/{id}")]
+    public IActionResult GetById(int id)
+    {
+        var order = _orderService.GetById(id);
+
+        if (order == null)
+            return NotFound("Order not found");
+
+        return ResultAPI(order);
+    }
+
+    [HttpPost("UpdateStatus")]
+    public IActionResult UpdateStatus(int orderId, string status)
+    {
+        var result = _orderService.UpdateStatus(orderId, status);
+
+        if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new { Message = "Status update failed", ErrorCode = result });
+    }
 }

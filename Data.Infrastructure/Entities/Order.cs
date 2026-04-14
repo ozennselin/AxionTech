@@ -10,6 +10,7 @@ public class Order:BaseEntity
     public string Status { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public int UserId { get; set; }
+    public User? User { get; set; }
 
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

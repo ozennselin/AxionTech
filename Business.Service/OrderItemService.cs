@@ -48,9 +48,8 @@ public class OrderItemService : IOrderItemService
         var orderItems = _orderItemRepository.GetAll().Where(x => x.OrderId == orderId).ToList();
         return orderItems.Select(x => new OrderItemResponseModel
         {
-            Id = x.Id,
-            OrderId = x.OrderId,
             ProductId = x.ProductId,
+            ProductName = x.Product != null ? x.Product.Name : "",
             Quantity = x.Quantity,
             UnitPrice = x.UnitPrice,
             LineTotal = x.LineTotal

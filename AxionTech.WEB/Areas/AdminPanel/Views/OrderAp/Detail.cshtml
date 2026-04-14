@@ -1,0 +1,96 @@
+﻿@using Core.Models.Entities.Order
+@model OrderResponseModel
+
+@{
+    ViewData["Title"] = "Order Detail";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Order Detail</h3>
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-group">
+            <label>Order No</label>
+            <input class="form-control" value="@Model.OrderNo" disabled />
+        </div>
+
+        <div class="form-group">
+            <label>Order Date</label>
+            <input class="form-control" value="@Model.OrderDate.ToString("dd.MM.yyyy")" disabled />
+        </div>
+
+        <div class="form-group">
+            <label>Total Amount</label>
+            <input class="form-control" value="@Model.TotalAmount" disabled />
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <textarea class="form-control" rows="2" disabled>@Model.Address</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>User Id</label>
+            <input class="form-control" value="@Model.UserId" disabled />
+        </div>
+
+        <hr />
+        <form method="post" action="~/AdminPanel/OrderAP/UpdateStatus">
+            <input type="hidden" name="orderId" value="@Model.Id" />
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    <option value="Pending" @(Model.Status == "Pending" ? "selected" : null)>Pending</option>
+                    <option value="Preparing" @(Model.Status == "Preparing" ? "selected" : null)>Preparing</option>
+                    <option value="Shipped" @(Model.Status == "Shipped" ? "selected" : null)>Shipped</option>
+                    <option value="Completed" @(Model.Status == "Completed" ? "selected" : null)>Completed</option>
+                </select>
+            </div>
+
+            <button class="btn btn-warning">Update Status</button>
+        </form>
+        <hr />
+
+        <h4>Order Items</h4>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Items != null && Model.Items.Any())
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.UnitPrice</td>
+                            <td>@item.LineTotal</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-danger">
+                            No items found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

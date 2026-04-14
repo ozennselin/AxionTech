@@ -1,11 +1,13 @@
-﻿using Core.Models.Entities.Order;
+﻿using Core.Enums;
+using Core.Models.Entities.Order;
 
 namespace Business.Service.Interfaces;
 
 public interface IOrderService
 {
-    void Create(CreateOrderRequestModel request);
-    void Update(UpdateOrderRequestModel request);
-    void Delete(DeleteOrderRequestModel request);
     List<OrderResponseModel> List();
+
+    OrderResponseModel? GetById(int id);
+
+    ResponseMessageEnum UpdateStatus(int orderId, string status);
 }
