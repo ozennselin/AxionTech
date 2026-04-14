@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.Category;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
@@ -11,69 +12,114 @@ public class CategoryService : ICategoryService
     private readonly IUserRepository _userRepository;
     private readonly IProductRepository _productRepository;
 
-    public CategoryService(ICategoryRepository categoryRepository, IUserRepository userRepository, IProductRepository productRepository)
+    public CategoryService(
+        ICategoryRepository categoryRepository,
+        IUserRepository userRepository,
+        IProductRepository productRepository)
     {
         _categoryRepository = categoryRepository;
         _userRepository = userRepository;
         _productRepository = productRepository;
     }
-    public void Create(CreateCategoryRequestModel request)
+
+    public ResponseMessageEnum Create(CreateCategoryRequestModel request)
     {
-        //Aşağıdaki kod yapısı olmaması gerekli ama bu aşamada tutalım=> Mapper gelecek
+        try
+        {
+            Category category = new Category();
 
-        Category category = new Category();
-        category.Name = request.Name;
-        category.Description = request.Description;
-        category.CreateDate = request.CreateDate;
-        category.CreatorId = request.CreatorId;
+            category.ParentId = request.ParentId;
+            category.Name = request.Name;
+            category.Description = request.Description;
+            category.CreateDate = request.CreateDate;
+            category.CreatorId = request.CreatorId;
 
-        _categoryRepository.Add(category);
+            _categoryRepository.Add(category);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 
-    public void Delete(DeleteCategoryRequestModel request)
+    public ResponseMessageEnum Delete(DeleteCategoryRequestModel request)
     {
-        var categoryToDelete = _categoryRepository.GetById(request.Id);
-        if (categoryToDelete == null)
+        try
         {
-            throw new Exception("Category not found");
+            var categoryToDelete = _categoryRepository.GetById(request.Id);
+
+            if (categoryToDelete == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            _categoryRepository.Delete(categoryToDelete);
+
+            return ResponseMessageEnum.Success;
         }
-        _categoryRepository.Delete(categoryToDelete);
+        catch (Exception)
+        {
+            return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
+    }
+
+    public CategoryResponseModel? GetById(int id)
+    {
+        var item = _categoryRepository.GetById(id);
+
+        if (item == null)
+            return null;
+
+        return new CategoryResponseModel
+        {
+            Id = item.Id,
+            ParentId = item.ParentId,
+            Name = item.Name,
+            Description = item.Description,
+            UserNameLastname = "Admin",
+            ProductCount = _productRepository.GetAll().Count(p => p.CategoryId == item.Id)
+        };
     }
 
     public List<CategoryResponseModel> List()
     {
-        CategoryResponseModel categoryResponseModel = new CategoryResponseModel();
-        var list = new List<CategoryResponseModel>();
+        var dbList = _categoryRepository.GetAll().ToList();
 
-        var dbList = _categoryRepository.GetAll();
-
-        foreach (var item in dbList)
+        return dbList.Select(item => new CategoryResponseModel
         {
-            var categoryResponseModelAdd = new CategoryResponseModel
-            {
-                Id = item.Id,
-                ParentId = item.ParentId,
-                Name = item.Name,
-                Description = item.Description,
-                UserNameLastname = "Admin",
-                ProductCount = 0,
-            };
-            list.Add(categoryResponseModelAdd);
-        }
-
-
-        return list;
+            Id = item.Id,
+            ParentId = item.ParentId,
+            Name = item.Name,
+            Description = item.Description,
+            UserNameLastname = "Admin",
+            ProductCount = _productRepository.GetAll().Count(p => p.CategoryId == item.Id)
+        }).ToList();
     }
 
-    public void Update(UpdateCategoryRequestModel request)
+    public ResponseMessageEnum Update(UpdateCategoryRequestModel request)
     {
-       var categoryToUpdate = _categoryRepository.GetById(request.Id);
-        if (categoryToUpdate == null)
+        try
         {
-            throw new Exception("Category not found");
+            var categoryToUpdate = _categoryRepository.GetById(request.Id);
+
+            if (categoryToUpdate == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            categoryToUpdate.ParentId = request.ParentId;
+            categoryToUpdate.Name = request.Name;
+            categoryToUpdate.Description = request.Description;
+
+            _categoryRepository.Update(categoryToUpdate);
+
+            return ResponseMessageEnum.UpdateSuccess;
         }
-        categoryToUpdate.Name = request.Name;
-        categoryToUpdate.Description = request.Description;
-      _categoryRepository.Update(categoryToUpdate);
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 }

@@ -6,33 +6,75 @@
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
 
-<h1>Category List</h1>
+<div class="card card-info">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h3 class="card-title">Category List</h3>
+            <a class="btn btn-success" href="~/AdminPanel/CategoryAP/Create">Create</a>
+        </div>
+    </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var item in Model)
-            {
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Name</td>
-                    <td>@item.Description</td>
+                    <th>Id</th>
+                    <th>Parent Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Product Count</th>
+                    <th>User</th>
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="3">Kayıt bulunamadı.</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.ParentId</td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>@item.ProductCount</td>
+                            <td>@item.UserNameLastname</td>
+
+                            <td>
+                                <a class="btn btn-block btn-primary btn-sm"
+                                   href="~/AdminPanel/CategoryAP/Detail/@item.Id">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-block btn-warning btn-sm"
+                                   href="~/AdminPanel/CategoryAP/Update/@item.Id">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-block btn-danger btn-sm"
+                                   href="~/AdminPanel/CategoryAP/Delete/@item.Id">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="text-center text-danger">
+                            No records found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

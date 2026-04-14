@@ -1,4 +1,5 @@
-﻿using Core.Models.Entities.Category;
+﻿using Core.Enums;
+using Core.Models.Entities.Category;
 
 namespace Business.Service.Interfaces;
 
@@ -9,8 +10,9 @@ public interface ICategoryService
     //API katmanında bu operasyonlar çağırılacak ve Request /Response işlemleri yapılacak
     //Request=> istek, talepler
     //Response=> cevaplar, yanıtlar
-    void Create(CreateCategoryRequestModel request);
-    void Update(UpdateCategoryRequestModel request);
-    void Delete(DeleteCategoryRequestModel request);
+    ResponseMessageEnum Create(CreateCategoryRequestModel request);
+    ResponseMessageEnum Update(UpdateCategoryRequestModel request);
+    ResponseMessageEnum Delete(DeleteCategoryRequestModel request);
     List<CategoryResponseModel> List();
+    CategoryResponseModel? GetById(int id);
 }

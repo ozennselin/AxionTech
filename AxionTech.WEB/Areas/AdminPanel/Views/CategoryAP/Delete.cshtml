@@ -1,0 +1,43 @@
+﻿@using Core.Models.Entities.Category
+@model CategoryResponseModel
+
+@{
+    ViewData["Title"] = "Delete Category";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<form method="post" action="~/AdminPanel/CategoryAP/Delete">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="card card-danger">
+        <div class="card-header">
+            <h3 class="card-title">Delete Category</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="form-group">
+                <label>Id</label>
+                <input class="form-control" value="@Model.Id" disabled />
+            </div>
+
+            <div class="form-group">
+                <label>Parent Id</label>
+                <input class="form-control" value="@Model.ParentId" disabled />
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" value="@Model.Name" disabled />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" rows="3" disabled>@Model.Description</textarea>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</form>

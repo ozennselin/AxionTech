@@ -1,0 +1,43 @@
+﻿@using Core.Models.Entities.Category
+@model CreateCategoryRequestModel
+
+@{
+    ViewData["Title"] = "Create Category";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Create Category</h3>
+    </div>
+
+    <form method="post" action="~/AdminPanel/CategoryAP/Create">
+        <div class="card-body">
+
+            <div class="form-group">
+                <label>Parent Id</label>
+                <input name="ParentId" class="form-control" placeholder="0 for main category" />
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input name="Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="Description" class="form-control" rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}
