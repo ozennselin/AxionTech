@@ -1,0 +1,44 @@
+﻿@using Core.Models.Entities.Role
+@model RoleResponseModel
+
+@{
+    ViewData["Title"] = "Role Detail";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Role Detail</h3>
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-group">
+            <label>Role Name</label>
+            <input class="form-control" value="@Model.Name" disabled />
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="3" disabled>@Model.Description</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>User Count</label>
+            <input class="form-control" value="@Model.UserCount" disabled />
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            @if (Model.IsActive)
+            {
+                <span class="badge badge-success">Active</span>
+            }
+            else
+            {
+                <span class="badge badge-danger">Passive</span>
+            }
+        </div>
+
+    </div>
+</div>

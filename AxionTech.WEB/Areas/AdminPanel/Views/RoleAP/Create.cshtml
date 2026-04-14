@@ -1,0 +1,46 @@
+﻿@using Core.Models.Entities.Role
+@model CreateRoleRequestModel
+
+@{
+    ViewData["Title"] = "Create Role";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Create New Role</h3>
+    </div>
+
+    <form method="post" action="~/AdminPanel/RoleAP/Create">
+        <div class="card-body">
+
+            <div class="form-group">
+                <label>Role Name</label>
+                <input name="Name" class="form-control" placeholder="Example: Admin" />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="Description" class="form-control" rows="3" placeholder="Describe this role"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="IsActive" class="form-control">
+                    <option value="true">Active</option>
+                    <option value="false">Passive</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}
