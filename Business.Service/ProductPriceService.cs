@@ -1,10 +1,8 @@
 ﻿using Business.Service.Interfaces;
-using Core.Models.Entities.ProductDocument;
+using Core.Enums;
 using Core.Models.Entities.ProductPrice;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Service;
 
@@ -17,56 +15,106 @@ public class ProductPriceService : IProductPriceService
         _productPriceRepository = productPriceRepository;
     }
 
-    public void Create(CreateProductPriceRequestModel request)
+    public ResponseMessageEnum Create(CreateProductPriceRequestModel request)
     {
-        var newPrice = new ProductPrice
+        try
         {
-            ProductId = request.ProductId,
-            Price = request.Price,
-            Description = request.Description
-        };
+            var newPrice = new ProductPrice
+            {
+                ProductId = request.ProductId,
+                Price = request.Price,
+                Description = request.Description,
+                IsActive = true
+            };
 
-        _productPriceRepository.Add(newPrice);
+            _productPriceRepository.Add(newPrice);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 
-    public void Delete(DeleteProductPriceRequestModel request)
+    public ResponseMessageEnum Delete(DeleteProductPriceRequestModel request)
     {
-        var priceToDelete = _productPriceRepository.GetById(request.Id);
-        if(priceToDelete == null)
+        try
         {
-            throw new Exception("Price not found");
-            
+            var priceToDelete = _productPriceRepository.GetById(request.Id);
+
+            if (priceToDelete == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            priceToDelete.IsActive = false;
+            _productPriceRepository.Update(priceToDelete);
+
+            return ResponseMessageEnum.Success;
         }
-        _productPriceRepository.Delete(priceToDelete);
+        catch (Exception)
+        {
+            return ResponseMessageEnum.DeleteErrorWithMessage;
+        }
     }
 
     public ProductPriceResponseModel? GetByProductId(int productId)
     {
-        var getPrice = _productPriceRepository.GetByProductId(productId);
-        if (getPrice==null)
+        var getPrice = _productPriceRepository.GetAll()
+            .FirstOrDefault(x => x.ProductId == productId && x.IsActive);
+
+        if (getPrice == null)
         {
             return null;
         }
-          return new ProductPriceResponseModel
-          {
-              Id = getPrice.Id,
-              ProductId = getPrice.ProductId,
-              Price = getPrice.Price,
-              Description = getPrice.Description
-          };
+
+        return new ProductPriceResponseModel
+        {
+            Id = getPrice.Id,
+            ProductId = getPrice.ProductId,
+            Price = getPrice.Price,
+            Description = getPrice.Description
+        };
     }
 
-    public void Update(UpdateProductPriceRequestModel request)
+    public List<ProductPriceResponseModel> List()
     {
-        var priceToUpdate = _productPriceRepository.GetByProductId(request.ProductId);
-        if (priceToUpdate == null)
-        {
-            throw new Exception("Price not found");
+        var prices = _productPriceRepository.GetAll()
+            .Where(x => x.IsActive)
+            .ToList();
 
+        return prices.Select(x => new ProductPriceResponseModel
+        {
+            Id = x.Id,
+            ProductId = x.ProductId,
+            Price = x.Price,
+            Description = x.Description
+        }).ToList();
+    }
+
+    public ResponseMessageEnum Update(UpdateProductPriceRequestModel request)
+    {
+        try
+        {
+            var priceToUpdate = _productPriceRepository.GetById(request.Id);
+
+            if (priceToUpdate == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            priceToUpdate.ProductId = request.ProductId;
+            priceToUpdate.Price = request.Price;
+            priceToUpdate.Description = request.Description;
+
+            _productPriceRepository.Update(priceToUpdate);
+
+            return ResponseMessageEnum.UpdateSuccess;
         }
-        priceToUpdate.ProductId = request.ProductId;
-        priceToUpdate.Price = request.Price;
-        priceToUpdate.Description = request.Description;
-        _productPriceRepository.Update(priceToUpdate);
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
+using Core.Models.Entities.ProductPrice;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
@@ -14,11 +16,38 @@ public class ProductPriceController : BaseAPIController
         _productPriceService = productPriceService;
     }
 
-    [HttpGet("GetPriceByProductId")]
-    public IActionResult GetPriceByProductId(int Id)
+    [HttpGet("List")]
+    public IActionResult List()
     {
-       var  getPrice= _productPriceService.GetByProductId(Id);
-        return ResultAPI(getPrice);//json formatında döner
+        var list = _productPriceService.List();
+        return ResultAPI(list);
     }
- 
+
+    [HttpGet("GetByProductId/{id}")]
+    public IActionResult GetByProductId(int id)
+    {
+        var price = _productPriceService.GetByProductId(id);
+        return ResultAPI(price);
+    }
+
+    [HttpPost("Create")]
+    public IActionResult Create([FromBody] CreateProductPriceRequestModel request)
+    {
+        var result = _productPriceService.Create(request);
+        return ResultAPI(result);
+    }
+
+    [HttpPost("Update")]
+    public IActionResult Update([FromBody] UpdateProductPriceRequestModel request)
+    {
+        var result = _productPriceService.Update(request);
+        return ResultAPI(result);
+    }
+
+    [HttpPost("Delete")]
+    public IActionResult Delete([FromBody] DeleteProductPriceRequestModel request)
+    {
+        var result = _productPriceService.Delete(request);
+        return ResultAPI(result);
+    }
 }

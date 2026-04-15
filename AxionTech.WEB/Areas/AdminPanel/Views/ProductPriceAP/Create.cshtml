@@ -1,0 +1,43 @@
+﻿@using Core.Models.Entities.ProductPrice
+@model CreateProductPriceRequestModel
+
+@{
+    ViewData["Title"] = "Create Product Price";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Create Product Price</h3>
+    </div>
+
+    <form method="post" action="~/AdminPanel/ProductPriceAP/Create">
+        <div class="card-body">
+
+            <div class="form-group">
+                <label>Product Id</label>
+                <input name="ProductId" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Price</label>
+                <input name="Price" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="Description" class="form-control" rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-success">Create</button>
+        </div>
+    </form>
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}
