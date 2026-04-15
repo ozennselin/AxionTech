@@ -66,5 +66,43 @@ public class ProductPictureController : BaseAPIController
         return ResultAPI(getPicture);
     }
 
+    [HttpPost("Upload")]
+    public IActionResult Upload(IFormFile file)
+    {
+        try
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Dosya seçilmedi.");
+            }
 
+            var extension = Path.GetExtension(file.FileName);
+            var newFileName = Guid.NewGuid().ToString() + extension;
+
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var filePath = Path.Combine(folderPath, newFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return Ok(new
+            {
+                Url = "/uploads/" + newFileName,
+                Name = newFileName,
+                OrjinalName = file.FileName
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

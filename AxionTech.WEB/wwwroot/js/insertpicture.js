@@ -1,5 +1,4 @@
-﻿
-
+﻿console.log("insertpicture.js çalıştı");
 document.addEventListener("DOMContentLoaded", function () {
 
     if (typeof Dropzone !== 'undefined') {
@@ -16,26 +15,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 var myDropzone = this;
 
                 submitButton.addEventListener("click", function (e) {
+                    console.log("butona basıldı");
                     e.preventDefault();
-                    myDropzone.processQueue(); // Butona basınca yüklemeyi başlat
-                });
+                    myDropzone.processQueue();
+                }); // Butona basınca yüklemeyi başlat
+               
+
                 debugger;
+
                 this.on("success", function (file, response) {
-                    //console.log("Başarıyla kaydedildi:", response);
-                    const yeniResim = `
+                    var productId = document.querySelector("#productId").value;
+
+                    var request = {
+                        ProductId: parseInt(productId),
+                        Url: response.Url,
+                        IsMain: false,
+                        DisplayOrder: 1,
+                        OrjinalName: response.OrjinalName,
+                        Name: response.Name
+                    };
+
+                    fetch("/AdminPanel/ProductAP/CreatePicture", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(request)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            const yeniResim = `
                                <div class="col-sm-2" id="${response.Name}">
-                                <a href="#" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
+                                <a href="${response.Url}" data-toggle="lightbox" data-title="${response.OrjinalName}" data-gallery="gallery">
                                     <img src="${response.Url}" class="img-fluid mb-2 border rounded p-1" alt="white sample">
                                 </a>
-                                <div class="urun-sil">
-                                    <input type="hidden" name="id" value="${response.Ids}">
-                                    <button onclick="DeletePicture('${response.Id}')" type="submit" class="btn btn-danger btn-sm">Sil</button>
-                                </div>
                                 </div>`;
 
-                    const hedefDiv = document.getElementById("resimList");
-                    hedefDiv.insertAdjacentHTML("beforeend", yeniResim);
-
+                            const hedefDiv = document.getElementById("resimList");
+                            if (hedefDiv) {
+                                hedefDiv.insertAdjacentHTML("beforeend", yeniResim);
+                            }
+                        })
+                        .catch(err => {
+                            console.log("Kayıt hatası:", err);
+                        });
                 });
             }
         };

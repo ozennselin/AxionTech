@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Data.Infrastructure\Data.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
 </Project>
