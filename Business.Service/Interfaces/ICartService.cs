@@ -10,4 +10,7 @@ public interface ICartService
     ResponseMessageEnum Delete(DeleteCartRequestModel request);
     CartResponseModel GetById(int id);
     List<CartResponseModel> List();
+    CartResponseModel GetCartByUserId(int userId);
+
+
 }

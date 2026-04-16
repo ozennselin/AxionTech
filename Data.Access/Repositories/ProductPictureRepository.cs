@@ -25,4 +25,11 @@ public class ProductPictureRepository : Repository<ProductPicture>, IProductPict
             return 0;
         }
     }
+
+
+    public ProductPicture GetMainPictureByProductId(int productId)
+    {
+        var result= GetEntityQuery(pp => pp.ProductId == productId && pp.IsMain == true);
+        return result;
+    }
 }

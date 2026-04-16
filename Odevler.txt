@@ -12,5 +12,10 @@ bütün tablolarýn api ve web list iþlemleri yapýlacak
 7)Register(Üyelik sayfasý) yapýlacak adminlte de register v2 örneði alýnacak(yapýldý)
 8)JWT (json web token)-Identity ile kullanýcý doðrulama ve yetkilendirme makale okuma
 
+-------------------- Bakýlacak -------------------------------
+1)Postman iþlemi tekrar yapýlacak, ayarlarda sýkýntý var
+2)Resim eklerken eklenen resim liste kýsmýnda ekleyecek
+
+
 
 
