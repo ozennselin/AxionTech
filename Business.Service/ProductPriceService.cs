@@ -17,41 +17,48 @@ public class ProductPriceService : IProductPriceService
         _productPriceRepository = productPriceRepository;
     }
 
-    public ResponseMessageEnum Create(CreateProductPictureRequestModel request)
+    public ResponseMessageEnum Create(CreateProductPriceRequestModel request)
     {
-        try
-        {
-            // AYNI RESİM VAR MI KONTROL
-            var isExist = _productPictureRepository
-                .GetAll()
-                .Any(x => x.ProductId == request.ProductId
-                       && x.OrjinalName == request.OrjinalName);
-
-            if (isExist)
-            {
-                return ResponseMessageEnum.Exist;
-            }
-
-            var newProductPicture = new ProductPicture
-            {
-                ProductId = request.ProductId,
-                Url = request.Url,
-                IsMain = request.IsMain,
-                DisplayOrder = request.DisplayOrder,
-                Name = request.Name,
-                OrjinalName = request.OrjinalName,
-                CreateDate = DateTime.Now,
-                CreatorId = 1
-            };
-
-            _productPictureRepository.Add(newProductPicture);
-            return ResponseMessageEnum.Success;
-        }
-        catch (Exception)
-        {
-            return ResponseMessageEnum.Error;
-        }
+        throw new NotImplementedException();
     }
+
+    //public ResponseMessageEnum Create(CreateProductPriceRequestModel request)
+    //{
+    //    try
+    //    {
+    //        // AYNI RESİM VAR MI KONTROL
+    //        var isExist = _productPriceRepository
+    //            .GetAll()
+    //            .Any(x => x.ProductId == request.ProductId
+    //                   && x.OrjinalName == request.OrjinalName);
+
+    //        if (isExist)
+    //        {
+    //            return ResponseMessageEnum.Exist;
+    //        }
+
+    //        var newProductPicture = new ProductPicture
+    //        {
+    //            ProductId = request.ProductId,
+    //            Url = request.Url,
+    //            IsMain = request.IsMain,
+    //            DisplayOrder = request.DisplayOrder,
+    //            Name = request.Name,
+    //            OrjinalName = request.OrjinalName,
+    //            CreateDate = DateTime.Now,
+    //            CreatorId = 1
+    //        };
+
+    //        _productPictureRepository.Add(newProductPicture);
+    //        return ResponseMessageEnum.Success;
+    //    }
+    //    catch (Exception)
+    //    {
+    //        return ResponseMessageEnum.Error;
+    //    }
+    //}
+
+
 
     public ResponseMessageEnum Delete(DeleteProductPriceRequestModel request)
     {

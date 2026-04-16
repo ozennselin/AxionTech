@@ -40,7 +40,7 @@ public class ProductService : IProductService
             product.Description = request.Description;
             product.CategoryId = request.CategoryId;
             product.UpdateDate = DateTime.Now;
-            product.UpdaterId = 1;
+            product.UpdaterId = 1;//Session Login olan kullanıcını Id 'si gelecek
             product.IsActive = true;
 
             _productRepository.Add(product);
