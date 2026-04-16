@@ -1,5 +1,7 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.Cart;
+using Core.Models.Entities.Product;
+using Newtonsoft.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AxionTech.WEB.GetApi;
@@ -49,5 +51,18 @@ public class CartApi
         var response = _httpClient.PutAsJsonAsync("Cart/Update", request).Result;
 
         return response.IsSuccessStatusCode;
+    }
+
+    public CartResponseModel GetByUserId(int userId)
+    {
+        var response = _httpClient.GetAsync($"Cart/GetByUserId?userId={userId}");
+        var content = response.Result.Content.ReadAsStringAsync();
+
+        if (content.IsCompletedSuccessfully)
+        {
+            var responseContent = JsonConvert.DeserializeObject<APIResponseDTO<CartResponseModel>>(content.Result);
+            return responseContent.Data;
+        }
+        return null;
     }
 }

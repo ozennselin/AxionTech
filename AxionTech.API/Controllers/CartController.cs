@@ -14,11 +14,11 @@ public class CartController : BaseAPIController
     {
         _cartService = cartService;
     }
-    
+
     [HttpPost("Create")]
     public IActionResult Create(CreateCartRequestModel request)
     {
-        var result=_cartService.Create(request);
+        var result = _cartService.Create(request);
         return ResultAPI(result);
     }
 
@@ -49,5 +49,13 @@ public class CartController : BaseAPIController
         return ResultAPI(result);
 
     }
+
+    [HttpGet("GetByUserId")]
+    public IActionResult GetByUserId(int userId)
+    {
+        var result = _cartService.GetCartByUserId(userId);
+        return ResultAPI(result);
+    }
+
 }
 

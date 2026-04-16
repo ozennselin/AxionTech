@@ -22,8 +22,10 @@ public class CartController : BaseController
     public IActionResult List()
     {
         ViewBag.category = _categoryApi.List();
-        var list = _cartApi.List();
-        return View(list);
+        var getCartItem = _cartApi.GetByUserId(1);//UserId, CartId olan Id değerlerine göre list gelmeli
+        //SESSION işlemi yapılabilir. Biz şimdilik 1 verdik.
+
+        return View(getCartItem);
     }
 
     // public IActionResult AddCart(int id)

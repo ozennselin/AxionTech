@@ -12,11 +12,13 @@ public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
     private readonly ICartItemRepository _cartItemRepository;
+    private readonly IProductPictureRepository _productPicture;
 
-    public CartService(ICartRepository cartRepository, ICartItemRepository cartItemRepository)
+    public CartService(ICartRepository cartRepository, ICartItemRepository cartItemRepository, IProductPictureRepository productPicture)
     {
         _cartRepository = cartRepository;
         _cartItemRepository = cartItemRepository;
+        _productPicture = productPicture;
     }
 
     public ResponseMessageEnum Create(CreateCartRequestModel request)
@@ -152,5 +154,37 @@ public class CartService : ICartService
         {
             return ResponseMessageEnum.UpdateErrorWithMessage;
         }
+    }
+
+    public CartResponseModel GetCartByUserId(int userId)
+    {
+        var getCart = _cartRepository.GetEntityQuery(c => c.UserId == userId);
+
+        if (getCart == null)
+        {
+            return null;
+        }
+
+        var getCartItem = _cartItemRepository.GetAllQuery(x => x.CartId == getCart.Id).ToList();
+
+        var result = new CartResponseModel
+        {
+            UserId = userId,
+            Id = getCart.Id,
+            Items = getCartItem.Select(ci => new CartItemResponseModel
+            {
+                Id = ci.Id,
+                CartId = ci.CartId,
+                ProductId = ci.ProductId,
+                Quantity = ci.Quantity,
+                PictureUrl = _productPicture.GetMainPictureByProductId(ci.ProductId)?.Url,
+                ProductName ="test isim",
+                UnitPrice = ci.UnitPrice,
+                LineTotal = ci.Quantity * ci.UnitPrice
+            }).ToList()
+        };
+
+        return result;
+
     }
 }

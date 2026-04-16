@@ -51,7 +51,7 @@ function AddCart(productId) {
 
                 var newTotalTag = `<li class="total" id="deleteTag">
                        <strong>Total</strong>: <span class="float-right" id="totalProcess">${getNewTotal}</span>
-                <a href="~/Cart/List" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a> </li>`;
+                <a href="/Cart/List" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a> </li>`;
 
                 document.getElementById("cartDetail").insertAdjacentHTML("beforeend", newTotalTag)
 
