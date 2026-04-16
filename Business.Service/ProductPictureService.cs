@@ -3,6 +3,7 @@ using Core.Enums;
 using Core.Models.Entities.ProductPicture;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
+using System.Linq;
 
 namespace Business.Service;
 
