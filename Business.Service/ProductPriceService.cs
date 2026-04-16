@@ -1,6 +1,8 @@
 ﻿using Business.Service.Interfaces;
 using Core.Enums;
+using Core.Models.Entities.ProductPicture;
 using Core.Models.Entities.ProductPrice;
+using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
 
@@ -15,25 +17,39 @@ public class ProductPriceService : IProductPriceService
         _productPriceRepository = productPriceRepository;
     }
 
-    public ResponseMessageEnum Create(CreateProductPriceRequestModel request)
+    public ResponseMessageEnum Create(CreateProductPictureRequestModel request)
     {
         try
         {
-            var newPrice = new ProductPrice
+            // AYNI RESİM VAR MI KONTROL
+            var isExist = _productPictureRepository
+                .GetAll()
+                .Any(x => x.ProductId == request.ProductId
+                       && x.OrjinalName == request.OrjinalName);
+
+            if (isExist)
+            {
+                return ResponseMessageEnum.Exist;
+            }
+
+            var newProductPicture = new ProductPicture
             {
                 ProductId = request.ProductId,
-                Price = request.Price,
-                Description = request.Description,
-                IsActive = true
+                Url = request.Url,
+                IsMain = request.IsMain,
+                DisplayOrder = request.DisplayOrder,
+                Name = request.Name,
+                OrjinalName = request.OrjinalName,
+                CreateDate = DateTime.Now,
+                CreatorId = 1
             };
 
-            _productPriceRepository.Add(newPrice);
-
-            return ResponseMessageEnum.UpdateSuccess;
+            _productPictureRepository.Add(newProductPicture);
+            return ResponseMessageEnum.Success;
         }
         catch (Exception)
         {
-            return ResponseMessageEnum.UpdateErrorWithMessage;
+            return ResponseMessageEnum.Error;
         }
     }
 
