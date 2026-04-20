@@ -21,7 +21,7 @@ public class CartService : ICartService
         _productPicture = productPicture;
     }
 
-    public ResponseMessageEnum Create(CreateCartRequestModel request)
+    public (ResponseMessageEnum, CreateCartRequestModel) Create(CreateCartRequestModel request)
     {
         try
         {
@@ -47,8 +47,8 @@ public class CartService : ICartService
                 getSameProduct.Quantity = getSameProduct.Quantity + 1;
                 getSameProduct.UpdateDate = DateTime.Now;
                 getSameProduct.UpdaterId = request.UserId;
-
                 _cartItemRepository.Update(createCartItem);
+                request.SameProduct = true;
 
             }
             else
@@ -67,11 +67,11 @@ public class CartService : ICartService
 
             }
 
-            return ResponseMessageEnum.UpdateSuccess;
+            return (ResponseMessageEnum.UpdateSuccess, request);
         }
         catch (Exception)
         {
-            return ResponseMessageEnum.UpdateErrorWithMessage;
+            return (ResponseMessageEnum.UpdateErrorWithMessage,null);
         }
     }
 

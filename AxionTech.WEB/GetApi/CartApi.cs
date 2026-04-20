@@ -24,6 +24,7 @@ public class CartApi
     public bool AddCart(CreateCartRequestModel request)
     {
         var response = _httpClient.PostAsJsonAsync($"Cart/Create", request).Result;
+        //var response1 = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartResponseModel>>>("Cart/List").Result;
 
         if (response != null)
         {

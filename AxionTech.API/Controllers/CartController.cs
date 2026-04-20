@@ -19,7 +19,7 @@ public class CartController : BaseAPIController
     public IActionResult Create(CreateCartRequestModel request)
     {
         var result = _cartService.Create(request);
-        return ResultAPI(result);
+        return ResultAPI(result.Item2);
     }
 
     [HttpPut]
