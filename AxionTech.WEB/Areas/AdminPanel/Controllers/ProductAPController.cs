@@ -199,5 +199,6 @@ public class ProductAPController : Controller
         }
         return Json(new { success = true, message = "Resim başarıyla silindi.",data= getPicture });
     }
+ 
 }
 
