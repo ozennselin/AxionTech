@@ -9,17 +9,21 @@
         </div>
 
         <div class="row" id="resimList">
-            @foreach (var item in Model)
+            @if (Model != null)
             {
-                <div class="col-sm-2" id="@item.Name">
-                    <a href="#" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
-                        <img src="~/picture/@item.Name" class="img-fluid mb-2 border rounded p-1" alt="white sample">
-                    </a>
-                    <div class="urun-sil">  
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button onclick="DeletePicture(@item.Id)" type="submit" class="btn btn-danger btn-sm">Sil</button>
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-2" id="@item.Name">
+                        <a href="#" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
+                            <img src="~/picture/@item.Name" class="img-fluid mb-2 border rounded p-1" alt="white sample">
+                        </a>
+                        <div class="urun-sil">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button onclick="DeletePicture(@item.Id)" type="submit" class="btn btn-danger btn-sm">Sil</button>
+                        </div>
                     </div>
-                </div>
+                }
             }
         </div>
 

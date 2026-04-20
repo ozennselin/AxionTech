@@ -1,8 +1,10 @@
-﻿@model List<Core.Models.Entities.ProductDocument.ProductDocumentResponseModel>
+﻿@using Core.Models.Entities.ProductDocument
+
+@model List<ProductDocumentResponseModel>
 
 <div class="col-md-12 mt-3">
     <div class="row" id="dokumanList">
-        @if (Model != null)
+        @if (Model!=null)
         {
             foreach (var item in Model)
             {

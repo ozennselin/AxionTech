@@ -95,15 +95,30 @@ public class ProductAPController : Controller
     }
     public IActionResult Update(int Id)
     {
+        //productId = Id;
+        //var product = _productApi.GetById(Id);
+        //var picture = _productPictureApi.List().Where(k => k.ProductId == Id);
+
+        //var getProductAllDetail = new ProductCreateUpdateResponseModel
+        //{
+        //    ProductDetail = product,
+        //    ProductPicture = picture.ToList(),
+        //    ProductPrice= null,
+        //    ProductDocument = null,
+        //    Category = null//_categoryApi.List()
+
+        //};
+        //return View(getProductAllDetail);
+
         productId = Id;
         var getProductAllDetail = new ProductCreateUpdateResponseModel
         {
             ProductDetail = _productApi.GetById(Id),
             ProductPicture = _productPictureApi.List().Where(k => k.ProductId == Id).ToList(),
+            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
+            ProductDocument = null,
+            Category=_categoryApi.List()
 
-            ProductDocument = _productDocumentApi.List(Id),
-
-            Category = _categoryApi.List()
         };
         return View(getProductAllDetail);
     }
