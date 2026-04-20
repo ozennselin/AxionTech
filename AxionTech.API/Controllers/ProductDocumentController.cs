@@ -1,5 +1,8 @@
 ﻿using Business.Service.Interfaces;
+using Core.Dtos;
+using Core.Models.Entities.ProductDocument;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace AxionTech.API.Controllers;
 
@@ -19,5 +22,6 @@ public class ProductDocumentController : BaseAPIController
         var getDocument = _productDocumentService.GetByProductId(Id);
         return ResultAPI(getDocument);
     }
- 
+
+
 }

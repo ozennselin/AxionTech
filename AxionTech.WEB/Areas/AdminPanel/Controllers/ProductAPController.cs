@@ -1,7 +1,9 @@
 ﻿using AxionTech.WEB.GetApi;
+using Azure.Core;
 using Core.Dtos;
 using Core.Models.Entities.Category;
 using Core.Models.Entities.Product;
+using Core.Models.Entities.ProductDocument;
 using Core.Models.Entities.ProductPicture;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -98,10 +100,10 @@ public class ProductAPController : Controller
         {
             ProductDetail = _productApi.GetById(Id),
             ProductPicture = _productPictureApi.List().Where(k => k.ProductId == Id).ToList(),
-            //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
-            ProductDocument = null,
-            Category = _categoryApi.List()
 
+            ProductDocument = _productDocumentApi.List(Id),
+
+            Category = _categoryApi.List()
         };
         return View(getProductAllDetail);
     }
@@ -185,13 +187,13 @@ public class ProductAPController : Controller
         {
             return Json(new { success = false, message = "Resim bulunamadı." });
         }
-        // Fiziksel dosyayı silme
+        
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", getPicture.Url.TrimStart('/'));
         if (System.IO.File.Exists(filePath))
         {
             System.IO.File.Delete(filePath);
         }
-        // Veritabanından resmi silme
+     
         bool result = _productPictureApi.Delete(new DeleteProductPictureRequestModel { Id = id });
         if (!result)
         {
@@ -199,6 +201,39 @@ public class ProductAPController : Controller
         }
         return Json(new { success = true, message = "Resim başarıyla silindi.",data= getPicture });
     }
- 
+
+    [HttpPost]
+    public async Task<IActionResult> DocumentUpload(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+            return Json(new { success = false, message = "Dosya seçilmedi." });
+        }
+
+        var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents");
+
+        if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
+
+        string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(fileStream);
+        }
+
+        var createDocumentRequest = new Core.Models.Entities.ProductDocument.CreateProductDocumentRequestModel
+        {
+            ProductId = productId,
+            Url = "/documents/" + uniqueFileName,
+            FileName = file.FileName,
+            FileType = Path.GetExtension(file.FileName)
+        };
+
+        bool result = _productDocumentApi.Create(createDocumentRequest);
+
+        return Json(new { success = result, data = createDocumentRequest });
+    }
+
 }
 

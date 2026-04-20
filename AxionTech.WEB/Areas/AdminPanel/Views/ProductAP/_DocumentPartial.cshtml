@@ -1,0 +1,21 @@
+﻿@model List<Core.Models.Entities.ProductDocument.ProductDocumentResponseModel>
+
+<div class="col-md-12 mt-3">
+    <div class="row" id="dokumanList">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-md-3" id="${item.FileName}">
+                    <div class="info-box shadow-none border">
+                        <span class="info-box-icon bg-secondary"><i class="far fa-file-alt"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text text-sm">@item.FileName</span>
+                            <a href="@item.Url" target="_blank" class="btn btn-xs btn-outline-info">Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

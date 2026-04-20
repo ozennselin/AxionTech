@@ -65,6 +65,10 @@
 
 
 @* 4- product document info *@
+
+@Html.Partial("_DocumentPartial", null)
+@Html.Partial("_DocumentListPartial", Model.ProductDocument)
+
 <div class="col-md-12">
     <div class="card card-info">
         <div class="card-header">
@@ -81,4 +85,5 @@
     <script src="~/dropzone/dropzone.min.js"></script>
     <script src="~/js/insertpicture.js" ></script>
     <script src="~/js/deletepicture.js"></script>
+    <script src="~/js/insertdocument.js"></script>
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.ProductDocument;
+using System.Net.Http.Json;
 
 namespace AxionTech.WEB.GetApi;
 
@@ -10,9 +11,17 @@ public class ProductDocumentApi
     {
         _httpClient = httpClient;
     }
-    public List<ProductDocumentResponseModel> List()
+    public List<ProductDocumentResponseModel> List(int productId)
     {
-        var responseProductDocument = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductDocumentResponseModel>>>("ProductDocument/List").Result;
+        var responseProductDocument = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductDocumentResponseModel>>>("ProductDocument/GetByProductId?Id=" + productId).Result;
+
         return responseProductDocument.Data;
     }
+    public bool Create(CreateProductDocumentRequestModel request)
+    {
+        var response = _httpClient.PostAsJsonAsync("ProductDocument/Create", request).Result;
+        return response.IsSuccessStatusCode;
+    }
+
+
 }
