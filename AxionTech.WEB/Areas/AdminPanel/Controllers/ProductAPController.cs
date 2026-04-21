@@ -1,10 +1,12 @@
 ﻿using AxionTech.WEB.GetApi;
 using Azure.Core;
 using Core.Dtos;
+using Core.Enums;
 using Core.Models.Entities.Category;
 using Core.Models.Entities.Product;
 using Core.Models.Entities.ProductDocument;
 using Core.Models.Entities.ProductPicture;
+using Core.Models.Entities.ProductPrice;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
@@ -40,15 +42,15 @@ public class ProductAPController : Controller
     {
         var product = _productApi.GetById(id);
 
-        var price = _productPriceApi.GetPriceByProductId(id);
+        var price = _productPriceApi.List().Where(k => k.ProductId == id).ToList();
 
         var getProductDetail = new ProductDetailResponseModel
         {
             ProductDetail = product,
             //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
-            ProductDocument = null,
-            ProductPicture = null,
+            ProductPicture = _productPictureApi.List().Where(k => k.ProductId == id).ToList(),
+            ProductDocument = _productDocumentApi.List(id),
             ProductPrice = price,
 
         };
@@ -59,12 +61,12 @@ public class ProductAPController : Controller
     {
         var getProductDetail = new ProductCreateUpdateResponseModel
         {
-            ProductDetail = null,
+            ProductDetail = new ProductResponseModel(),
             //ProductPicture = _productPictureApi.List().Where(k=>k.ProductId==Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
-            ProductDocument = null,
-            ProductPicture = null,
-            ProductPrice = null,
+            ProductPrice = new List<ProductPriceResponseModel>(),
+            ProductPicture = new List<ProductPictureResponseModel>(),
+            ProductDocument = new List<ProductDocumentResponseModel>(),
             Category = _categoryApi.List()
 
         };
@@ -116,8 +118,9 @@ public class ProductAPController : Controller
             ProductDetail = _productApi.GetById(Id),
             ProductPicture = _productPictureApi.List().Where(k => k.ProductId == Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),
-            ProductDocument = null,
-            Category=_categoryApi.List()
+            ProductDocument = _productDocumentApi.List(Id),
+            ProductPrice = _productPriceApi.List().Where(k => k.ProductId == Id).ToList(),
+            Category =_categoryApi.List()
 
         };
         return View(getProductAllDetail);
@@ -216,22 +219,17 @@ public class ProductAPController : Controller
         }
         return Json(new { success = true, message = "Resim başarıyla silindi.",data= getPicture });
     }
-
     [HttpPost]
-    public async Task<IActionResult> DocumentUpload(IFormFile file)
+    public async Task<IActionResult> UploadDocument(IFormFile file, int productId)
     {
-        if (file == null || file.Length == 0)
-        {
-            return Json(new { success = false, message = "Dosya seçilmedi." });
-        }
+        if (file == null || file.Length == 0) return Json(new { success = false, message = "Dosya seçilmedi." });
 
-        var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+        var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
         var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents");
 
         if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
 
         string filePath = Path.Combine(uploadFolder, uniqueFileName);
-
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
             await file.CopyToAsync(fileStream);
@@ -240,14 +238,51 @@ public class ProductAPController : Controller
         var createDocumentRequest = new Core.Models.Entities.ProductDocument.CreateProductDocumentRequestModel
         {
             ProductId = productId,
-            Url = "/documents/" + uniqueFileName,
+            Url = "/documents/" + uniqueFileName, 
             FileName = file.FileName,
             FileType = Path.GetExtension(file.FileName)
         };
 
         bool result = _productDocumentApi.Create(createDocumentRequest);
 
-        return Json(new { success = result, data = createDocumentRequest });
+        return Json(new
+        {
+            success = result,
+            message = result ? "Başarılı" : "API Hatası: Veritabanına kaydedilemedi.",
+            data = createDocumentRequest
+        });
+    }
+
+    [HttpPost]
+    public IActionResult DeleteDocument(int id)
+    {
+        var result = _productDocumentApi.Delete(id);
+
+        if (result)
+        {
+            return Json(new { success = true, message = "Döküman silindi." });
+        }
+        return Json(new { success = false, message = "Döküman silinemedi." });
+    }
+
+    [HttpPost]
+    public IActionResult AddPrice(decimal price, string description, int productId)
+    {
+        var request = new CreateProductPriceRequestModel
+        {
+            ProductId = productId,
+            Price = price,
+            Description = description
+        };
+        var result = _productPriceApi.Create(request);
+        return Json(new { success = (result == ResponseMessageEnum.Success) });
+    }
+
+    [HttpPost]
+    public IActionResult DeletePrice(int id)
+    {
+        var result = _productPriceApi.Delete(new DeleteProductPriceRequestModel { Id = id });
+        return Json(new { success = (result == ResponseMessageEnum.Success) });
     }
 
 }

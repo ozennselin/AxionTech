@@ -1,39 +1,46 @@
 ﻿using Business.Service.Interfaces;
+using Core.Enums;
 using Core.Models.Entities.ProductDocument;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
-using System.Reflection.Metadata;
+using System.Linq;
 
 namespace Business.Service;
 
 public class ProductDocumentService : IProductDocumentService
 {
     private readonly IProductDocumentRepository _productDocumentRepository;
-   
+
     public ProductDocumentService(IProductDocumentRepository productDocumentRepository)
     {
         _productDocumentRepository = productDocumentRepository;
     }
-    public void Create(CreateProductDocumentRequestModel request)
+    public ResponseMessageEnum Create(CreateProductDocumentRequestModel request)
     {
-        var newProductDocument = new ProductDocument
+        try
         {
-            ProductId = request.ProductId,
-            Url = request.Url,
-            FileName = request.FileName,
-            FileType = request.FileType
-        };
-        _productDocumentRepository.Add(newProductDocument);
+            var newProductDocument = new ProductDocument
+            {
+                ProductId = request.ProductId,
+                Url = request.Url,
+                FileName = request.FileName,
+                FileType = request.FileType,
+                CreateDate = DateTime.Now,
+                CreatorId = 1
+            };
+            _productDocumentRepository.Add(newProductDocument);
+            return ResponseMessageEnum.Success;
+        }
+        catch { return ResponseMessageEnum.Error; }
     }
 
-    public void Delete(DeleteProductDocumentRequestModel request)
+    public ResponseMessageEnum Delete(DeleteProductDocumentRequestModel request)
     {
         var documentToDelete = _productDocumentRepository.GetById(request.Id);
-        if (documentToDelete == null)
-        {
-            throw new Exception("Product document not found.");
-        }
+        if (documentToDelete == null) return ResponseMessageEnum.NotExist;
+
         _productDocumentRepository.Delete(documentToDelete);
+        return ResponseMessageEnum.Success;
     }
 
     public List<ProductDocumentResponseModel> GetByProductId(int productId)
@@ -52,15 +59,14 @@ public class ProductDocumentService : IProductDocumentService
     public void Update(UpdateProductDocumentRequestModel request)
     {
         var documentToUpdate = _productDocumentRepository.GetById(request.Id);
-        if (documentToUpdate==null)
+        if (documentToUpdate == null)
         {
-            throw new Exception("Document not found");
+            throw new Exception("Product document not found.");
         }
         documentToUpdate.ProductId = request.ProductId;
         documentToUpdate.Url = request.Url;
         documentToUpdate.FileName = request.FileName;
         documentToUpdate.FileType = request.FileType;
-
         _productDocumentRepository.Update(documentToUpdate);
     }
 }

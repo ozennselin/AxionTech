@@ -1,13 +1,12 @@
 ﻿@using Core.Models.Entities.Product
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "Detail"; // List olan yeri Detail yaptık
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
 
 @model ProductDetailResponseModel
 
 @* 1-Product info *@
-<!-- right column -->
 <div class="col-md-12">
     <div class="card card-info">
         <div class="card-header">
@@ -20,9 +19,7 @@
                     <input class="form-control" type="text" value="@Model.ProductDetail.Id" disabled>
                     <label> Description</label>
                     <input class="form-control" type="text" value="@Model.ProductDetail.Description" disabled>
-
                 </div>
-                <!-- /.card-body -->
             </div>
             <div class="col-md-6">
                 <div class="card-body">
@@ -31,12 +28,10 @@
                     <label> Category Name</label>
                     <input class="form-control" type="text" value="@Model.ProductDetail.CategoryName" disabled>
                 </div>
-                <!-- /.card-body -->
             </div>
         </div>
     </div>
 </div>
-
 
 @* 2-product price info *@
 <div class="col-md-12">
@@ -44,23 +39,41 @@
         <div class="card-header">
             <h3 class="card-title">Product Price</h3>
         </div>
-
+        <div class="card-body">
+            @* Senin modelindeki List<ProductPriceResponseModel> yapısını döngüye sokuyoruz *@
+            @if (Model.ProductPrice != null)
+            {
+                foreach (var item in Model.ProductPrice)
+                {
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <input class="form-control" type="text" value="@item.Price.ToString("N2") ₺" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control" type="text" value="@item.Description" disabled>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
 </div>
 
 @* 3-product picture info *@
-
 <div class="col-md-12">
     <div class="card card-info">
         <div class="card-header">
             <h3 class="card-title">Product Picture</h3>
         </div>
-        <div>
-            <img src="~/picture/p2.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/p3.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/p4.jpg" class="img-thumbnail w-25" alt="...">
-            <img src="~/picture/phone1.jpg" class="img-thumbnail w-25" alt="...">
-
+        <div class="card-body">
+            @* Statik resimleri sildik, Modelden gelenleri senin img yapınla ekledik *@
+            @if (Model.ProductPicture != null)
+            {
+                foreach (var pic in Model.ProductPicture)
+                {
+                    <img src="@pic.Url" class="img-thumbnail w-25" alt="@pic.OrjinalName">
+                }
+            }
         </div>
     </div>
 </div>
@@ -71,6 +84,18 @@
         <div class="card-header">
             <h3 class="card-title">Product Document</h3>
         </div>
-
+        <div class="card-body">
+            @if (Model.ProductDocument != null)
+            {
+                foreach (var doc in Model.ProductDocument)
+                {
+                    <div class="mb-2">
+                        <a href="@doc.Url" target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="fas fa-file"></i> @doc.FileName
+                        </a>
+                    </div>
+                }
+            }
+        </div>
     </div>
 </div>

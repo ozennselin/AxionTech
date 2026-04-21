@@ -54,9 +54,57 @@
         <div class="card-header">
             <h3 class="card-title">Product Price</h3>
         </div>
+        <div class="card-body">
+            <div class="row mb-4 border-bottom pb-3">
+                <div class="col-md-5">
+                    <label>Fiyat (₺)</label>
+                    <input type="number" id="newPrice" class="form-control" placeholder="0.00">
+                </div>
+                <div class="col-md-5">
+                    <label>Açıklama</label>
+                    <input type="text" id="newPriceDesc" class="form-control" placeholder="Örn: Liste Fiyatı, İndirimli vb.">
+                </div>
+                <div class="col-md-2">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-success btn-block" onclick="SavePrice()">Ekle</button>
+                </div>
+            </div>
 
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="bg-light text-center">
+                        <th>Fiyat</th>
+                        <th>Açıklama</th>
+                        <th style="width: 100px;">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="priceListTable">
+                    @if (Model.ProductPrice != null && Model.ProductPrice.Any())
+                    {
+                        foreach (var item in Model.ProductPrice)
+                        {
+                            <tr id="price-row-@item.Id">
+                                <td class="text-center"><strong>@item.Price.ToString("N2") ₺</strong></td>
+                                <td>@item.Description</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-danger btn-xs" onclick="RemovePrice(@item.Id)">
+                                        <i class="fas fa-trash"></i> Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr id="no-price-msg">
+                            <td colspan="3" class="text-center text-muted">Henüz bir fiyat tanımlanmamış.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>c
+</div>
 
 @* 3-product picture info *@
 
@@ -66,16 +114,15 @@
 
 @* 4- product document info *@
 
- @Html.Partial("_DocumentListPartial", Model.ProductDocument) 
-<div class="col-md-12">
-    <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Product Document</h3>
-        </div>
-
-    </div>
-</div>
-
+@Html.Partial("_DocumentPartial", null)
+@if (Model.ProductDocument != null)
+{
+    @Html.Partial("_DocumentListPartial", Model.ProductDocument)
+}
+else
+{
+    @Html.Partial("_DocumentListPartial", new List<Core.Models.Entities.ProductDocument.ProductDocumentResponseModel>())
+}
 
 
 @section _js {
@@ -84,4 +131,5 @@
     <script src="~/js/insertpicture.js" ></script>
     <script src="~/js/deletepicture.js"></script>
     <script src="~/js/insertdocument.js"></script>
+    <script src="~/js/insertprice.js"></script>
 }

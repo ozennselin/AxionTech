@@ -9,6 +9,6 @@ public class ProductDetailResponseModel
     public ProductResponseModel ProductDetail { get; set; } 
     public List<ProductPictureResponseModel> ProductPicture { get; set; } 
     public List<ProductDocumentResponseModel> ProductDocument { get; set; }
-    public ProductPriceResponseModel ProductPrice { get; set; }
+    public List<ProductPriceResponseModel> ProductPrice { get; set; }
 
 }

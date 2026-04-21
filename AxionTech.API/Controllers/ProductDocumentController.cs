@@ -23,5 +23,19 @@ public class ProductDocumentController : BaseAPIController
         return ResultAPI(getDocument);
     }
 
+    [HttpPost("Create")]
+    public IActionResult Create(CreateProductDocumentRequestModel request)
+    {
+        var result = _productDocumentService.Create(request);
+        return ResultAPI(result);
+    }
+
+    [HttpDelete("Delete")]
+    public IActionResult Delete(int Id) 
+    {
+        var request = new DeleteProductDocumentRequestModel { Id = Id };
+        var result = _productDocumentService.Delete(request);
+        return ResultAPI(result);
+    }
 
 }

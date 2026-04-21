@@ -1,23 +1,30 @@
 ﻿@using Core.Models.Entities.ProductDocument
-
 @model List<ProductDocumentResponseModel>
 
 <div class="col-md-12 mt-3">
-    <div class="row" id="dokumanList">
-        @if (Model!=null)
-        {
-            foreach (var item in Model)
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Product Document List</h3>
+        </div>
+        <div class="row p-3" id="dokumanList">
+            @if (Model != null)
             {
-                <div class="col-md-3" id="${item.FileName}">
-                    <div class="info-box shadow-none border">
-                        <span class="info-box-icon bg-secondary"><i class="far fa-file-alt"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text text-sm">@item.FileName</span>
-                            <a href="@item.Url" target="_blank" class="btn btn-xs btn-outline-info">Görüntüle</a>
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-2 text-center mb-3" id="@item.FileName">
+                        <div class="border rounded p-3 bg-light">
+                            <i class="fas fa-file-pdf fa-3x text-danger mb-2"></i>
+                            <p class="text-truncate mb-2" style="font-size: 12px;" title="@item.FileName">
+                                @item.FileName
+                            </p>
+                            <div class="btn-group w-100">
+                                <a href="@item.Url" target="_blank" class="btn btn-xs btn-outline-primary">Aç</a>
+                                <button type="button" class="btn btn-xs btn-outline-danger" onclick="DeleteDocument(@item.Id)">Sil</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-        }
+        </div>
     </div>
 </div>

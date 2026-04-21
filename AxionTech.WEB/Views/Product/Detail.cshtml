@@ -138,7 +138,10 @@
                 <div class="single-product-details">
                     <h2>@Model.ProductDetail.Name</h2>
 
-                    <h5>@Model.ProductPrice.Price.ToString("C") ₺</h5>
+                    @foreach (var item in Model.ProductPrice)
+                    {
+                        <h5>@item.Price.ToString("C2") ₺ (@item.Description)</h5>
+                    }
 
                     <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span>
                     <p>

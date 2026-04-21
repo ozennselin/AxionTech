@@ -1,11 +1,12 @@
-﻿using Core.Models.Entities.ProductDocument;
+﻿using Core.Enums;
+using Core.Models.Entities.ProductDocument;
 
 namespace Business.Service.Interfaces;
 
 public interface IProductDocumentService
 {
-    void Create(CreateProductDocumentRequestModel request);
+    ResponseMessageEnum Create(CreateProductDocumentRequestModel request);
     void Update(UpdateProductDocumentRequestModel request);
-    void Delete(DeleteProductDocumentRequestModel request);
+    ResponseMessageEnum Delete(DeleteProductDocumentRequestModel request);
     List<ProductDocumentResponseModel> GetByProductId(int productId);
 }

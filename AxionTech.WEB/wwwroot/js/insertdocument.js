@@ -1,45 +1,75 @@
-﻿console.log("insertdocument.js aktif");
+﻿Dropzone.autoDiscover = false;
 
-Dropzone.autoDiscover = false;
-
-document.addEventListener("DOMContentLoaded", function () {
-    var docElement = document.querySelector("#docDropzone");
+$(document).ready(function () {
+    var docElement = document.querySelector("#documentDropzone");
 
     if (docElement) {
-        var myDocDropzone = new Dropzone(docElement, {
+        var myDocDz = new Dropzone(docElement, {
+            url: "/AdminPanel/ProductAP/UploadDocument",
+            paramName: "file",
             autoProcessQueue: false,
             acceptedFiles: ".pdf,.doc,.docx,.xls,.xlsx",
             init: function () {
                 var dz = this;
-                var submitBtn = document.querySelector("#dokumanYukle");
 
-                submitBtn.addEventListener("click", function (e) {
+                $("#dokumanYukle").click(function (e) {
                     e.preventDefault();
                     dz.processQueue();
                 });
 
-                this.on("success", function (file, response) {
-                    var hedefDiv = document.getElementById("dokumanList");
+                this.on("sending", function (file, xhr, formData) {
+                    var pId = $("input[name='id']").val();
+                    formData.append("productId", pId);
+                });
 
-                    if (hedefDiv && response.success) {
-                        var docData = response.data;
+                this.on("success", function (file, response) {
+                    if (response.success) {
+                        var d = response.data;
+                        var dId = d.id || d.Id;
+                        var dName = d.fileName || d.FileName;
+                        var dUrl = d.url || d.Url;
 
                         var html = `
-                            <div class="col-md-3">
-                                <div class="info-box shadow-none border">
-                                    <span class="info-box-icon bg-info"><i class="far fa-file-alt"></i></span>
-                                    <div class="info-box-content">
-                                        <span class="info-box-text text-sm">${docData.fileName}</span>
-                                        <a href="${docData.url}" target="_blank" class="btn btn-xs btn-outline-info">Görüntüle</a>
+                            <div class="col-sm-2 text-center mb-3" id="doc-${dId}">
+                                <div class="border rounded p-3 bg-light" style="min-height: 150px;">
+                                    <i class="fas fa-file-pdf fa-3x text-danger mb-2"></i>
+                                    <p class="text-truncate mb-2" style="font-size: 12px;" title="${dName}">
+                                        ${dName}
+                                    </p>
+                                    <div class="btn-group w-100">
+                                        <a href="${dUrl}" target="_blank" class="btn btn-xs btn-outline-primary">Aç</a>
+                                        <button type="button" class="btn btn-xs btn-outline-danger" onclick="DeleteDocument(${dId})">Sil</button>
                                     </div>
                                 </div>
                             </div>`;
 
-                        hedefDiv.insertAdjacentHTML("beforeend", html);
-                        this.removeFile(file);
+                        $("#dokumanList").append(html);
+                        $("#no-doc-msg").remove();
+                        dz.removeFile(file);
+                    } else {
+                        alert(response.message);
                     }
                 });
             }
         });
     }
 });
+
+function DeleteDocument(id) {
+    if (confirm("Bu dökümanı silmek istediğinize emin misiniz?")) {
+        $.ajax({
+            url: "/AdminPanel/ProductAP/DeleteDocument/" + id,
+            type: "POST",
+            success: function (res) {
+                if (res.success) {
+                    $("#doc-" + id).fadeOut(300, function () { $(this).remove(); });
+                } else {
+                    alert(res.message);
+                }
+            },
+            error: function () {
+                alert("Sistem hatası oluştu.");
+            }
+        });
+    }
+}

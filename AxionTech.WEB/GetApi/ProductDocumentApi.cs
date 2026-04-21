@@ -23,5 +23,11 @@ public class ProductDocumentApi
         return response.IsSuccessStatusCode;
     }
 
+    public bool Delete(int id)
+    {
+        var response = _httpClient.DeleteAsync("ProductDocument/Delete?Id=" + id).Result;
+        return response.IsSuccessStatusCode;
+    }
+
 
 }

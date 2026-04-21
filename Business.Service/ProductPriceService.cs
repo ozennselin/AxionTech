@@ -19,7 +19,24 @@ public class ProductPriceService : IProductPriceService
 
     public ResponseMessageEnum Create(CreateProductPriceRequestModel request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var newPrice = new ProductPrice
+            {
+                ProductId = request.ProductId,
+                Price = request.Price,
+                Description = request.Description,
+                IsActive = true,
+                CreateDate = DateTime.Now,
+                CreatorId = 1
+            };
+            _productPriceRepository.Add(newPrice);
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.Error;
+        }
     }
 
     //public ResponseMessageEnum Create(CreateProductPriceRequestModel request)
@@ -139,5 +156,20 @@ public class ProductPriceService : IProductPriceService
         {
             return ResponseMessageEnum.UpdateErrorWithMessage;
         }
+    }
+
+    public List<ProductPriceResponseModel> GetPricesByProductId(int productId)
+    {
+        var list = _productPriceRepository.GetAll()
+            .Where(x => x.ProductId == productId && x.IsActive == true)
+            .ToList();
+
+        return list.Select(x => new ProductPriceResponseModel
+        {
+            Id = x.Id,
+            ProductId = x.ProductId,
+            Price = x.Price,
+            Description = x.Description
+        }).ToList();
     }
 }
