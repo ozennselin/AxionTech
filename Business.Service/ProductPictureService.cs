@@ -18,6 +18,13 @@ public class ProductPictureService : IProductPictureService
     {
         try
         {
+            var isAny = _productPictureRepository.GetAll()
+                    .Any(x => x.ProductId == request.ProductId && x.OrjinalName == request.OrjinalName);
+
+            if (isAny)
+            {
+                return ResponseMessageEnum.Error; 
+            }
             var newProductPicture = new ProductPicture
             {
                 ProductId = request.ProductId,

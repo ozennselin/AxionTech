@@ -45,6 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         hedefDiv.insertAdjacentHTML("beforeend", yeniResim);
                         this.removeFile(file);
+                    } else if (!response.success) {
+                        alert(response.message);
+                        this.removeFile(file);
                     }
                 });
             }

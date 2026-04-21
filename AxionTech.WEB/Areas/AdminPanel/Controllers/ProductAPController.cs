@@ -169,15 +169,8 @@ public class ProductAPController : Controller
 
         //resme benzersiz isim verme işlemi
         var uniquePictureName = Guid.NewGuid().ToString() + "_" + file.FileName;
-        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
-        string filePath = Path.Combine(uploadFolder, uniquePictureName);
 
-        //Fizikse Kayıt
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        {
-            await file.CopyToAsync(fileStream);
-        }
-        //Resmi DB ye  kaydetme işlemi
+        //Resmi DB ye  kaydetme işlemi için request hazırlanıyor
         var createProductPictureRequest = new CreateProductPictureRequestModel
         {
             ProductId = productId, //Bu değeri dinamik olarak belirlemeniz gerekecek
@@ -187,11 +180,23 @@ public class ProductAPController : Controller
             Name = uniquePictureName,
             OrjinalName = file.FileName
         };
+
+        // Önce DB kaydı deneniyor (Service içindeki kontrol burada çalışır)
         bool result = _productPictureApi.Create(createProductPictureRequest);
 
         if (!result)
         {
-            return Json(new { success = false, message = "Resim veritabanına kaydedilirken bir hata oluştu." });
+            // Eğer servis "Aynı isimli resim var" diyerek false dönerse fiziksel kayda hiç geçmiyoruz
+            return Json(new { success = false, message = "Bu ürün için aynı isimli bir resim zaten mevcut!" });
+        }
+
+        //Fizikse Kayıt (DB kaydı başarılıysa buraya geçer)
+        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
+        string filePath = Path.Combine(uploadFolder, uniquePictureName);
+
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(fileStream);
         }
 
         return Json(new { success = true, data = createProductPictureRequest });
