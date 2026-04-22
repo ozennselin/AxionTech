@@ -36,6 +36,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         return _dbSet.Find(id);
     }
+
     public  IQueryable<TEntity> GetAllQuery(Expression<Func<TEntity,bool>> query)
     {
         //IQueryable
@@ -61,8 +62,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public void Update(TEntity entity)
     {
-        //_dbSet.Update(entity);
+        _dbSet.Update(entity);
         _axionTechDB.SaveChanges();
     }
 
+    
 }

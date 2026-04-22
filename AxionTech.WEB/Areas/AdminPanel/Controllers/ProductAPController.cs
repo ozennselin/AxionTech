@@ -32,6 +32,7 @@ public class ProductAPController : Controller
         _categoryApi = categoryApi;
     }
 
+    #region Product    
     public IActionResult List()
     {
         var list = _productApi.List();
@@ -158,6 +159,10 @@ public class ProductAPController : Controller
         return View();
     }
 
+    #endregion
+
+    #region Picture    
+
     [HttpPost]
     public async Task<IActionResult> Upload(IFormFile file)
     {
@@ -210,20 +215,27 @@ public class ProductAPController : Controller
         {
             return Json(new { success = false, message = "Resim bulunamadı." });
         }
-        
+
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", getPicture.Url.TrimStart('/'));
         if (System.IO.File.Exists(filePath))
         {
             System.IO.File.Delete(filePath);
         }
-     
+
         bool result = _productPictureApi.Delete(new DeleteProductPictureRequestModel { Id = id });
         if (!result)
         {
             return Json(new { success = false, message = "Resim veritabanından silinirken bir hata oluştu." });
         }
-        return Json(new { success = true, message = "Resim başarıyla silindi.",data= getPicture });
+        return Json(new { success = true, message = "Resim başarıyla silindi.", data = getPicture });
     }
+
+
+    #endregion  
+
+    #region Document
+
+
     [HttpPost]
     public async Task<IActionResult> UploadDocument(IFormFile file, int productId)
     {
@@ -269,6 +281,8 @@ public class ProductAPController : Controller
         }
         return Json(new { success = false, message = "Döküman silinemedi." });
     }
+   
+    #endregion
 
     [HttpPost]
     public IActionResult AddPrice(decimal price, string description, int productId)

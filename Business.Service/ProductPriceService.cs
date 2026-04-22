@@ -21,6 +21,11 @@ public class ProductPriceService : IProductPriceService
     {
         try
         {
+            var priceToUpdate = _productPriceRepository.GetEntityQuery(k=>k.IsActive==true && k.ProductId==request.ProductId);
+
+            priceToUpdate.IsActive = false;
+            _productPriceRepository.Update(priceToUpdate);
+
             var newPrice = new ProductPrice
             {
                 ProductId = request.ProductId,
