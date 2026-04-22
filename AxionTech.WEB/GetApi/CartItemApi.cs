@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Models.Entities.CartItem;
+using Newtonsoft.Json;
 
 namespace AxionTech.WEB.GetApi;
 
@@ -12,13 +13,18 @@ public class CartItemApi
         _httpClient = httpClient;
     }
 
-    public List<CartItemResponseModel> List()
+    public List<CartItemResponseModel> List(int? userId = 1)
     {
-        var response = _httpClient
-            .GetFromJsonAsync<List<CartItemResponseModel>>("CartItem/List")
-            .Result;
+        var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartItemResponseModel>>>($"CartItem/List?userId={userId}").Result;
 
-        return response ?? new List<CartItemResponseModel>();
+        return response?.Data ?? new List<CartItemResponseModel>();
+        //var content=response.Content.ReadAsStringAsync();
+        //if (content.IsCompletedSuccessfully)
+        //{
+        //   var result = JsonConvert.DeserializeObject<APIResponseDTO<List<CartItemResponseModel>>>(content.Result);
+        //    return result.Data;
+        //}
+        //return  new List<CartItemResponseModel>();
     }
     public List<CartItemResponseModel> GetByCartId(int cartId)
     {

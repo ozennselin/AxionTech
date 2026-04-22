@@ -1,5 +1,7 @@
 ﻿using Business.Service.Interfaces;
+using Core.Models.Entities.Cart;
 using Core.Models.Entities.CartItem;
+using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +11,14 @@ namespace Business.Service;
 public class CartItemService : ICartItemService
 {
     private readonly ICartItemRepository _cartItemRepository;
-    public CartItemService(ICartItemRepository cartItemRepository)
+    private readonly ICartRepository _cartRepository;
+    private readonly IProductService _productService;
+
+    public CartItemService(ICartItemRepository cartItemRepository, ICartRepository cartRepository, IProductService productService = null)
     {
         _cartItemRepository = cartItemRepository;
+        _cartRepository = cartRepository;
+        _productService = productService;
     }
     public void Create(CreateCartItemRequestModel request)
     {
@@ -38,7 +45,7 @@ public class CartItemService : ICartItemService
 
     public List<CartItemResponseModel> GetByCartId(int cartId)
     {
-        var cartItems = _cartItemRepository.GetAllQuery(x => x.CartId == cartId).Include(x=>x.Product).ToList();
+        var cartItems = _cartItemRepository.GetAllQuery(x => x.CartId == cartId).Include(x => x.Product).ToList();
 
         return cartItems.Select(x => new CartItemResponseModel
         {
@@ -48,7 +55,7 @@ public class CartItemService : ICartItemService
             Quantity = x.Quantity,
             UnitPrice = x.UnitPrice,
             LineTotal = x.LineTotal,
-            ProductName=x.Product.Name
+            ProductName = x.Product.Name
         }).ToList();
     }
 
@@ -65,5 +72,23 @@ public class CartItemService : ICartItemService
         cartItemToUpdate.UnitPrice = request.UnitPrice;
         cartItemToUpdate.LineTotal = request.Quantity * request.UnitPrice;
         _cartItemRepository.Update(cartItemToUpdate);
+    }
+
+    public List<CartItemResponseModel> List(int? userId = null)
+    {
+        var cartId = _cartRepository.GetEntityQuery(k => !userId.HasValue || k.UserId == userId.Value).Id;
+
+        var getCartItems = _cartItemRepository.GetAllQuery(x => x.CartId == cartId).ToList();
+
+        return getCartItems.Select(ci => new CartItemResponseModel
+        {
+            Id = ci.Id,
+            CartId = ci.CartId,
+            ProductId = ci.ProductId,
+            ProductName =_productService.GetById(ci.ProductId).Name,
+            Quantity = ci.Quantity,
+            UnitPrice = 20,//ProductPrice getirilecek
+            LineTotal =112 //ci.Quantity * 20,
+        }).ToList();
     }
 }

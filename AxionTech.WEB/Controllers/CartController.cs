@@ -8,24 +8,25 @@ namespace AxionTech.WEB.Controllers;
 public class CartController : BaseController
 {
     private readonly CartApi _cartApi;
+    private readonly CartItemApi _cartItemApi;
     private readonly CategoryApi _categoryApi;
     private readonly ProductApi _productApi;
+    private readonly ProductPictureApi _productPictureApi;
 
-
-    public CartController(CartApi cartApi, HttpClient httpClient, CategoryApi categoryApi = null, ProductApi productApi = null) : base(httpClient)
+    public CartController(CartApi cartApi, HttpClient httpClient, CategoryApi categoryApi = null, ProductApi productApi = null, CartItemApi cartItemApi = null) : base(httpClient)
     {
         _cartApi = cartApi;
         _categoryApi = categoryApi;
         _productApi = productApi;
+        _cartItemApi = cartItemApi;
     }
 
     public IActionResult List()
     {
-        ViewBag.category = _categoryApi.List();
-        var getCartItem = _cartApi.GetByUserId(1);//UserId, CartId olan Id değerlerine göre list gelmeli
+        var getCartItem = _cartItemApi.List();//UserId, CartId olan Id değerlerine göre list gelmeli
         //SESSION işlemi yapılabilir. Biz şimdilik 1 verdik.
 
-        return View(getCartItem);
+        return Json(new { success = true, data = getCartItem });
     }
 
     // public IActionResult AddCart(int id)

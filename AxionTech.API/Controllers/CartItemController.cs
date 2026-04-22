@@ -1,4 +1,5 @@
-﻿using Business.Service.Interfaces;
+﻿using Business.Service;
+using Business.Service.Interfaces;
 using Core.Models.Entities.CartItem;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,13 @@ public class CartItemController : BaseAPIController
         _cartItemService.Update(request);
         return Ok();
     }
-   
 
+
+    [HttpGet("List")]
+    public IActionResult List(int userId=1)
+    {
+        var result = _cartItemService.List(userId);
+        return ResultAPI(result);
+
+    }
 }
