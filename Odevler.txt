@@ -11,6 +11,7 @@ bütün tablolarýn api ve web list iþlemleri yapýlacak
 6)AdminPanel tarafýnda bütün tablolar için ProductList'e olduðu gibi list yapýlacak(az kaldý)
 7)Register(Üyelik sayfasý) yapýlacak adminlte de register v2 örneði alýnacak(yapýldý)
 8)JWT (json web token)-Identity ile kullanýcý doðrulama ve yetkilendirme makale okuma
+9)Web site kýsmýnda ürün fiyat gözükmüyor.
 
 -------------------- Bakýlacak -------------------------------
 1)Postman iþlemi tekrar yapýlacak, ayarlarda sýkýntý var
