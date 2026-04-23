@@ -14,7 +14,7 @@
                 var eklenecekUrun = `<li id="product${item.productId}">
                                     <a href="#" class="photo"><img src="${item.picture}" class="cart-thumb" alt="" /></a>
                                     <h6><a href="#">${item.productname} </a></h6>
-                                    <p id="quantity${item.productId}">${item.quantity}x - <span class="price">${item.price}</span></p> </li>`;
+                                    <p id="quantity${item.productId}">${item.quantity}x - <span class="price" id="price${item.productId}">${item.price}</span></p> </li>`;
 
                         document.getElementById("cartDetail").insertAdjacentHTML("beforeend", eklenecekUrun);
                         var getTotal = document.getElementById("totalProcess");
@@ -65,12 +65,14 @@ function AddCart(productId) {
 
                         var getSameProduct = document.getElementById("product" + gelenCevap.data.id + "");
 
-                        if (getSameProduct == undefined || getSameProduct==null) {
+                        if (getSameProduct == null) {
 
                             var eklenecekUrun = `<li id="product${gelenCevap.data.id}">
                                     <a href="#" class="photo"><img src="${gelenCevap.data.picture}" class="cart-thumb" alt="" /></a>
                                     <h6><a href="#">${gelenCevap.data.name} </a></h6>
-                                    <p id="quantity${gelenCevap.data.id}">1x - <span class="price">${gelenCevap.data.price}</span></p> </li>`;
+                                    <span id="quantity${gelenCevap.data.id}">1x - </span> 
+                                    <span class="price" id="price${gelenCevap.data.id}">${gelenCevap.data.price}</span>
+                                    </li>`;
 
                             document.getElementById("cartDetail").insertAdjacentHTML("beforeend", eklenecekUrun);
                             //${gelenCevap.data.total}
@@ -97,18 +99,24 @@ function AddCart(productId) {
                         else {
                             var element = document.getElementById("quantity" + gelenCevap.data.id);
                             var text = element.childNodes[0].nodeValue.trim(); // "2x -"
-                            var number = parseInt(text); // 2
-                            number = number + 1;
-                            document.getElementById("quantity" + gelenCevap.data.id).innerHTML = number + "x -";
+                            var quantity = parseInt(text); // 2
+                            quantity = quantity + 1;
+                            document.getElementById("quantity" + gelenCevap.data.id).innerHTML = quantity + "x -";
 
+                            var getPrice = document.getElementById("price" + gelenCevap.data.id);
+                            getPrice.innerText = gelenCevap.data.price * quantity;
+                            //Sepet toplamı:
+
+                            var getTotal = document.getElementById("totalProcess");
+                            var getTotalPrice = parseInt(getTotal.innerHTML);
+                            var getNewTotal = getTotalPrice + gelenCevap.data.price;
+                            getTotal.innerText = getNewTotal;
                         }
 
                     } catch (e) {
 
 
                     }
-
-                    
 
                 }
                 else {
