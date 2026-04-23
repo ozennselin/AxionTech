@@ -1,9 +1,9 @@
-﻿@using Core.Models.Entities.Cart
+﻿@using Core.Models.Entities.CartItem
 @{
     ViewData["Title"] = "Sepet";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model CartResponseModel
+@model List<CartItemResponseModel>
 
 <!-- Start Top Search -->
 <div class="top-search">
@@ -51,13 +51,14 @@
                         </thead>
                         <tbody>
 
-                            @foreach (var item in Model.Items)
+                            @foreach (var item in Model)
                             {
                                 <tr>
                                     <td class="thumbnail-img">
                                         <a href="#"><img class="img-thumbnail img-fluid" src="@item.PictureUrl" alt="" /></a>
                                     </td>
-                                    <td class="name-pr"><a href="#">@item.ProductName</a>
+                                    <td class="name-pr">
+                                        <a href="#">@item.ProductName</a>
                                     </td>
                                     <td class="price-pr">
                                         <p>@item.UnitPrice</p>
@@ -130,7 +131,7 @@
                     <hr>
                 </div>
             </div>
-            <div class="col-12 d-flex shopping-box"><a href="~/Product/Checkout" class="ml-auto btn hvr-bounce-to-bottom">Ödeme</a> </div>
+            <div class="col-12 d-flex shopping-box"><a href="~/Order/CheckOrder" class="ml-auto btn hvr-bounce-to-bottom">Ödeme</a> </div>
         </div>
 
     </div>

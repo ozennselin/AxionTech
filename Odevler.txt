@@ -11,7 +11,13 @@ bütün tablolarýn api ve web list iþlemleri yapýlacak
 6)AdminPanel tarafýnda bütün tablolar için ProductList'e olduðu gibi list yapýlacak(az kaldý)
 7)Register(Üyelik sayfasý) yapýlacak adminlte de register v2 örneði alýnacak(yapýldý)
 8)JWT (json web token)-Identity ile kullanýcý doðrulama ve yetkilendirme makale okuma
+--------------------Bitirildi---------------------------------------
+-------------------23 Nisan 2026 
 9)Web site kýsmýnda ürün fiyat gözükmüyor.
+10)Poup olarak çýkan sepet  alanýnda undefined kýsýmlar doðru deðerleri ile gelecek
+11)Sepet listesinde ürünleri fiyat, adet,total(quantity*Unitprice) db deki dinamik data yansýtýlacak
+12)Sepetteki toplam ödenecek tutar hesaplanýp yansýtýlacak
+13)Ödeme baþarýlý sayfasý bootsnippet ya da css ile kendin kodlayarak yap
 
 -------------------- Bakýlacak -------------------------------
 1)Postman iþlemi tekrar yapýlacak, ayarlarda sýkýntý var

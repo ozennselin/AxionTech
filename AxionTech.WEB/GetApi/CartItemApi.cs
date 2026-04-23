@@ -26,10 +26,10 @@ public class CartItemApi
         //}
         //return  new List<CartItemResponseModel>();
     }
-    public List<CartItemResponseModel> GetByCartId(int cartId)
+    public List<CartItemResponseModel> GetByCartId(int userId)
     {
         var response = _httpClient
-            .GetFromJsonAsync<List<CartItemResponseModel>>($"CartItem/{cartId}")
+            .GetFromJsonAsync<List<CartItemResponseModel>>($"CartItem/{userId}")
             .Result;
 
         return response ?? new List<CartItemResponseModel>();

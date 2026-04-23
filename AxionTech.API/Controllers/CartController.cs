@@ -42,6 +42,7 @@ public class CartController : BaseAPIController
         var result = _cartService.GetById(cartId);
         return ResultAPI(result);
     }
+    
     [HttpGet("List")]
     public IActionResult List()
     {

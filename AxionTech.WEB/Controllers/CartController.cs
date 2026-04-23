@@ -29,6 +29,14 @@ public class CartController : BaseController
         return Json(new { success = true, data = getCartItem });
     }
 
+    public IActionResult CartItemList(int userId)
+    {
+        var getCartItem = _cartItemApi.List();
+        ViewBag.category = _categoryApi.List();
+
+        return View(getCartItem);
+    }
+
     // public IActionResult AddCart(int id)
     public JsonResult AddCart(int id)//giriş(Açık)
     {
@@ -47,5 +55,11 @@ public class CartController : BaseController
 
         return Json(new { success = false });
 
+    }
+
+    public IActionResult PaymentSuccess()
+    {
+        //Ödeme başarılı sayfası bootsnippet ya da css ile kendin kodlayarak yap
+        return View();
     }
 }
