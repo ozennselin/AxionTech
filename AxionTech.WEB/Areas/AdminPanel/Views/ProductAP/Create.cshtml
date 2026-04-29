@@ -21,23 +21,8 @@
                         <input id="productName" name="Name" class="form-control" type="text" placeholder="Product Name">
 
                         <label for="categoryId" class="form-label">Category Name</label>
-                        <select id="categoryId" name="CategoryId" class="form-control">
-
-                            <option value="">Kategori Seçiniz</option>
-
-                            @if (Model.Category != null && Model.Category.Any())
-                            {
-                                foreach (var item in Model.Category)
-                                {
-                                    if (item.ParentId == 0)
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-
-
-                                    }
-                                }
-                            }
-                        </select>
+                        <!--Kategori doldurma alanı-->
+                        @Html.Partial("_CategoryList", Model.Category)
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -92,9 +77,51 @@
     </div>
 </div>
 
-@section _js{
+@section _js {
+    <script src="~/igtu/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+         //Parent Id değeri o olmayan bağlı kategorileri getirmek için kullanılacak
 
-        <script>
-            //Parent Id değeri o olmayan bağlı kategorileri getirmek için kullanılacak
-        </script>
+
+         $(document).ready(function(){
+        
+                    $("#categoryContainer").on('change','#categoryId',function(){
+
+                              var selectedCategoryId=$(this);
+                               var parentId=selectedCategoryId.val();
+
+                          //C# taafında seçilen kategori için alt kategorileri getirecek Controller methoda yönlendirme
+                          $.ajax({
+                                  url:"/CategoryAP/GetChildCategoryWithId",
+                                  type:"GET",
+                                  data:{categoryId:parentId},
+                                  success:function(response) {
+                                    //data=> birden fazla kategori getirecek
+
+                                    var nextCategoryLevel=parseInt( parentId)+1;
+
+                                           var html=`<div class="category-level" >
+                                        <select class="form-control" data-level="${nextCategoryLevel}">
+                                            <option value="">Altkategori Seçiniz!!</option>`;
+
+
+                                        $.each(response.data,function (index,item){
+                                            html+=`<option value="${item.id}">${item.name}</option>"`;                    
+                                        });
+
+                                        html+=` </select></div>`;
+
+                                        $("#categoryContainer").append(html);
+
+
+                                              //success SON
+                                   },
+                                     error:function(hata) {
+                                         console.log("hata:"+hata.responseText)
+                                     }
+                          });                        
+
+                  });
+        });
+    </script>
 }
