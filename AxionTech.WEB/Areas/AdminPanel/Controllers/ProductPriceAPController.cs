@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
+[Area("AdminPanel")]
+
 public class ProductPriceAPController : Controller
 {
     private readonly ProductPriceApi _productPriceApi;

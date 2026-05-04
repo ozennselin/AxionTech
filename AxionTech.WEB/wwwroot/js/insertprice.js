@@ -9,9 +9,9 @@
     }
 
     $.ajax({
-        url: "/AdminPanel/ProductAP/AddPrice",
+        url: "/AdminPanel/ProductPriceAP/Create",
         type: "POST",
-        data: { price: priceValue, description: priceDesc, productId: pId },
+        data: { Price: priceValue, Description: priceDesc, ProductId: pId },
         success: function (res) {
             if (res.success) {
                 location.reload();
@@ -28,7 +28,7 @@
 function RemovePrice(id) {
     if (confirm("Bu fiyat kaydını silmek istediğinize emin misiniz?")) {
         $.ajax({
-            url: "/AdminPanel/ProductAP/DeletePrice/" + id,
+            url: "/AdminPanel/ProductPriceAP/DeletePrice/" + id,
             type: "POST",
             success: function (res) {
                 if (res.success) {

@@ -34,6 +34,8 @@ public class ProductController : BaseController
         //var responsePro = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>(uriApiAdresPro).Result;   
         #endregion
         ViewBag.category=_categoryApi.List();
+      
+        ViewBag.AllPrices=_productPriceApi.List();
         return View(_productApi.List());
     }
     
