@@ -51,33 +51,33 @@
                         </thead>
                         <tbody>
 
-                         @foreach (var item in Model)
-{
-    <tr>
-        <td class="thumbnail-img">
-            <a href="#"><img class="img-thumbnail img-fluid" src="@item.PictureUrl" alt="" /></a>
-        </td>
-        <td class="name-pr">
-            <a href="#">@item.ProductName</a>
-        </td>
-        <td class="price-pr">
-            <p id="unitPrice_@item.ProductId">@item.UnitPrice</p>
-        </td>
-        <td class="quantity-box">
-            <input type="number" size="4" value="@item.Quantity" min="0" step="1" 
-                   class="c-input-text qty text"
-                   id="input_@item.ProductId"
-                   onchange="updateLineTotal('@item.ProductId')"
-                   onkeyup="updateLineTotal('@item.ProductId')">
-        </td>
-        <td class="total-pr">
-            <p id="lineTotal_@item.ProductId">@item.LineTotal</p>
-        </td>
-        <td class="remove-pr">
-            <a href="#"><i class="fas fa-times"></i></a>
-        </td>
-    </tr>
-}
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="#"><img class="img-thumbnail img-fluid" src="@item.PictureUrl" alt="" /></a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="#">@item.ProductName</a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p id="unitPrice_@item.ProductId">@item.UnitPrice</p>
+                                    </td>
+                                    <td class="quantity-box">
+                                        <input type="number" size="4" value="@item.Quantity" min="0" step="1"
+                                               class="c-input-text qty text"
+                                               id="input_@item.ProductId"
+                                               onchange="updateLineTotal('@item.ProductId')"
+                                               onkeyup="updateLineTotal('@item.ProductId')">
+                                    </td>
+                                    <td class="total-pr">
+                                        <p id="lineTotal_@item.ProductId">@item.LineTotal</p>
+                                    </td>
+                                    <td class="remove-pr">
+                                        <a href="#"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
 
                         </tbody>
                     </table>

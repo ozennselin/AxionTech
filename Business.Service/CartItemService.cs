@@ -13,12 +13,15 @@ public class CartItemService : ICartItemService
     private readonly ICartItemRepository _cartItemRepository;
     private readonly ICartRepository _cartRepository;
     private readonly IProductService _productService;
+    private readonly IProductPriceRepository _productPriceRespository;
 
-    public CartItemService(ICartItemRepository cartItemRepository, ICartRepository cartRepository, IProductService productService = null)
+
+    public CartItemService(ICartItemRepository cartItemRepository, ICartRepository cartRepository, IProductService productService = null, IProductPriceRepository productPriceRespository=null)
     {
         _cartItemRepository = cartItemRepository;
         _cartRepository = cartRepository;
         _productService = productService;
+        _productPriceRespository = productPriceRespository;
     }
     public void Create(CreateCartItemRequestModel request)
     {
@@ -87,8 +90,8 @@ public class CartItemService : ICartItemService
             ProductId = ci.ProductId,
             ProductName =_productService.GetById(ci.ProductId).Name,
             Quantity = ci.Quantity,
-            UnitPrice = 20,//ProductPrice getirilecek
-            LineTotal =112 //ci.Quantity * 20,
+            UnitPrice = _productPriceRespository.GetPriceByProductId(ci.ProductId),
+            LineTotal =ci.Quantity * _productPriceRespository.GetPriceByProductId(ci.ProductId),
         }).ToList();
     }
 }
