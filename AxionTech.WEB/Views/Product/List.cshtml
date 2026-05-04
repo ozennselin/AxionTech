@@ -10,7 +10,8 @@
 @{
     var categories = ViewBag.category as List<CategoryResponseModel>;
 }
-
+@using Core.Dtos
+@using System.Linq
 <!-- Start Top Search -->
 <div class="top-search">
     <div class="container">
@@ -75,7 +76,11 @@
                                 <div class="row">
 
                                     @foreach (var item in Model)
-                                    {
+                                    { 
+                                        var priceList = ViewBag.AllPrices as List<Core.Dtos.ProductPriceResponseModel>;
+                                            var currentPrice = priceList?.FirstOrDefault(x => x.ProductId == item.Id)?.Price;
+                                        
+                                        
                                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                             <div class="products-single fix">
                                                 <div class="box-img-hover">
@@ -100,11 +105,20 @@
                                                                 @item.Name
                                                             </a>
                                                         </h4>
-                                                    <h5>@item.Price</h5>
+                                                    <h5>
+                                                        @if (currentPrice != null)
+                                                        {
+                                                            @currentPrice.Value.ToString("C2")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Fiyat Belirtilmedi</span>
+                                                        }
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
-                                    }
+                                     }
 
                                 </div>
                             </div>

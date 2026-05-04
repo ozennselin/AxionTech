@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (myDropzoneElement) {
         var myDropzone = new Dropzone(myDropzoneElement, {
-            url: "/AdminPanel/ProductAP/Upload",
+            url: "/AdminPanel/ProductPictureAP/Upload",
             paramName: "file",
             maxFilesize: 5,
             acceptedFiles: ".jpeg,.jpg,.png,.gif",

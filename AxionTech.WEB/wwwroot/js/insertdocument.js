@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     if (docElement) {
         var myDocDz = new Dropzone(docElement, {
-            url: "/AdminPanel/ProductAP/UploadDocument",
+            url: "/AdminPanel/ProductDocumentAP/UploadDocument",
             paramName: "file",
             autoProcessQueue: false,
             acceptedFiles: ".pdf,.doc,.docx,.xls,.xlsx",
@@ -58,7 +58,7 @@ $(document).ready(function () {
 function DeleteDocument(id) {
     if (confirm("Bu dökümanı silmek istediğinize emin misiniz?")) {
         $.ajax({
-            url: "/AdminPanel/ProductAP/DeleteDocument/" + id,
+            url: "/AdminPanel/ProductDocumentAP/DeleteDocument/" + id,
             type: "POST",
             success: function (res) {
                 if (res.success) {

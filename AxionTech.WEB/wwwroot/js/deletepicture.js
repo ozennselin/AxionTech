@@ -6,7 +6,7 @@
 
         //$=> jquery// 
         $.ajax({
-            url: '/AdminPanel/ProductAP/DeletePicture',
+            url: '/AdminPanel/ProductPictureAP/DeletePicture',
             type: 'POST',
             data: { id: Id },
             success: function (response) {

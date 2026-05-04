@@ -13,6 +13,8 @@ using System.Web;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
+[Area("AdminPanel")]
+
 public class ProductAPController : Controller
 {
     private readonly ProductApi _productApi;
@@ -161,148 +163,148 @@ public class ProductAPController : Controller
 
     #endregion
 
-    #region Picture    
+    //#region Picture    
 
-    [HttpPost]
-    public async Task<IActionResult> Upload(IFormFile file)
-    {
-        //resim db y ekayıt işlemi brda yapılacak
-        if (file == null || file.Length == 0)
-        {
-            return Json(new { success = false, message = "Dosya seçilmedi." });
-        }
+    //[HttpPost]
+    //public async Task<IActionResult> Upload(IFormFile file)
+    //{
+    //    //resim db y ekayıt işlemi brda yapılacak
+    //    if (file == null || file.Length == 0)
+    //    {
+    //        return Json(new { success = false, message = "Dosya seçilmedi." });
+    //    }
 
-        //resme benzersiz isim verme işlemi
-        var uniquePictureName = Guid.NewGuid().ToString() + "_" + file.FileName;
+    //    //resme benzersiz isim verme işlemi
+    //    var uniquePictureName = Guid.NewGuid().ToString() + "_" + file.FileName;
 
-        //Resmi DB ye  kaydetme işlemi için request hazırlanıyor
-        var createProductPictureRequest = new CreateProductPictureRequestModel
-        {
-            ProductId = productId, //Bu değeri dinamik olarak belirlemeniz gerekecek
-            Url = "/picture/" + uniquePictureName,
-            //IsMain = false,//trigger
-            DisplayOrder = 0,//trigger
-            Name = uniquePictureName,
-            OrjinalName = file.FileName
-        };
+    //    //Resmi DB ye  kaydetme işlemi için request hazırlanıyor
+    //    var createProductPictureRequest = new CreateProductPictureRequestModel
+    //    {
+    //        ProductId = productId, //Bu değeri dinamik olarak belirlemeniz gerekecek
+    //        Url = "/picture/" + uniquePictureName,
+    //        //IsMain = false,//trigger
+    //        DisplayOrder = 0,//trigger
+    //        Name = uniquePictureName,
+    //        OrjinalName = file.FileName
+    //    };
 
-        // Önce DB kaydı deneniyor (Service içindeki kontrol burada çalışır)
-        bool result = _productPictureApi.Create(createProductPictureRequest);
+    //    // Önce DB kaydı deneniyor (Service içindeki kontrol burada çalışır)
+    //    bool result = _productPictureApi.Create(createProductPictureRequest);
 
-        if (!result)
-        {
-            // Eğer servis "Aynı isimli resim var" diyerek false dönerse fiziksel kayda hiç geçmiyoruz
-            return Json(new { success = false, message = "Bu ürün için aynı isimli bir resim zaten mevcut!" });
-        }
+    //    if (!result)
+    //    {
+    //        // Eğer servis "Aynı isimli resim var" diyerek false dönerse fiziksel kayda hiç geçmiyoruz
+    //        return Json(new { success = false, message = "Bu ürün için aynı isimli bir resim zaten mevcut!" });
+    //    }
 
-        //Fizikse Kayıt (DB kaydı başarılıysa buraya geçer)
-        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
-        string filePath = Path.Combine(uploadFolder, uniquePictureName);
+    //    //Fizikse Kayıt (DB kaydı başarılıysa buraya geçer)
+    //    var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "picture");
+    //    string filePath = Path.Combine(uploadFolder, uniquePictureName);
 
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        {
-            await file.CopyToAsync(fileStream);
-        }
+    //    using (var fileStream = new FileStream(filePath, FileMode.Create))
+    //    {
+    //        await file.CopyToAsync(fileStream);
+    //    }
 
-        return Json(new { success = true, data = createProductPictureRequest });
-    }
+    //    return Json(new { success = true, data = createProductPictureRequest });
+    //}
 
-    [HttpPost]
-    public IActionResult DeletePicture(int id)
-    {
-        var getPicture = _productPictureApi.GetById(id);
-        if (getPicture == null)
-        {
-            return Json(new { success = false, message = "Resim bulunamadı." });
-        }
+    //[HttpPost]
+    //public IActionResult DeletePicture(int id)
+    //{
+    //    var getPicture = _productPictureApi.GetById(id);
+    //    if (getPicture == null)
+    //    {
+    //        return Json(new { success = false, message = "Resim bulunamadı." });
+    //    }
 
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", getPicture.Url.TrimStart('/'));
-        if (System.IO.File.Exists(filePath))
-        {
-            System.IO.File.Delete(filePath);
-        }
+    //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", getPicture.Url.TrimStart('/'));
+    //    if (System.IO.File.Exists(filePath))
+    //    {
+    //        System.IO.File.Delete(filePath);
+    //    }
 
-        bool result = _productPictureApi.Delete(new DeleteProductPictureRequestModel { Id = id });
-        if (!result)
-        {
-            return Json(new { success = false, message = "Resim veritabanından silinirken bir hata oluştu." });
-        }
-        return Json(new { success = true, message = "Resim başarıyla silindi.", data = getPicture });
-    }
-
-
-    #endregion  
-
-    #region Document
+    //    bool result = _productPictureApi.Delete(new DeleteProductPictureRequestModel { Id = id });
+    //    if (!result)
+    //    {
+    //        return Json(new { success = false, message = "Resim veritabanından silinirken bir hata oluştu." });
+    //    }
+    //    return Json(new { success = true, message = "Resim başarıyla silindi.", data = getPicture });
+    //}
 
 
-    [HttpPost]
-    public async Task<IActionResult> UploadDocument(IFormFile file, int productId)
-    {
-        if (file == null || file.Length == 0) return Json(new { success = false, message = "Dosya seçilmedi." });
+    //#endregion  
 
-        var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-        var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents");
+    //#region Document
 
-        if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
 
-        string filePath = Path.Combine(uploadFolder, uniqueFileName);
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        {
-            await file.CopyToAsync(fileStream);
-        }
+    //[HttpPost]
+    //public async Task<IActionResult> UploadDocument(IFormFile file, int productId)
+    //{
+    //    if (file == null || file.Length == 0) return Json(new { success = false, message = "Dosya seçilmedi." });
 
-        var createDocumentRequest = new Core.Models.Entities.ProductDocument.CreateProductDocumentRequestModel
-        {
-            ProductId = productId,
-            Url = "/documents/" + uniqueFileName, 
-            FileName = file.FileName,
-            FileType = Path.GetExtension(file.FileName)
-        };
+    //    var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+    //    var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents");
 
-        bool result = _productDocumentApi.Create(createDocumentRequest);
+    //    if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
 
-        return Json(new
-        {
-            success = result,
-            message = result ? "Başarılı" : "API Hatası: Veritabanına kaydedilemedi.",
-            data = createDocumentRequest
-        });
-    }
+    //    string filePath = Path.Combine(uploadFolder, uniqueFileName);
+    //    using (var fileStream = new FileStream(filePath, FileMode.Create))
+    //    {
+    //        await file.CopyToAsync(fileStream);
+    //    }
 
-    [HttpPost]
-    public IActionResult DeleteDocument(int id)
-    {
-        var result = _productDocumentApi.Delete(id);
+    //    var createDocumentRequest = new Core.Models.Entities.ProductDocument.CreateProductDocumentRequestModel
+    //    {
+    //        ProductId = productId,
+    //        Url = "/documents/" + uniqueFileName, 
+    //        FileName = file.FileName,
+    //        FileType = Path.GetExtension(file.FileName)
+    //    };
 
-        if (result)
-        {
-            return Json(new { success = true, message = "Döküman silindi." });
-        }
-        return Json(new { success = false, message = "Döküman silinemedi." });
-    }
+    //    bool result = _productDocumentApi.Create(createDocumentRequest);
+
+    //    return Json(new
+    //    {
+    //        success = result,
+    //        message = result ? "Başarılı" : "API Hatası: Veritabanına kaydedilemedi.",
+    //        data = createDocumentRequest
+    //    });
+    //}
+
+    //[HttpPost]
+    //public IActionResult DeleteDocument(int id)
+    //{
+    //    var result = _productDocumentApi.Delete(id);
+
+    //    if (result)
+    //    {
+    //        return Json(new { success = true, message = "Döküman silindi." });
+    //    }
+    //    return Json(new { success = false, message = "Döküman silinemedi." });
+    //}
    
-    #endregion
+    //#endregion
 
-    [HttpPost]
-    public IActionResult AddPrice(decimal price, string description, int productId)
-    {
-        var request = new CreateProductPriceRequestModel
-        {
-            ProductId = productId,
-            Price = price,
-            Description = description
-        };
-        var result = _productPriceApi.Create(request);
-        return Json(new { success = (result == ResponseMessageEnum.Success) });
-    }
+    //[HttpPost]
+    //public IActionResult AddPrice(decimal price, string description, int productId)
+    //{
+    //    var request = new CreateProductPriceRequestModel
+    //    {
+    //        ProductId = productId,
+    //        Price = price,
+    //        Description = description
+    //    };
+    //    var result = _productPriceApi.Create(request);
+    //    return Json(new { success = (result == ResponseMessageEnum.Success) });
+    //}
 
-    [HttpPost]
-    public IActionResult DeletePrice(int id)
-    {
-        var result = _productPriceApi.Delete(new DeleteProductPriceRequestModel { Id = id });
-        return Json(new { success = (result == ResponseMessageEnum.Success) });
-    }
+    //[HttpPost]
+    //public IActionResult DeletePrice(int id)
+    //{
+    //    var result = _productPriceApi.Delete(new DeleteProductPriceRequestModel { Id = id });
+    //    return Json(new { success = (result == ResponseMessageEnum.Success) });
+    //}
 
 }
 
