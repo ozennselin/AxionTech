@@ -78,4 +78,16 @@ public class CategoryAPController : Controller
 
         return View();
     }
+
+    [HttpGet]
+    public IActionResult GetChildCategoryWithId(int categoryId)
+    {
+        var list = _categoryApi.List().Where(k=>k.ParentId==categoryId)
+            .Select(c=>new
+            {
+                id=c.Id,
+                name=c.Name
+            }).ToList();
+        return Json(new { success = true, data = list });
+    }   
 }

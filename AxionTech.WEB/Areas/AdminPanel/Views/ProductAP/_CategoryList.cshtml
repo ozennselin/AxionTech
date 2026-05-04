@@ -1,0 +1,35 @@
+﻿@using Core.Models.Entities.Category
+
+@model List<CategoryResponseModel>
+<style>
+    .category-level{
+        margin-bottom:10px;
+    }
+
+</style>
+
+<div id="categoryContainer">
+
+    <div class="category-level" >
+
+        <select id="categoryId"  name="CategoryId" class="form-control">
+
+            <option value="">Kategori Seçiniz</option>
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    if (item.ParentId == 0)
+                    {
+                        <option id="parentCategory" value="@item.Id">@item.Name</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+</div>
+
+
+
+
