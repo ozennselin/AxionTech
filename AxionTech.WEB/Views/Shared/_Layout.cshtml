@@ -366,6 +366,10 @@
         <script src="~/igtu/js/form-validator.min.js"></script>
         <script src="~/igtu/js/contact-form-script.js"></script>
         <script src="~/igtu/js/custom.js"></script>
+        <script>
+            var initialCartCount = @(ViewBag.CartCount ?? 0);
+            var initialCartTotal = @(ViewBag.CartTotal ?? 0);
+        </script>
         <script src="~/js/cartprocess.js"></script>
         @RenderSection("_js", required: false);
     </body>

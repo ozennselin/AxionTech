@@ -1,135 +1,150 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
 
-
     $.ajax({
         url: '/Cart/List',
         type: 'POST',
         data: { userId: 1 },
         success: function (gelenList) {
-            debugger;
             var list = gelenList.data;
+            var cartDetail = document.getElementById("cartDetail");
+            cartDetail.innerHTML = "";
 
-            list.forEach(function (item) {
+            var totalAll = 0;
+            var totalCount = 0;
 
-                var eklenecekUrun = `<li id="product${item.productId}">
-                                    <a href="#" class="photo"><img src="${item.picture}" class="cart-thumb" alt="" /></a>
-                                    <h6><a href="#">${item.productname} </a></h6>
-                                    <p id="quantity${item.productId}">${item.quantity}x - <span class="price" id="price${item.productId}">${item.price}</span></p> </li>`;
+            if (list && list.length > 0) {
 
-                        document.getElementById("cartDetail").insertAdjacentHTML("beforeend", eklenecekUrun);
-                        var getTotal = document.getElementById("totalProcess");
-                        var getTotalPrice = parseInt(getTotal.innerHTML);
-                        var getNewTotal = getTotalPrice + item.price;
+                list.forEach(function (item) {
 
-                        document.getElementById("deleteTag").remove();
+                    var urunFiyat = parseInt(item.price) || 0;
+                    var urunAdet = parseInt(item.quantity) || 1;
+                    var rowTotal = urunFiyat * urunAdet;
 
-                        var newTotalTag = `<li class="total" id="deleteTag">
-                       <strong>Total</strong>: <span class="float-right" id="totalProcess">${getNewTotal}</span>
-                <a href="/Cart/CartItemList" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a> </li>`;
+                    totalAll += rowTotal;
+                    totalCount += urunAdet;
 
-                        document.getElementById("cartDetail").insertAdjacentHTML("beforeend", newTotalTag)
+                    var eklenecekUrun = `<li id="product${item.productId}">
+                        <a href="#" class="photo"><img src="${item.picture}" class="cart-thumb" alt="" /></a>
+                        <h6><a href="#">${item.productName}</a></h6>
+                        <p id="quantity${item.productId}">${urunAdet}x - 
+                            <span class="price" id="price${item.productId}">${rowTotal}</span>
+                        </p>
+                    </li>`;
 
-                        var getProductCount = document.getElementById("cartProductCount");
-                        var getCount = parseInt(getProductCount.innerHTML);
-                        getCount += 1;
-                        getProductCount.innerHTML = getCount;                
-
+                    cartDetail.insertAdjacentHTML("beforeend", eklenecekUrun);
                 });
+            }
+
+            var newTotalTag = `<li class="total" id="deleteTag">
+                <strong>Total</strong>: 
+                <span class="float-right" id="totalProcess">${totalAll}</span>
+                <a href="/Cart/CartItemList" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
+            </li>`;
+
+            cartDetail.insertAdjacentHTML("beforeend", newTotalTag);
+
+            var getProductCount = document.getElementById("cartProductCount");
+            if (getProductCount) {
+                getProductCount.innerHTML = totalCount;
+            }
         },
         error: function () {
-
-            alert("Ürün sepete eklenirken bir hata oluştu.");
+            alert("Liste yüklenirken bir hata oluştu.");
         }
     });
-
-
-
-})
-
-
-
+});
 
 function AddCart(productId) {
-
     $.ajax({
         url: '/Cart/AddCart',
         type: 'POST',
         data: { id: productId },
         success: function (gelenCevap) {
-
             if (gelenCevap.success) {
-
                 if (gelenCevap.data.id) {
+                    try {
+                        var product = gelenCevap.data;
+                        var unitPrice = parseInt(product.price) || 0;
 
-                    try {//
-
-                        var getSameProduct = document.getElementById("product" + gelenCevap.data.id + "");
+                        var getSameProduct = document.getElementById("product" + product.id);
 
                         if (getSameProduct == null) {
+                            var deleteTag = document.getElementById("deleteTag");
+                            if (deleteTag) {
+                                deleteTag.remove();
+                            }
 
-                            var eklenecekUrun = `<li id="product${gelenCevap.data.id}">
-                                    <a href="#" class="photo"><img src="${gelenCevap.data.picture}" class="cart-thumb" alt="" /></a>
-                                    <h6><a href="#">${gelenCevap.data.name} </a></h6>
-                                    <span id="quantity${gelenCevap.data.id}">1x - </span> 
-                                    <span class="price" id="price${gelenCevap.data.id}">${gelenCevap.data.price}</span>
-                                    </li>`;
+                            var eklenecekUrun = `<li id="product${product.id}">
+                                <a href="#" class="photo"><img src="${product.picture}" class="cart-thumb" alt="" /></a>
+                                <h6><a href="#">${product.name}</a></h6>
+                                <p id="quantity${product.id}">1x - 
+                                    <span class="price" id="price${product.id}">${unitPrice}</span>
+                                </p>
+                            </li>`;
 
                             document.getElementById("cartDetail").insertAdjacentHTML("beforeend", eklenecekUrun);
-                            //${gelenCevap.data.total}
-                            //totalProcess=> ilkin bu sil
-                            //silmeden sonra yeniSekme değişkenini aşağıdaki gibi en sona ekle
-                            var getTotal = document.getElementById("totalProcess");
-                            var getTotalPrice = parseInt(getTotal.innerHTML);
-                            var getNewTotal = getTotalPrice + gelenCevap.data.price;
 
-                            document.getElementById("deleteTag").remove();
+                            var getTotal = document.getElementById("totalProcess");
+                            var getTotalPrice = parseInt(getTotal ? getTotal.innerHTML : 0) || 0;
+                            var getNewTotal = getTotalPrice + unitPrice;
 
                             var newTotalTag = `<li class="total" id="deleteTag">
-                       <strong>Total</strong>: <span class="float-right" id="totalProcess">${getNewTotal}</span>
-                         <a href="/Cart/CartItemList" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a> </li>`;
+                                <strong>Total</strong>: 
+                                <span class="float-right" id="totalProcess">${getNewTotal}</span>
+                                <a href="/Cart/CartItemList" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
+                            </li>`;
 
-                            document.getElementById("cartDetail").insertAdjacentHTML("beforeend", newTotalTag)
-
-                            var getProductCount = document.getElementById("cartProductCount");
-                            var getCount = parseInt(getProductCount.innerHTML);
-                            getCount += 1;
-                            getProductCount.innerHTML = getCount;
+                            document.getElementById("cartDetail").insertAdjacentHTML("beforeend", newTotalTag);
                         }
-
                         else {
-                            var element = document.getElementById("quantity" + gelenCevap.data.id);
-                            var text = element.childNodes[0].nodeValue.trim(); // "2x -"
-                            var quantity = parseInt(text); // 2
-                            quantity = quantity + 1;
-                            document.getElementById("quantity" + gelenCevap.data.id).innerHTML = quantity + "x -";
+                            var element = document.getElementById("quantity" + product.id);
+                            var text = element.childNodes[0].nodeValue.trim();
+                            var quantity = parseInt(text) || 1;
 
-                            var getPrice = document.getElementById("price" + gelenCevap.data.id);
-                            getPrice.innerText = gelenCevap.data.price * quantity;
-                            //Sepet toplamı:
+                            quantity = quantity + 1;
+
+                            element.innerHTML = quantity + `x - 
+                                <span class="price" id="price${product.id}">${unitPrice * quantity}</span>`;
 
                             var getTotal = document.getElementById("totalProcess");
-                            var getTotalPrice = parseInt(getTotal.innerHTML);
-                            var getNewTotal = getTotalPrice + gelenCevap.data.price;
-                            getTotal.innerText = getNewTotal;
+                            var getTotalPrice = parseInt(getTotal.innerHTML) || 0;
+                            getTotal.innerText = getTotalPrice + unitPrice;
+                        }
+
+                        var getProductCount = document.getElementById("cartProductCount");
+                        if (getProductCount) {
+                            var getCount = parseInt(getProductCount.innerHTML) || 0;
+                            getProductCount.innerHTML = getCount + 1;
                         }
 
                     } catch (e) {
-
-
+                        console.log(e);
                     }
-
-                }
-                else {
-
                 }
             }
             else {
-                alert("Ürün sepete eklenirken bir hata oluştu: " + gelenCevap.message);
+                alert("Hata: " + gelenCevap.message);
             }
         },
         error: function () {
-
             alert("Ürün sepete eklenirken bir hata oluştu.");
         }
     });
+}
+
+function updateLineTotal(productId) {
+    var unitPriceText = document.getElementById("unitPrice_" + productId).innerText;
+    var quantityValue = document.getElementById("input_" + productId).value;
+
+    var unitPrice = parseFloat(unitPriceText) || 0;
+    var quantity = parseInt(quantityValue) || 1;
+
+    var total = unitPrice * quantity;
+
+    var totalElement = document.getElementById("lineTotal_" + productId);
+    if (totalElement) {
+        totalElement.innerText = total.toFixed(2);
+    }
+
+    console.log("Ürün: " + productId + " için yeni toplam: " + total);
 }
