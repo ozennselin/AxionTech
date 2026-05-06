@@ -39,7 +39,7 @@
     </form>
 </div>
 
-@if (ViewBag.Error != null)
+@if (!string.IsNullOrEmpty(Model.Message))
 {
-    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+    <div class="alert alert-danger mt-2">@Model.Message</div>
 }

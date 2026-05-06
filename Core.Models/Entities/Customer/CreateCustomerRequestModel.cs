@@ -19,4 +19,5 @@ public class CreateCustomerRequestModel:BaseCreateModel
     public string? TaxOffice { get; set; }
     public string? TaxNumber { get; set; }
     public bool IsActive { get; set; } = true;
+    public string Message { get; set; } = string.Empty;
 }

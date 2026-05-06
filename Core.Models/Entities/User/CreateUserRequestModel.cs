@@ -19,4 +19,5 @@ public class CreateUserRequestModel:BaseCreateModel
     public bool IsActive { get; set; } = true;
     public bool IsEmailConfirmed { get; set; } = false;
     public int RoleId { get; set; }
+    public string Message { get; set; } = string.Empty;
 }

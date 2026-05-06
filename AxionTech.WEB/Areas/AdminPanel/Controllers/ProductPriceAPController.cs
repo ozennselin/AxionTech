@@ -35,7 +35,7 @@ public class ProductPriceAPController : Controller
         if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
             return RedirectToAction("List");
 
-        ViewBag.Error = result.ToString();
+        request.Message = result.ToString();
         return View(request);
     }
 
@@ -53,8 +53,9 @@ public class ProductPriceAPController : Controller
         if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
             return RedirectToAction("List");
 
-        ViewBag.Error = result.ToString();
+        request.Message = result.ToString();
         var price = _productPriceApi.GetPriceByProductId(request.ProductId);
+        price.Message= request.Message;
         return View(price);
     }
 

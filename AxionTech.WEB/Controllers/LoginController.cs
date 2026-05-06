@@ -89,8 +89,7 @@ public class LoginController : Controller
         {
             return RedirectToAction("Login", "Login");
         }
-
-        ViewBag.Error = "Kayıt işlemi başarısız";
+        request.Message=ResponseMessageEnum.Error.ToString();
         return View(request);
     }
 }

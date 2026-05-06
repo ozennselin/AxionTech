@@ -34,7 +34,10 @@
                     </div>
                 </div>
             </div>
-            <p class="danger">@ViewBag.error</p>
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <p class="danger">@Model.Message</p>
+            }
         </div>
         <button class="btn btn-success">Create</button>
     </div>
