@@ -10,7 +10,7 @@
         <form action="~/AdminPanel/ProductAP/Upload" class="dropzone" id="myDropzone" enctype="multipart/form-data">
             <div class="dz-message">
                 <h4>Resimleri sürükleyin veya tıklayarak yükleyin</h4>
-                <input type="hidden" value="2" name="productId" id="productId" />
+                <input type="hidden" value="@Model.ProductDetail.Id" name="productId" id="productId" />
             </div>
         </form>
         <button type="button" id="resimYukle" class="btn btn-success">Resim Yükle</button>
