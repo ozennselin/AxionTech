@@ -19,4 +19,6 @@ public enum ResponseMessageEnum
     DeleteErrorWithMessage = 14,
     Exist = 15,
     NotExist = 16,
+    UserNotFound=17,
+    UserNameOrPasswordFailed=18,
 }

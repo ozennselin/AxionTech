@@ -7,4 +7,5 @@ public class UserLoginModel
     public string? Token { get; set; } = null;
     //Identity, JWT konusu token işlenecek
     //session, cookie konuları analatacağım
+    public string? Message { get; set; } = string.Empty;
 }

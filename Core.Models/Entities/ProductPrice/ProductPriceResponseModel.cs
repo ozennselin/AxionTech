@@ -10,4 +10,5 @@ public class ProductPriceResponseModel
     public int ProductId { get; set; }
     public decimal Price { get; set; }
     public string Description { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
 }

@@ -58,7 +58,10 @@ namespace AxionTech.WEB
             {
                 c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
             });
-
+            builder.Services.AddHttpClient<LoginApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

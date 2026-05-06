@@ -85,9 +85,11 @@ public class ProductAPController : Controller
         {
             return RedirectToAction("List");
         }
-        ViewBag.error = "Ürün oluşturulurken bir hata oluştu.";
+        request.Message = ResponseMessageEnum.Error.ToString();
+
         var getProductDetail = new ProductCreateUpdateResponseModel
         {
+            Message = request.Message,
             ProductDetail = null,
             ProductPicture = _productPictureApi.List().Where(k => k.ProductId == request.Id).ToList(),
             //ProductDocument = _productDocumentApi.List().Where(k=>k.ProductId==Id).ToList(),

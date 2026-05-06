@@ -14,9 +14,9 @@
 
 </form>
 
-@if (ViewBag.Error != null)
+@if (!string.IsNullOrEmpty(Model.Message))
 {
-    <div style="color:red">
-        @ViewBag.Error
+    <div class="alert alert-danger">
+        @Model.Message
     </div>
 }

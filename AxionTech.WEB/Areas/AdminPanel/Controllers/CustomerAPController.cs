@@ -1,4 +1,5 @@
 ﻿using AxionTech.WEB.GetApi;
+using Core.Enums;
 using Core.Models.Entities.Customer;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,7 +70,7 @@ public class CustomerAPController: Controller
             return RedirectToAction("List");
         }
 
-        ViewBag.Error = "Müşteri oluşturulamadı";
+        request.Message=ResponseMessageEnum.Error.ToString();
         return View(request);
     }
 
