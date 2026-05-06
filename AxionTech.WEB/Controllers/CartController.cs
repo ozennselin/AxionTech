@@ -32,7 +32,7 @@ public class CartController : BaseController
     public IActionResult CartItemList(int userId)
     {
         var getCartItem = _cartItemApi.List();
-        ViewBag.category = _categoryApi.List();
+        //ViewBag.category = _categoryApi.List();//Component
 
         return View(getCartItem);
     }

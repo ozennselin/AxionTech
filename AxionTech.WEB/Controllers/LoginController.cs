@@ -56,9 +56,9 @@ public class LoginController : Controller
             //2.parametre Value=> bu kullanıcı girişi yaparken verilecek nickname, username, mail,.. olabilir
             //Session Süre ver.
             //iç layout ya da session farklı ynetim??
-            ViewBag.userName = HttpContext.Session.GetString("UserName");
+           // ViewBag.userName = HttpContext.Session.GetString("UserName");
 
-            return RedirectToAction("_Layout");
+            return RedirectToAction("Index", "Home");
         }
         if (result != null && result.Id == -2)
         {

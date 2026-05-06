@@ -22,7 +22,7 @@ public class OrderController : Controller
 
     public IActionResult CheckOrder()
     {
-        ViewBag.category = _categoryApi.List();
+        //ViewBag.category = _categoryApi.List();//Component yapıldı gerek kalmadı
         return View();
     }
 }

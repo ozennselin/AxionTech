@@ -22,6 +22,15 @@ public class CategoryApi
         return response.Data;
     }
 
+    public async Task<List<CategoryResponseModel>> ListAsync()
+    {
+        var response =  _httpClient
+            .GetFromJsonAsync<APIResponseDTO<List<CategoryResponseModel>>>("Category/List")
+            .Result;
+
+        return  response.Data;
+    }
+
     public CategoryResponseModel GetById(int id)
     {
         var response = _httpClient

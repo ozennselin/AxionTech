@@ -46,8 +46,9 @@ public class CartItemController : BaseAPIController
 
 
     [HttpGet("List")]
-    public IActionResult List(int userId=1)
+    public IActionResult List(int userId = 1)
     {
+
         var result = _cartItemService.List(userId);
         return ResultAPI(result);
 

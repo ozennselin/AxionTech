@@ -9,5 +9,6 @@ public interface ICartItemService
     void Delete(DeleteCartItemRequestModel request);
     List<CartItemResponseModel> GetByCartId(int cartId);
     List<CartItemResponseModel> List(int? userId = null);
+    bool Any(int userId);
 
 }

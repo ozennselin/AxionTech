@@ -79,6 +79,12 @@ public class CartItemService : ICartItemService
 
     public List<CartItemResponseModel> List(int? userId = null)
     {
+        if (!_cartRepository.Any(k => k.UserId == userId))
+        {
+            return new List<CartItemResponseModel>();
+
+        }
+
         var cartId = _cartRepository.GetEntityQuery(k => !userId.HasValue || k.UserId == userId.Value).Id;
 
         var getCartItems = _cartItemRepository.GetAllQuery(x => x.CartId == cartId).ToList();
@@ -93,5 +99,11 @@ public class CartItemService : ICartItemService
             UnitPrice = _productPriceRespository.GetPriceByProductId(ci.ProductId),
             LineTotal =ci.Quantity * _productPriceRespository.GetPriceByProductId(ci.ProductId),
         }).ToList();
+    }
+
+    public bool Any(int userId)
+    {
+        return _cartRepository.Any(k => k.UserId == userId);
+       
     }
 }

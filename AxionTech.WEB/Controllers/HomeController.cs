@@ -25,7 +25,7 @@ public class HomeController : BaseController
         //ViewBag.category = response.Data; 
         #endregion
 
-        ViewBag.category = _categoryApi.List();
+       // ViewBag.category = _categoryApi.List();//Component yapýldý
         return View();
     }
 

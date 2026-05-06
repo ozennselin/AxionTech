@@ -1,0 +1,24 @@
+﻿@using Core.Models.Entities.Category
+@model List<CategoryResponseModel>
+
+
+@foreach (var item in Model)
+{
+    <div class="col-menu col-md-3">
+        @if (item.ParentId == 0)
+        {
+            <h6 class="title">@item.Name</h6>
+            foreach (var altItem in Model)
+            {
+                if (altItem.ParentId == item.Id)
+                {
+                    <div class="content">
+                        <ul class="menu-col">
+                            <li><a href="~/Product/List">@altItem.Name</a></li>
+                        </ul>
+                    </div>
+                }
+            }
+        }
+    </div>
+}

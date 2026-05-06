@@ -1,0 +1,17 @@
+﻿@using Core.Dtos.Entities.User
+@model UserResponseDto
+
+@{
+    //Session dolu ise
+                                  
+    if (Model==null)
+    {
+        <li><a href="~/Login/Login">HESABIM</a></li>
+                                    
+    }
+    else
+    {
+        //Session dolu ise
+        <li><a href="~/Login/MyAccount">@Model.Name</a></li>
+    }
+}
