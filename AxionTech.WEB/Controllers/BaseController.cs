@@ -22,21 +22,21 @@ public class BaseController : Controller
     }
 
 
-    //public UserResponseDto GetUser()
-    //{
-    //    var getUserName = HttpContext.Session.GetString("UserName");
-    //    if (getUserName==null)
-    //    {
-    //        return new UserResponseDto();//null dönmek yerine boş bir UserResponseDto döndürüyoruz
-    //    }
+    public UserResponseDto GetUser()
+    {
+        var getUserName = HttpContext.Session.GetString("UserName");
+        if (getUserName == null)
+        {
+            return new UserResponseDto();//null dönmek yerine boş bir UserResponseDto döndürüyoruz
+        }
 
-    //    var user = new UserResponseDto
-    //    {
-    //        Id = 1,
-    //        Name = getUserName,
-    //        RoleId = 2,
-    //        Role = "x Role"
-    //    };
-    //    return user;
-    //}
+        var user = new UserResponseDto
+        {
+            Id = 1,
+            Name = getUserName,
+            RoleId = 2,
+            Role = "x Role"
+        };
+        return user;
+    }
 }

@@ -40,6 +40,15 @@ public class CartController : BaseController
     // public IActionResult AddCart(int id)
     public JsonResult AddCart(int id)//giriş(Açık)
     {
+        if (GetUser().Name == null)//cookie ye ekle
+        {
+            var getProduct = _productApi.GetById(id);
+            //yukardaki ürün ve ürüne ait Price, Picture bilgileri cookie ye eklenebilir.
+
+            return Json(new { success = true, data = getProduct });
+        }
+        else
+        {
             CreateCartRequestModel model = new CreateCartRequestModel();
             model.ProductId = id;
             model.UserId = 1;//session işlemi yapılabilir. Biz şimdilik 1 verdik.
@@ -54,6 +63,7 @@ public class CartController : BaseController
             }
 
             return Json(new { success = false });
+        }
         //}
         //else
         //{
