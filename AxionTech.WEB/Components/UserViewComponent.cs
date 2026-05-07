@@ -17,11 +17,12 @@ public class UserViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
+
         var getUser = HttpContext.Session.GetString("UserName");
 
         if (getUser == null)
         {
-            return View();
+            return View(new UserResponseDto());
         }
 
         var user = _userApi.GetById(2);

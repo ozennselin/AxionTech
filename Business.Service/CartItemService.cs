@@ -31,7 +31,8 @@ public class CartItemService : ICartItemService
             ProductId = request.ProductId,
             Quantity = request.Quantity,
             UnitPrice = request.UnitPrice,
-            LineTotal = request.Quantity * request.UnitPrice
+            LineTotal = request.Quantity * request.UnitPrice,
+            CreatorId=request.CreatorId
         };
         _cartItemRepository.Add(newCartItem);
     }

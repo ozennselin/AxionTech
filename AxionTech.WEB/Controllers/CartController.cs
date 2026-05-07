@@ -40,21 +40,27 @@ public class CartController : BaseController
     // public IActionResult AddCart(int id)
     public JsonResult AddCart(int id)//giriş(Açık)
     {
-        CreateCartRequestModel model = new CreateCartRequestModel();
-        model.ProductId = id;
-        model.UserId = 1;//session işlemi yapılabilir. Biz şimdilik 1 verdik.
-        var result = _cartApi.AddCart(model);
-        //sepet için cookie işlemi, session işlemi  yapılabilir. Biz DB ye ekleme işlemi yaptık.
-        if (result)
-        {
-           //giriş yapan kullanıcı için sepete eklediği bütün ürünleri getir
-            var getProduct = _productApi.GetById(id);//ürün sayısı db de CartItem da bir prop olarak tutulacak
+            CreateCartRequestModel model = new CreateCartRequestModel();
+            model.ProductId = id;
+            model.UserId = 1;//session işlemi yapılabilir. Biz şimdilik 1 verdik.
+            var result = _cartApi.AddCart(model);
+            //sepet için cookie işlemi, session işlemi  yapılabilir. Biz DB ye ekleme işlemi yaptık.
+            if (result)
+            {
+                //giriş yapan kullanıcı için sepete eklediği bütün ürünleri getir
+                var getProduct = _productApi.GetById(id);//ürün sayısı db de CartItem da bir prop olarak tutulacak
 
-            return Json(new { success = true, data = getProduct });//bitiş-Kapatılacak
-        }
+                return Json(new { success = true, data = getProduct });//bitiş-Kapatılacak
+            }
 
-        return Json(new { success = false });
+            return Json(new { success = false });
+        //}
+        //else
+        //{
+        //    //Sepete eklenen ürünler için kullanıcı giriş yapmamış ise cookie işlemi, session işlemi yapılabilir. 
+        //    return Json(new { success = false, message = "Lütfen giriş yapınız." });
 
+        //}
     }
 
     public IActionResult PaymentSuccess()
