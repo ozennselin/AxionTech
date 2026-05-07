@@ -22,7 +22,7 @@ public class BaseController : Controller
     }
 
 
-    public UserResponseDto GetUser()
+    public UserResponseDto  GetUser()
     {
         var getUserName = HttpContext.Session.GetString("UserName");
         if (getUserName == null)

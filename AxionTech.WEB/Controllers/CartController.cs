@@ -1,6 +1,7 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Models.Entities.Cart;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 
 namespace AxionTech.WEB.Controllers;
@@ -40,11 +41,13 @@ public class CartController : BaseController
     // public IActionResult AddCart(int id)
     public JsonResult AddCart(int id)//giriş(Açık)
     {
+#warning "Bu method giriş yapmamış kullanıcılar için çalışmaz, cookie işlemi yapılabilir." DEVAM EDİLECEK
+        GetUser().Name = null;
         if (GetUser().Name == null)//cookie ye ekle
         {
             var getProduct = _productApi.GetById(id);
             //yukardaki ürün ve ürüne ait Price, Picture bilgileri cookie ye eklenebilir.
-
+            AddCartWithCookie(id);
             return Json(new { success = true, data = getProduct });
         }
         else
@@ -71,6 +74,59 @@ public class CartController : BaseController
         //    return Json(new { success = false, message = "Lütfen giriş yapınız." });
 
         //}
+    }
+
+
+    public JsonResult AddCartWithCookie(int id)
+    {
+        var getProduct = _productApi.GetById(id);
+        if (getProduct != null)
+        {
+            return Json(new { success = false });
+        }
+
+        var createCookie = Request.Cookies["guestCart"];//Cookie için isim verdik, bu isim proje içinde ayı session gibi unique (benzersiz) olmalıdır
+        //Request=> istek
+
+        List<CreateCartCookieModel> cartItems;
+
+        if (createCookie != null)
+        {
+            cartItems = JsonSerializer.Deserialize<List<CreateCartCookieModel>>(createCookie);
+        }
+        else
+        {
+            cartItems = new List<CreateCartCookieModel>();
+        }
+
+        //Sepetin varsa miktar artır, yoksa yeni ürün ekle
+        var existingCartItem = cartItems.FirstOrDefault(c => c.ProductId == id);
+        if (existingCartItem == null)
+        {
+            //yeni ekle
+            cartItems.Add(new CreateCartCookieModel
+            {
+                ProductId = id,
+                Quantity = 1,
+                UnitPrice = getProduct.Price,
+                CreateDate = DateTime.Now
+            });
+        }
+        else
+        {
+            //miktar artır
+            existingCartItem.Quantity += 1;
+        }
+
+        var cookieOptions = new CookieOptions
+        {
+            Expires = DateTime.Now.AddDays(7),//cookie nin geçerlilik süresi
+            HttpOnly = true,//sadece sunucu tarafından erişilebilir, client tarafında js ile erişilemez
+            IsEssential = true//kullanıcı onayı gerektirmez, zorunlu cookie
+        };
+        Response.Cookies.Append("guestCart", JsonSerializer.Serialize(cartItems), cookieOptions);//
+
+        return Json(new { success = true, data = cartItems });
     }
 
     public IActionResult PaymentSuccess()
