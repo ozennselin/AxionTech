@@ -8,6 +8,7 @@ using Core.Models.Entities.ProductDocument;
 using Core.Models.Entities.ProductPicture;
 using Core.Models.Entities.ProductPrice;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
 
@@ -17,6 +18,20 @@ namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
 public class ProductAPController : Controller
 {
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        var adminSession = HttpContext.Session.GetString("AdminPanelUserName");
+
+        if (string.IsNullOrEmpty(adminSession))
+        {
+            context.Result = new RedirectToActionResult(
+                "Login",
+                "AdminLoginAP",
+                new { area = "AdminPanel" });
+        }
+
+        base.OnActionExecuting(context);
+    }
     private readonly ProductApi _productApi;
     private readonly ProductPriceApi _productPriceApi;
     private readonly ProductPictureApi _productPictureApi;

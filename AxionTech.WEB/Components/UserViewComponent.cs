@@ -24,15 +24,9 @@ public class UserViewComponent : ViewComponent
         {
             return View(new UserResponseDto());
         }
-
-        var user = _userApi.GetById(2);
         var getUserResponseDto = new UserResponseDto
         {
-            Id = 1,
-            Name = getUser,
-            Role = "x Role",
-            RoleId = 2
-
+            Name=getUser
         };
         return View(getUserResponseDto);
     }

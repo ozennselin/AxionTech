@@ -1,0 +1,52 @@
+﻿@using Core.Models.Entities.User
+@model UserLoginModel
+
+@{
+    ViewData["Title"] = "Admin Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="~/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/adminlte/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+
+    <div class="login-box">
+        <div class="login-logo">
+            <b>Admin</b> Panel
+        </div>
+
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your admin session</p>
+
+                <form method="post" action="~/AdminPanel/AdminLoginAP/Login">
+                    <div class="input-group mb-3">
+                        <input name="UserName" class="form-control" placeholder="UserName">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input name="Password" type="password" class="form-control" placeholder="Password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+
+                @if (Model != null && !string.IsNullOrEmpty(Model.Message))
+                {
+                    <div class="alert alert-danger mt-2">@Model.Message</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="~/adminlte/plugins/jquery/jquery.min.js"></script>
+    <script src="~/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/adminlte/dist/js/adminlte.min.js"></script>
+</body>
+</html>
