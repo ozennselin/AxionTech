@@ -2,9 +2,6 @@
 using Core.Enums;
 using Core.Models.Entities.User;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AxionTech.WEB.Controllers;
 
@@ -78,18 +75,14 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(CreateUserRequestModel request)
     {
-        using var httpClient = new HttpClient();
+        var response = await _loginApi.Register(request);
 
-        var jsonData = JsonSerializer.Serialize(request);
-        var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-        var response = await httpClient.PostAsync("https://localhost:7162/api/User/Create", content);
-
-        if (response.IsSuccessStatusCode)
+        if (response)
         {
             return RedirectToAction("Login", "Login");
         }
-        request.Message=ResponseMessageEnum.Error.ToString();
+
+        request.Message = ResponseMessageEnum.Error.ToString();
         return View(request);
     }
 }

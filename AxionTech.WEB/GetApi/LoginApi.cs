@@ -20,7 +20,7 @@ public class LoginApi
         var jsonData = JsonSerializer.Serialize(loginModel);
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.PostAsync("https://localhost:7162/api/User/Login", content);
+        var response = await _httpClient.PostAsync("User/Login", content);
 
         var responseContent = await response.Content.ReadAsStringAsync();
         if (string.IsNullOrWhiteSpace(responseContent))
@@ -35,6 +35,16 @@ public class LoginApi
         });
 
         return  loginResponse;
+    }
+
+    public async Task<bool> Register(CreateUserRequestModel request)
+    {
+        var jsonData = JsonSerializer.Serialize(request);
+        var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PostAsync("User/Create", content);
+
+        return response.IsSuccessStatusCode;
     }
 
 }
