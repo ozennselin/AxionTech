@@ -11,24 +11,11 @@ public class CartController : BaseController
     private readonly CartItemApi _cartItemApi;
     private readonly ProductApi _productApi;
 
-    public CartController(CartApi cartApi, HttpClient httpClient, CategoryApi categoryApi = null, ProductApi productApi = null, CartItemApi cartItemApi = null) : base(httpClient)
+    public CartController(CartApi cartApi, HttpClient httpClient, ProductApi productApi = null, CartItemApi cartItemApi = null) : base(httpClient)
     {
         _cartApi = cartApi;
-        _categoryApi = categoryApi;
         _productApi = productApi;
         _cartItemApi = cartItemApi;
-    }
-   
-    private int GetSessionUserId()
-    {
-        var userId = HttpContext.Session.GetString("UserId");
-
-        if (string.IsNullOrEmpty(userId))
-        {
-            return 0;
-        }
-
-        return Convert.ToInt32(userId);
     }
 
     public IActionResult List()
@@ -53,8 +40,7 @@ public class CartController : BaseController
     // public IActionResult AddCart(int id)
     public JsonResult AddCart(int id)//giriş(Açık)
     {
-#warning "Bu method giriş yapmamış kullanıcılar için çalışmaz, cookie işlemi yapılabilir." DEVAM EDİLECEK
-        if (GetSessionUserId() == 0)//cookie ye ekle
+        if (GetSessionUserId() == 0)//cookie ye ekle=> Kullanıcı giriş yapmamış ise cookie işlemi yapılabilir. 
         {
             var getProduct = _productApi.GetById(id);
             //yukardaki ürün ve ürüne ait Price, Picture bilgileri cookie ye eklenebilir.

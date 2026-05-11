@@ -8,21 +8,20 @@ namespace AxionTech.WEB.Controllers;
 
 public class BaseController : Controller
 {
-   public HttpClient _httpClient;
+    public HttpClient _httpClient;
 
     public BaseController(HttpClient httpClient)
     {
-         _httpClient = httpClient;
+        _httpClient = httpClient;
     }
 
-    
+
     public IActionResult Test()
     {
         return View();
     }
 
-
-    public UserResponseDto  GetUser()
+    public UserResponseDto GetUser()
     {
         var getUserName = HttpContext.Session.GetString("UserName");
         if (getUserName == null)
@@ -38,5 +37,15 @@ public class BaseController : Controller
             Role = "x Role"
         };
         return user;
+    }
+
+    public int GetSessionUserId()
+    {
+        var getUserId = HttpContext.Session.GetString("UserId");
+        if (getUserId == null)
+        {
+            return 0;//null dönmek yerine 0 dönüyoruz
+        }
+        return int.Parse(getUserId);
     }
 }

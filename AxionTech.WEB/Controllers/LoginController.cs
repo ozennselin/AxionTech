@@ -1,7 +1,10 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Enums;
+using Core.Models.Entities.Cart;
 using Core.Models.Entities.User;
+using Data.Infrastructure.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace AxionTech.WEB.Controllers;
 
@@ -58,7 +61,22 @@ public class LoginController : Controller
                                                                                  //iç layout ya da session farklı yönetim??
                                                                                  // ViewBag.userName = HttpContext.Session.GetString("UserName");
             HttpContext.Session.SetString("UserId", loginUser.Result.Id.ToString());
+            //Cookie'de ürün varsa ürünleri giriş yapan kullanıcıya ata/sepetine ekle
+           var cartItems = JsonSerializer.Deserialize<List<CreateCartCookieModel>>(Request.Cookies["guestCart"]);
+            if (cartItems.Count()==0)
+            {
             return RedirectToAction("Index", "Home");
+            }
+            //cookie ürünlerini ekleme alanı
+            //1) javascript ile seesion yaparak ekle
+            //2)json döndüren bir yapı ile ekle (klasik login olan kullanıcının sepete ekleme mantığı)
+            //3)klasik login olan kullanıcı methoduna yönlendirme yaparak ekleme
+            foreach (var item in cartItems)
+            {
+                return RedirectToAction("AddCart", "Cart",item.ProductId);
+            }
+
+            return Json(new { success = true });
         }
         if (loginUser != null && loginUser.Id == -2)
         {
