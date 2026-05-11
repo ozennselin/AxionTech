@@ -44,20 +44,20 @@ public class LoginController : Controller
         //    PropertyNameCaseInsensitive = true
         //});
 
-        var result = _loginApi.Login(loginModel);
+        var loginUser = _loginApi.Login(loginModel);
 
-        if (result != null && result.Id > 0)
+        if (loginUser != null && loginUser.Id > 0)
         {
-            HttpContext.Session.SetString("UserName", result.Result.UserName);//Session oluşturme
+            HttpContext.Session.SetString("UserName", loginUser.Result.UserName);//Session oluşturme
             //1. parametre Key=> Unique tir
             //2.parametre Value=> bu kullanıcı girişi yaparken verilecek nickname, username, mail,.. olabilir
             //Session Süre ver.
             //iç layout ya da session farklı ynetim??
            // ViewBag.userName = HttpContext.Session.GetString("UserName");
-
+           HttpContext.Session.SetString("UserId", loginUser.Result.Id.ToString());
             return RedirectToAction("Index", "Home");
         }
-        if (result != null && result.Id == -2)
+        if (loginUser != null && loginUser.Id == -2)
         {
             loginModel.Message = ResponseMessageEnum.UserNameOrPasswordFailed.ToString();
             return View(loginModel);

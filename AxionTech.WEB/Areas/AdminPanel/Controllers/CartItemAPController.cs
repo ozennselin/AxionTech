@@ -16,13 +16,15 @@ public class CartItemAPController:Controller
     }
      public IActionResult List()
     {
-        var cartItems = _cartItemApi.List();
+        var userId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
+        var cartItems = _cartItemApi.List(userId);
         return View(cartItems);
     }
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var cartItems = _cartItemApi.List();
+        var userId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
+        var cartItems = _cartItemApi.List(userId);
         var cartItem = cartItems.FirstOrDefault(x => x.Id == id);
 
         return View(cartItem);

@@ -13,15 +13,17 @@ public class CartItemService : ICartItemService
     private readonly ICartItemRepository _cartItemRepository;
     private readonly ICartRepository _cartRepository;
     private readonly IProductService _productService;
+    private readonly IProductPictureRepository _productPictureRepository;
     private readonly IProductPriceRepository _productPriceRespository;
 
 
-    public CartItemService(ICartItemRepository cartItemRepository, ICartRepository cartRepository, IProductService productService = null, IProductPriceRepository productPriceRespository=null)
+    public CartItemService(ICartItemRepository cartItemRepository, ICartRepository cartRepository, IProductService productService = null, IProductPriceRepository productPriceRespository = null, IProductPictureRepository productPictureRepository = null,IProductPriceRepository productPriceRepository=null)
     {
         _cartItemRepository = cartItemRepository;
         _cartRepository = cartRepository;
         _productService = productService;
-        _productPriceRespository = productPriceRespository;
+        _productPictureRepository = productPictureRepository;
+        _productPriceRespository = productPriceRepository;
     }
     public void Create(CreateCartItemRequestModel request)
     {
@@ -32,7 +34,7 @@ public class CartItemService : ICartItemService
             Quantity = request.Quantity,
             UnitPrice = request.UnitPrice,
             LineTotal = request.Quantity * request.UnitPrice,
-            CreatorId=request.CreatorId
+            CreatorId = request.CreatorId
         };
         _cartItemRepository.Add(newCartItem);
     }
@@ -95,16 +97,17 @@ public class CartItemService : ICartItemService
             Id = ci.Id,
             CartId = ci.CartId,
             ProductId = ci.ProductId,
-            ProductName =_productService.GetById(ci.ProductId).Name,
-            Quantity = ci.Quantity,
+            ProductName = _productService.GetById(ci.ProductId).Name,
+            PictureUrl = _productPictureRepository.GetMainPictureByProductId(ci.ProductId)?.Url,
             UnitPrice = _productPriceRespository.GetPriceByProductId(ci.ProductId),
-            LineTotal =ci.Quantity * _productPriceRespository.GetPriceByProductId(ci.ProductId),
+            Quantity = ci.Quantity,
+            LineTotal = ci.Quantity * 1//_productPriceRespository.GetPriceByProductId(ci.ProductId),
         }).ToList();
     }
 
     public bool Any(int userId)
     {
         return _cartRepository.Any(k => k.UserId == userId);
-       
+
     }
 }

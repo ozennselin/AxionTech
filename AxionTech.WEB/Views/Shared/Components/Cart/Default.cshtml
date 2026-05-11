@@ -1,1 +1,39 @@
-﻿
+﻿@using Core.Models.Entities.CartItem
+@model List<CartItemResponseModel>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="dropdown-item">
+            <div class="media">
+                @{
+                    var pictureUrl = @item.PictureUrl;
+                }
+                <img src="@pictureUrl" class="img-size-50 mr-3 img-circle" alt="@item.ProductName">
+
+                <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                        @item.ProductName
+                    </h3>
+
+                    <p class="text-sm">
+                        Quantity: @item.Quantity
+                    </p>
+
+                    <p class="text-sm text-muted">
+                        Total: @item.LineTotal
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown-divider"></div>
+    }
+}
+else
+{
+    <span class="dropdown-item dropdown-header">
+        Cart is empty
+    </span>
+}

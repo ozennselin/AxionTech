@@ -2,6 +2,7 @@
 using Core.Models.Entities.Cart;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Core.Models.Entities.CartItem;
 
 
 namespace AxionTech.WEB.Controllers;
@@ -21,18 +22,32 @@ public class CartController : BaseController
         _productApi = productApi;
         _cartItemApi = cartItemApi;
     }
+    private int GetSessionUserId()
+    {
+        var userId = HttpContext.Session.GetString("UserId");
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return 0;
+        }
+
+        return Convert.ToInt32(userId);
+    }
 
     public IActionResult List()
     {
-        var getCartItem = _cartItemApi.List();//UserId, CartId olan Id değerlerine göre list gelmeli
+        var userId = GetSessionUserId();
+        var getCartItem = _cartItemApi.List(userId);//UserId, CartId olan Id değerlerine göre list gelmeli
         //SESSION işlemi yapılabilir. Biz şimdilik 1 verdik.
 
         return Json(new { success = true, data = getCartItem });
     }
 
-    public IActionResult CartItemList(int userId)
+    public IActionResult CartItemList()
     {
-        var getCartItem = _cartItemApi.List();
+        var sessionUserId = GetSessionUserId();
+
+        var getCartItem = _cartItemApi.List(sessionUserId);
         //ViewBag.category = _categoryApi.List();//Component
 
         return View(getCartItem);
@@ -42,8 +57,7 @@ public class CartController : BaseController
     public JsonResult AddCart(int id)//giriş(Açık)
     {
 #warning "Bu method giriş yapmamış kullanıcılar için çalışmaz, cookie işlemi yapılabilir." DEVAM EDİLECEK
-        GetUser().Name = null;
-        if (GetUser().Name == null)//cookie ye ekle
+        if (GetSessionUserId() == 0)//cookie ye ekle
         {
             var getProduct = _productApi.GetById(id);
             //yukardaki ürün ve ürüne ait Price, Picture bilgileri cookie ye eklenebilir.
@@ -54,7 +68,7 @@ public class CartController : BaseController
         {
             CreateCartRequestModel model = new CreateCartRequestModel();
             model.ProductId = id;
-            model.UserId = 1;//session işlemi yapılabilir. Biz şimdilik 1 verdik.
+            model.UserId = GetSessionUserId();//session işlemi yapılabilir. Biz şimdilik 1 verdik.
             var result = _cartApi.AddCart(model);
             //sepet için cookie işlemi, session işlemi  yapılabilir. Biz DB ye ekleme işlemi yaptık.
             if (result)

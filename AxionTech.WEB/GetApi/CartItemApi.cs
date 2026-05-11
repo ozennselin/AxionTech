@@ -13,7 +13,7 @@ public class CartItemApi
         _httpClient = httpClient;
     }
 
-    public List<CartItemResponseModel> List(int? userId = 1)
+    public List<CartItemResponseModel> List(int userId)
     {
         var response = _httpClient.GetFromJsonAsync<APIResponseDTO<List<CartItemResponseModel>>>($"CartItem/List?userId={userId}").Result;
 

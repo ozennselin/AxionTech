@@ -9,5 +9,5 @@ public class CartItemResponseModel
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal LineTotal { get; set; }
-    public string PictureUrl { get; set; }
+    public string PictureUrl { get; set; } = string.Empty;
 }

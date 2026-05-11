@@ -10,6 +10,7 @@
                 <span class="badge" id="cartProductCount">0</span>
             </a>
             <ul class="dropdown-menu cart-list" id="cartDetail">
+                @await Component.InvokeAsync("Cart")
              @*  <li class="total" id="deleteTag">
     <strong>Total</strong>: <span class="float-right" id="totalProcess">0</span> TL
     <a href="~/Cart/List" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
@@ -17,7 +18,7 @@
                         
                 <li class="total" id="deleteTag">
                     <strong>Total</strong>: <span class="float-right" id="totalProcess">0</span>
-                    <a href="~/Cart/List" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
+                    <a href="~/Cart/CartItemList" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
                 </li>
 
             </ul>
