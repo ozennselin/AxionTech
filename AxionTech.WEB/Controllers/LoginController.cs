@@ -25,6 +25,7 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(UserLoginModel loginModel)
     {
+        #region Login API Call  
         //using var httpClient = new HttpClient();
 
         //var jsonData = JsonSerializer.Serialize(loginModel);
@@ -44,17 +45,19 @@ public class LoginController : Controller
         //    PropertyNameCaseInsensitive = true
         //});
 
+        #endregion
+
         var loginUser = _loginApi.Login(loginModel);
 
         if (loginUser != null && loginUser.Id > 0)
         {
             HttpContext.Session.SetString("UserName", loginUser.Result.UserName);//Session oluşturme
-            //1. parametre Key=> Unique tir
-            //2.parametre Value=> bu kullanıcı girişi yaparken verilecek nickname, username, mail,.. olabilir
-            //Session Süre ver.
-            //iç layout ya da session farklı ynetim??
-           // ViewBag.userName = HttpContext.Session.GetString("UserName");
-           HttpContext.Session.SetString("UserId", loginUser.Result.Id.ToString());
+                                                                                 //1. parametre Key=> Unique tir
+                                                                                 //2.parametre Value=> bu kullanıcı girişi yaparken verilecek nickname, username, mail,.. olabilir
+                                                                                 //Session Süre ver.
+                                                                                 //iç layout ya da session farklı yönetim??
+                                                                                 // ViewBag.userName = HttpContext.Session.GetString("UserName");
+            HttpContext.Session.SetString("UserId", loginUser.Result.Id.ToString());
             return RedirectToAction("Index", "Home");
         }
         if (loginUser != null && loginUser.Id == -2)

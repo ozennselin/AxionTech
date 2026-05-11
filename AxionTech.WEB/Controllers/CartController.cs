@@ -2,8 +2,6 @@
 using Core.Models.Entities.Cart;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Core.Models.Entities.CartItem;
-
 
 namespace AxionTech.WEB.Controllers;
 
@@ -11,9 +9,7 @@ public class CartController : BaseController
 {
     private readonly CartApi _cartApi;
     private readonly CartItemApi _cartItemApi;
-    private readonly CategoryApi _categoryApi;
     private readonly ProductApi _productApi;
-    private readonly ProductPictureApi _productPictureApi;
 
     public CartController(CartApi cartApi, HttpClient httpClient, CategoryApi categoryApi = null, ProductApi productApi = null, CartItemApi cartItemApi = null) : base(httpClient)
     {
@@ -22,6 +18,7 @@ public class CartController : BaseController
         _productApi = productApi;
         _cartItemApi = cartItemApi;
     }
+   
     private int GetSessionUserId()
     {
         var userId = HttpContext.Session.GetString("UserId");
@@ -61,7 +58,7 @@ public class CartController : BaseController
         {
             var getProduct = _productApi.GetById(id);
             //yukardaki ürün ve ürüne ait Price, Picture bilgileri cookie ye eklenebilir.
-            AddCartWithCookie(id);
+            AddToCartWithCookie(id);
             return Json(new { success = true, data = getProduct });
         }
         else
@@ -90,8 +87,7 @@ public class CartController : BaseController
         //}
     }
 
-
-    public JsonResult AddCartWithCookie(int id)
+    public JsonResult AddToCartWithCookie(int id)
     {
         var getProduct = _productApi.GetById(id);
         if (getProduct != null)
