@@ -85,4 +85,22 @@ public class LoginController : Controller
         request.Message = ResponseMessageEnum.Error.ToString();
         return View(request);
     }
+
+    [HttpGet]
+    public IActionResult MyAccount()
+    {
+        var userName = HttpContext.Session.GetString("UserName");
+
+        if (string.IsNullOrEmpty(userName))
+        {
+            return RedirectToAction("Login");
+        }
+
+        var model = new MyAccountResponseModel
+        {
+            UserName = userName
+        };
+
+        return View(model);
+    }
 }

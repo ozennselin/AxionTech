@@ -1,0 +1,21 @@
+﻿@using Core.Models.Entities.User
+@model MyAccountResponseModel
+@{
+    ViewData["Title"] = "MyAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="card p-5">
+        <h2>Hesabım</h2>
+
+        <hr />
+
+        <h4>Hoşgeldiniz</h4>
+
+        <p>
+            Kullanıcı Adı:
+            <strong>@Model.UserName</strong>
+        </p>
+    </div>
+</div>
