@@ -12,80 +12,61 @@
             <div class="col-lg-12">
                 <h2>Hesabım</h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="~/Home/Index">Anasayfa</a>
-                    </li>
-                    <li class="breadcrumb-item active">
-                        Hesabım
-                    </li>
+                    <li class="breadcrumb-item"><a href="~/Home/Index">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Hesabım</li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
-<div class="my-account-box-main">
-    <div class="container">
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile text-center">
+                    <img class="profile-user-img img-fluid img-circle"
+                         src="~/adminlte/dist/img/user2-160x160.jpg"
+                         alt="User profile picture"
+                         style="width:100px;height:100px;border-radius:50%;">
 
-        <div class="row">
+                    <h3 class="profile-username text-center mt-3">
+                        @Model.UserName
+                    </h3>
 
-            <div class="col-lg-4 col-md-12">
-                <div class="account-box">
-                    <div class="service-box">
-                        <div class="service-icon">
-                            <i class="fa fa-user"></i>
-                        </div>
+                    <p class="text-muted text-center">
+                        Kullanıcı Hesabı
+                    </p>
 
-                        <div class="service-desc">
-                            <h4>Kullanıcı Bilgileri</h4>
-
-                            <p>
-                                @Model.UserName
-                            </p>
-                        </div>
-                    </div>
+                    <a href="~/Cart/CartItemList" class="btn hvr-hover btn-block">
+                        Sepetime Git
+                    </a>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-12">
-                <div class="account-box">
-                    <div class="service-box">
-                        <div class="service-icon">
-                            <i class="fa fa-shopping-bag"></i>
-                        </div>
-
-                        <div class="service-desc">
-                            <h4>Siparişlerim</h4>
-
-                            <a href="~/Cart/CartItemList"
-                                   class="btn hvr-hover">
-                                Sepete Git
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-12">
-                <div class="account-box">
-                    <div class="service-box">
-                        <div class="service-icon">
-                            <i class="fa fa-sign-out"></i>
-                        </div>
-
-                        <div class="service-desc">
-                            <h4>Çıkış Yap</h4>
-
-                            <a href="~/Login/Login"
-                                   class="btn hvr-hover">
-                                Logout
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Hesap Bilgileri</h3>
+                </div>
+
+                <div class="card-body">
+                    <strong>Kullanıcı Adı</strong>
+                    <p class="text-muted">@Model.UserName</p>
+
+                    <hr />
+
+                    <strong>Siparişlerim</strong>
+                    <p class="text-muted">
+                        Sipariş ve sepet işlemlerinizi buradan takip edebilirsiniz.
+                    </p>
+
+                    <a href="~/Cart/CartItemList" class="btn hvr-hover">
+                        Sepete Git
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
