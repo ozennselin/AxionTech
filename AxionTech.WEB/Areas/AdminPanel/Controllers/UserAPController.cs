@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
+[Area("AdminPanel")]
+
 public class UserAPController : Controller
 {
     private readonly UserApi _userApi;

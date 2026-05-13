@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
+[Area("AdminPanel")]
+
 public class OrderAPController : Controller
 {
     private readonly OrderApi _orderApi;

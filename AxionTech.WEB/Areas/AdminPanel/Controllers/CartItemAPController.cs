@@ -6,6 +6,8 @@ using System.Linq;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
+[Area("AdminPanel")]
+
 public class CartItemAPController:Controller
 {
     private readonly CartItemApi _cartItemApi;
