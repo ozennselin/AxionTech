@@ -1,21 +1,91 @@
 ﻿@using Core.Models.Entities.User
 @model MyAccountResponseModel
+
 @{
     ViewData["Title"] = "MyAccount";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5 mb-5">
-    <div class="card p-5">
-        <h2>Hesabım</h2>
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Hesabım</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/Home/Index">Anasayfa</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        Hesabım
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <hr />
+<div class="my-account-box-main">
+    <div class="container">
 
-        <h4>Hoşgeldiniz</h4>
+        <div class="row">
 
-        <p>
-            Kullanıcı Adı:
-            <strong>@Model.UserName</strong>
-        </p>
+            <div class="col-lg-4 col-md-12">
+                <div class="account-box">
+                    <div class="service-box">
+                        <div class="service-icon">
+                            <i class="fa fa-user"></i>
+                        </div>
+
+                        <div class="service-desc">
+                            <h4>Kullanıcı Bilgileri</h4>
+
+                            <p>
+                                @Model.UserName
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+                <div class="account-box">
+                    <div class="service-box">
+                        <div class="service-icon">
+                            <i class="fa fa-shopping-bag"></i>
+                        </div>
+
+                        <div class="service-desc">
+                            <h4>Siparişlerim</h4>
+
+                            <a href="~/Cart/CartItemList"
+                                   class="btn hvr-hover">
+                                Sepete Git
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+                <div class="account-box">
+                    <div class="service-box">
+                        <div class="service-icon">
+                            <i class="fa fa-sign-out"></i>
+                        </div>
+
+                        <div class="service-desc">
+                            <h4>Çıkış Yap</h4>
+
+                            <a href="~/Login/Login"
+                                   class="btn hvr-hover">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>
