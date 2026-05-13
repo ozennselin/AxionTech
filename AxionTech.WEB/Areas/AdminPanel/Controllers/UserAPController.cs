@@ -86,4 +86,10 @@ public class UserAPController : Controller
 
         return View();
     }
+
+    public IActionResult AssignRole(int id)
+    {
+        return View();
+    }
+
 }
