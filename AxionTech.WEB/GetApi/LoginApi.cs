@@ -1,5 +1,4 @@
-﻿using Azure;
-using Core.Models.Entities.User;
+﻿using Core.Models.Entities.User;
 using System.Text;
 using System.Text.Json;
 

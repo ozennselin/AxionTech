@@ -1,0 +1,84 @@
+﻿@using Core.Models.Entities.Dashboard
+@model DashboardResponseModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <h1>Dashboard</h1>
+        </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+
+         <div class="row">
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+
+                    <div class="inner">
+                        <h3>@Model.ProductCount</h3>
+                        <p>Ürün Sayısı</p>
+                    </div>
+
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+
+                    <div class="inner">
+                        <h3>@Model.OrderCount</h3>
+                        <p>Sipariş Sayısı</p>
+                    </div>
+
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+
+                    <div class="inner">
+                        <h3>@Model.UserCount</h3>
+                        <p>Kullanıcı Sayısı</p>
+                    </div>
+
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+
+                    <div class="inner">
+                        <h3>@Model.CartCount</h3>
+                        <p>Aktif Sepet</p>
+                    </div>
+
+                    <div class="icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+
+                </div>
+            </div>
+
+         </div>
+      </div>
+
+    </section>
+
