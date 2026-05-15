@@ -81,51 +81,6 @@
 </div>
 
 @section _js {
-    <script src="~/igtu/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript">
-         //Parent Id değeri o olmayan bağlı kategorileri getirmek için kullanılacak
-
-
-         $(document).ready(function(){
-        
-                    $("#categoryContainer").on('change','#categoryId',function(){
-                    // $("#categoryContainer").on('change','#categoryId',function(){/categoryId yerine class vererek çalışmak gerekli
-
-                              var selectedCategoryId=$(this);
-                               var parentId=selectedCategoryId.val();
-
-                          //C# taafında seçilen kategori için alt kategorileri getirecek Controller methoda yönlendirme
-                          $.ajax({
-                                  url:"/CategoryAP/GetChildCategoryWithId",
-                                  type:"GET",
-                                  data:{categoryId:parentId},
-                                  success:function(response) {
-                                    //data=> birden fazla kategori getirecek
-
-                                    var nextCategoryLevel=parseInt( parentId)+1;
-
-                                           var html=`<div class="category-level" >
-                                        <select class="form-control" data-level="${nextCategoryLevel}">
-                                            <option value="">Altkategori Seçiniz!!</option>`;
-
-
-                                        $.each(response.data,function (index,item){
-                                            html+=`<option value="${item.id}">${item.name}</option>"`;                    
-                                        });
-
-                                        html+=` </select></div>`;
-
-                                        $("#categoryContainer").append(html);
-
-
-                                              //success SON
-                                   },
-                                     error:function(hata) {
-                                         console.log("hata:"+hata.responseText)
-                                     }
-                          });                        
-
-                  });
-        });
-    </script>
+    <script src="~/igtu/js/jquery-3.2.1.min.js"></script>    
+    <script src="~/js/categorySelectChose.js" ></script>
 }

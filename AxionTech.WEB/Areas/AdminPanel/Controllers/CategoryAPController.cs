@@ -1,6 +1,7 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Enums;
 using Core.Models.Entities.Category;
+using Data.Infrastructure.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
@@ -30,7 +31,8 @@ public class CategoryAPController : Controller
 
     public IActionResult Create()
     {
-        return View();
+        var category = _categoryApi.List();
+        return View(category);
     }
 
     [HttpPost]
@@ -82,9 +84,9 @@ public class CategoryAPController : Controller
     }
 
     [HttpGet]
-    public IActionResult GetChildCategoryWithId(int categoryId)
+    public IActionResult GetChildCategoryWithId(int parentId)
     {
-        var list = _categoryApi.List().Where(k=>k.ParentId==categoryId)
+        var list = _categoryApi.List().Where(k=>k.ParentId==parentId)
             .Select(c=>new
             {
                 id=c.Id,

@@ -2,32 +2,30 @@
 
 @model List<CategoryResponseModel>
 <style>
-    .category-level{
-        margin-bottom:10px;
+    .category-level {
+        margin-bottom: 10px;
     }
 
 </style>
 
 <div id="categoryContainer">
 
-    <div class="category-level" >
-
-        <select id="categoryId"  name="CategoryId" class="form-control">
+    <!--*********************************------------------>
+    <div class="category-level">
+        <select id="categoryId1" name="CategoryId"  class="form-control category-select">
 
             <option value="">Kategori Seçiniz</option>
 
             @if (Model != null && Model.Any())
             {
-                foreach (var item in Model)
+                foreach (var item in Model.Where(x=>x.ParentId == 0))
                 {
-                    if (item.ParentId == 0)
-                    {
-                        <option id="parentCategory" value="@item.Id">@item.Name</option>
-                    }
+                    <option id="parentCategory" value="@item.Id">@item.Name</option>
                 }
             }
         </select>
     </div>
+    <!--*********************************------------------>    
 </div>
 
 
