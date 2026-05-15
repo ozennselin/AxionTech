@@ -156,7 +156,7 @@
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
                 <img src="~/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">AxionTech Admin</span>
             </a>
 
             <!-- Sidebar -->
@@ -167,7 +167,7 @@
                         <img src="~/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">@Context.Session.GetString("AdminPanelUserName")</a>
                     </div>
                 </div>
 
@@ -188,49 +188,49 @@
                         <li class="nav-header">LABELS</li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/Dashboard/Index" class="nav-link">
-                                <i class="nav-icon far fa-circle text-dark"></i>
+                                <i class="nav-icon fas fa-tachometer-alt text-primary"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/ProductAP/List" class="nav-link">
-                                <i class="fas fa-barcode text-danger "></i>
+                                <i class="nav-icon fas fa-box-open text-danger "></i>
                                 <p class="text">Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/CustomerAP/List" class="nav-link">
-                                <i class="nav-icon far fa-circle text-warning"></i>
+                                <i class="nav-icon fas fa-user-friends text-warning"></i>
                                 <p>Customer</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/CartAP/List" class="nav-link">
-                                <i class="nav-icon far fa-circle text-success"></i>
+                                <i class="nav-icon fas fa-shopping-cart text-success"></i>
                                 <p>Cart</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/UserAP/List" class="nav-link">
-                                <i class="fas fa-users text-info"></i>
+                                <i class="nav-icon fas fa-users text-info"></i>
                                 <p>User</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/CategoryAP/List" class="nav-link">
-                                <i class="nav-icon far fa-circle text-secondary"></i>
+                                <i class="nav-icon fas fa-tags text-pink"></i>
                                 <p>Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/RoleAP/List" class="nav-link">
-                                <i class="nav-icon far fa-circle text-muted"></i>
+                                <i class="nav-icon fas fa-user-shield text-orange"></i>
                                 <p>Role</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="~/AdminPanel/OrderAP/List" class="nav-link">
-                                <i class="nav-icon far fa-circle text-dark"></i>
+                                <i class="nav-icon fas fa-receipt text-purple"></i>
                                 <p>Order</p>
                             </a>
                         </li>
