@@ -29,7 +29,7 @@ public class AdminLoginAPController : Controller
         if (result != null && result.Id > 0)
         {
             HttpContext.Session.SetString("AdminPanelUserName", result.UserName);
-            return RedirectToAction("List", "ProductAP", new { area = "AdminPanel" });
+            return RedirectToAction("Index", "Dashboard", new { area = "AdminPanel" });
         }
 
         loginModel.Message = ResponseMessageEnum.UserNameOrPasswordFailed.ToString();

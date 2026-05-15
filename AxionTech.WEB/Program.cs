@@ -87,7 +87,7 @@ namespace AxionTech.WEB
             app.MapAreaControllerRoute(
             name: "Areas",
             areaName: "AdminPanel",
-            pattern: "AdminPanel/{controller=ProductAP}/{action=List}/{id?}"
+            pattern: "AdminPanel/{controller=Dashboard}/{action=Index}/{id?}"
           );
 
 
