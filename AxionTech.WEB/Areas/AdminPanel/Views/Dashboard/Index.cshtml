@@ -106,4 +106,17 @@
     </div>
 
     </section>
+</section>
+
+@section _js {
+
+    <script src="~/adminlte/plugins/chart.js/Chart.min.js"></script>
+
+    <script>
+        var monthlySales = @Html.Raw(Json.Serialize(Model.MonthlySales));
+    </script>
+
+    <script src="~/js/dashboard.js"></script>
+
+}
 
