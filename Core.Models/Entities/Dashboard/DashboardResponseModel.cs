@@ -1,4 +1,6 @@
-﻿namespace Core.Models.Entities.Dashboard;
+﻿using Core.Models.Entities.Order;
+
+namespace Core.Models.Entities.Dashboard;
 
 public class DashboardResponseModel
 {
@@ -7,4 +9,5 @@ public class DashboardResponseModel
     public int OrderCount { get; set; }
     public int CartCount { get; set; }
     public List<int> MonthlySales { get; set; }
+    public List<OrderResponseModel> LastOrders { get; set; } = new();
 }

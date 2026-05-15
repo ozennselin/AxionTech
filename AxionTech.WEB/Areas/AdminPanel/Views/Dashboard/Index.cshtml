@@ -6,16 +6,16 @@
 }
 
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <h1>Dashboard</h1>
-        </div>
-    </section>
+<section class="content-header">
+    <div class="container-fluid">
+        <h1>Dashboard</h1>
+    </div>
+</section>
 
-    <section class="content">
-      <div class="container-fluid">
+<section class="content">
+    <div class="container-fluid">
 
-         <div class="row">
+        <div class="row">
 
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
@@ -77,8 +77,8 @@
                 </div>
             </div>
 
-         </div>
-      </div>
+        </div>
+    </div>
     <div class="row">
 
         <section class="col-lg-12">
@@ -104,8 +104,66 @@
         </section>
 
     </div>
+    <div class="row mt-4">
 
-    </section>
+        <div class="col-lg-12">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h3 class="card-title">Son Siparişler</h3>
+                </div>
+
+                <div class="card-body p-0">
+
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Sipariş No</th>
+                                <th>Tarih</th>
+                                <th>Tutar</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.LastOrders)
+                            {
+                                <tr>
+                                    <td>@item.OrderNo</td>
+                                    <td>@item.OrderDate.ToShortDateString()</td>
+                                    <td>@item.TotalAmount ₺</td>
+                                    <td>
+                                        @{
+                                            var badgeClass = item.Status switch
+                                            {
+                                                "Pending" => "badge badge-warning",
+                                                "Completed" => "badge badge-success",
+                                                "Cancelled" => "badge badge-danger",
+                                                _ => "badge badge-secondary"
+                                            };
+                                        }
+
+                                        <span class="@badgeClass">
+                                            @item.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 </section>
 
 @section _js {
