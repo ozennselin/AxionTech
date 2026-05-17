@@ -31,17 +31,9 @@ public class DashboardController : Controller
             OrderCount = orderList.Count,
             CartCount = _cartApi.List().Count,
 
-            MonthlySales = new List<int>
-            {
-             orderList.Count(x => x.OrderDate.Month == 1),
-             orderList.Count(x => x.OrderDate.Month == 2),
-             orderList.Count(x => x.OrderDate.Month == 3),
-             orderList.Count(x => x.OrderDate.Month == 4),
-             orderList.Count(x => x.OrderDate.Month == 5),
-             orderList.Count(x => x.OrderDate.Month == 6)
-             },
+            MonthlySales = Enumerable.Range(1, 12).Select(month => orderList.Count(x => x.OrderDate.Month == month)).ToList(),
 
-               LastOrders = orderList
+            LastOrders = orderList
                  .OrderByDescending(x => x.OrderDate)
                  .Take(5)
                  .ToList()

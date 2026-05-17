@@ -4,6 +4,10 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
 }
+@section _css {
+    <link rel="stylesheet"
+          href="~/adminlte/plugins/jqvmap/jqvmap.css" />
+}
 
 
 <section class="content-header">
@@ -164,15 +168,74 @@
         </div>
 
     </div>
+    <div class="row mt-4">
+
+        <section class="col-lg-12">
+
+            <div class="card bg-gradient-primary">
+
+                <div class="card-header border-0">
+                    <h3 class="card-title">
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        Türkiye Sipariş Haritası
+                    </h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div id="turkey-map" style="height: 400px; width: 100%;"></div>
+
+                </div>
+
+                <div class="card-footer bg-transparent">
+                    <div class="row">
+
+                        <div class="col-4 text-center">
+                            <div class="text-white">
+                                <strong>İstanbul</strong>
+                                <br />
+                                <span>120 Sipariş</span>
+                            </div>
+                        </div>
+
+                        <div class="col-4 text-center">
+                            <div class="text-white">
+                                <strong>Ankara</strong>
+                                <br />
+                                <span>75 Sipariş</span>
+                            </div>
+                        </div>
+
+                        <div class="col-4 text-center">
+                            <div class="text-white">
+                                <strong>İzmir</strong>
+                                <br />
+                                <span>48 Sipariş</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
 </section>
 
 @section _js {
+
+    <script src="~/adminlte/plugins/jquery/jquery.min.js"></script>
 
     <script src="~/adminlte/plugins/chart.js/Chart.min.js"></script>
 
     <script>
         var monthlySales = @Html.Raw(Json.Serialize(Model.MonthlySales));
     </script>
+
+    <script src="~/adminlte/plugins/jqvmap/jquery.vmap.js"></script>
+    <script src="~/adminlte/plugins/jqvmap/maps/jquery.vmap.turkey.js"></script>
 
     <script src="~/js/dashboard.js"></script>
 
