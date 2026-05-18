@@ -49,7 +49,10 @@ public class CategoryAPController : Controller
 
     public IActionResult Update(int id)
     {
+        ViewBag.CategoryList = _categoryApi.List();
+
         var category = _categoryApi.GetById(id);
+
         return View(category);
     }
 

@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
 
     //var countChildCategory = parseInt(1);
 
@@ -34,5 +35,20 @@
                 console.error("Alt kategoriler yüklenemdi");
             }
         });
+    });
+    $(document).on('change', '#isMainCategory', function () {
+
+        if ($(this).is(":checked")) {
+
+            $("#parentCategorySelect").attr("disabled", "disabled");
+            $("#parentCategorySelect").val("0");
+
+        }
+        else {
+
+            $("#parentCategorySelect").removeAttr("disabled");
+
+        }
+
     });
 });

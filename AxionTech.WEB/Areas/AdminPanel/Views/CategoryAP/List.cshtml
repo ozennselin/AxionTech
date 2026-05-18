@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Parent Id</th>
+                    <th>Parent Category</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Product Count</th>
@@ -37,7 +37,18 @@
                     {
                         <tr>
                             <td>@item.Id</td>
-                            <td>@item.ParentId</td>
+                            <td>
+
+                                @{
+                                    var parentCategory = Model
+                                    .FirstOrDefault(x => x.Id == item.ParentId);
+                                }
+
+                                @(parentCategory != null
+                                    ? parentCategory.Name
+                                    : "Main Category")
+
+                            </td>
                             <td>@item.Name</td>
                             <td>@item.Description</td>
                             <td>@item.ProductCount</td>

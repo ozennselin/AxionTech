@@ -16,24 +16,53 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <label>Ana Kategori</label>
-                        <input name="parentCategori" class="form-control" type="checkbox" />
+
+                <div class="col-md-2">
+                    <div class="form-group mt-4">
+
+                        <div class="custom-control custom-switch mt-2">
+
+                            <input type="checkbox"
+                                   class="custom-control-input"
+                                   id="isMainCategory"
+                                   checked>
+
+                            <label class="custom-control-label"
+                                   for="isMainCategory">
+
+                                Main Category
+
+                            </label>
+
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-md-11">
+
+                <div class="col-md-10">
+
                     <div class="form-group">
                         <label>Parent Category</label>
-                        <select name="ParentId" class="form-control">
-                            <option value="0">Main Category</option>
-                            @foreach (var item in Model)
+
+                        <select id="parentCategorySelect"
+                                name="ParentId"
+                                class="form-control"
+                                disabled>
+
+                            <option value="0">Select Parent Category</option>
+
+                            @foreach (var item in Model.Where(x => x.ParentId == 0))
                             {
-                                <option value="@item.Id">@item.Name</option>
+                                <option value="@item.Id">
+                                    @item.Name
+                                </option>
                             }
+
                         </select>
                     </div>
+
                 </div>
+
             </div>
 
             <div class="form-group">
@@ -57,4 +86,11 @@
 @if (ViewBag.Error != null)
 {
     <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}
+@section _js {
+
+    <script src="~/adminlte/plugins/jquery/jquery.min.js"></script>
+
+    <script src="~/js/categorySelectChose.js"></script>
+
 }
