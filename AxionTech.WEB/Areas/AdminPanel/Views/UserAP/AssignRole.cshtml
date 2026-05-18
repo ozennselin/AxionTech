@@ -1,0 +1,126 @@
+﻿@using Core.Models.Entities.UserRole
+@using Data.Infrastructure.Entities
+
+@model List<UserRoleResponseModel>
+
+@{
+    ViewData["Title"] = "Assign Role";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+
+    var user = ViewBag.User;
+    var roles = ViewBag.Roles as List<Role>;
+}
+
+<div class="card card-info">
+
+    <div class="card-header">
+        <h3 class="card-title">
+            Assign Role
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        <h4>
+            @user.UserName
+        </h4>
+
+        <hr />
+
+        <h5>Current Roles</h5>
+
+        <table class="table table-bordered">
+
+            <thead>
+                <tr>
+                    <th>Role Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.RoleName</td>
+
+                            <td>
+
+                                <form method="post"
+                                      action="~/AdminPanel/UserAP/DeleteRole">
+
+                                    <input type="hidden"
+                                           name="UserId"
+                                           value="@item.UserId" />
+
+                                    <input type="hidden"
+                                           name="RoleId"
+                                           value="@item.RoleId" />
+
+                                    <button class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">
+                            No role assigned
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+        <hr />
+
+        <form method="post"
+              action="~/AdminPanel/UserAP/AssignRole">
+
+            <input type="hidden"
+                   name="UserId"
+                   value="@user.Id" />
+
+            <div class="form-group">
+
+                <label>Select Role</label>
+
+                <select name="RoleId"
+                        class="form-control">
+
+                    @if (roles != null)
+                    {
+                        foreach (var item in roles)
+                        {
+                            <option value="@item.Id">
+                                @item.Name
+                            </option>
+                        }
+                    }
+
+                </select>
+
+            </div>
+
+            <button class="btn btn-success mt-3">
+                Add Role
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

@@ -1,6 +1,7 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Enums;
 using Core.Models.Entities.User;
+using Core.Models.Entities.UserRole;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
@@ -10,10 +11,12 @@ namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 public class UserAPController : Controller
 {
     private readonly UserApi _userApi;
+    private readonly UserRoleApi _userRoleApi;
 
-    public UserAPController(UserApi userApi)
+    public UserAPController(UserApi userApi, UserRoleApi userRoleApi)
     {
         _userApi = userApi;
+        _userRoleApi = userRoleApi;
     }
 
     public IActionResult List()
@@ -91,7 +94,30 @@ public class UserAPController : Controller
 
     public IActionResult AssignRole(int id)
     {
-        return View();
+        var user = _userApi.GetById(id);
+
+        var userRoles = _userRoleApi.GetByUserId(id);
+
+        var roles = _userApi.GetRoles();
+
+        ViewBag.User = user;
+        ViewBag.Roles = roles;
+
+        return View(userRoles);
+    }
+    [HttpPost]
+    public IActionResult AssignRole(CreateUserRoleRequestModel request)
+    {
+        var result = _userRoleApi.Create(request);
+
+        return RedirectToAction("AssignRole", new { id = request.UserId });
+    }
+    [HttpPost]
+    public IActionResult DeleteRole(DeleteUserRoleRequestModel request)
+    {
+        var result = _userRoleApi.Delete(request);
+
+        return RedirectToAction("AssignRole", new { id = request.UserId });
     }
 
 }
