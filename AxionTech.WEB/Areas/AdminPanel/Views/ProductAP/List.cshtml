@@ -1,5 +1,4 @@
 ﻿@using Core.Models.Entities.Product
-@using AxionTech.WEB.TagHelpers
 
 @{
     ViewData["Title"] = "List";
@@ -10,9 +9,9 @@
 <div class="card card-info">
     <div class="card-header">
         <div class="text-xl-left"> <h3 class="card-title">Product List</h3></div>
-        <div class="text-md-right" >
+        <div class="text-md-right">
             
-            <a class="btn btn-success" visible=""  href="~/AdminPanel/ProductAP/Create">Create</a>
+            <a class="btn btn-success" visible="" href="~/AdminPanel/ProductAP/Create">Create</a>
 
         </div>
     </div>
@@ -39,14 +38,23 @@
                         <td>@item.Description</td>
                         <td> @item.CategoryName</td>
                        
-                        @* <td><a class="btn btn-block btn-primary btn-sm" href="~/AdminPanel/ProductAP/Detail/@item.Id"><i class="fa fa-eye"></i></a></td> *@
                         <td>
-                            <ax-button name="save" href="~/AdminPanel/ProductAP/Detail/" is-visible="true" value="Save">
+                            <ax-button yetki="true" name="detail" href="~/AdminPanel/ProductAP/Detail/">
                                 <i class="fa fa-eye"></i>
-                                </ax-button>
-                            </td>
-                        <td><a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/ProductAP/Update/@item.Id"><i class="fa fa-pen"></i></a></td>
-                        <td><a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/ProductAP/Delete/@item.Id"><i class="fa fa-trash"></i></a></td>
+                            </ax-button>
+                        </td>
+                        @*   <td><a class="btn  btn-warning btn-sm" href="~/AdminPanel/ProductAP/Update/@item.Id"><i class="fa fa-pen"></i></a></td> *@
+                        <td>
+                            <ax-button yetki="false" name="detail" href="~/AdminPanel/ProductAP/Detail/">
+                                <i class="fa fa-eye"></i>
+                            </ax-button>
+                        </td>
+                        @*   <td><a class="btn  btn-danger btn-sm" href="~/AdminPanel/ProductAP/Delete/@item.Id"><i class="fa fa-trash"></i></a></td> *@
+                        <td>
+                            <ax-button yetki="false" name="detail" href="~/AdminPanel/ProductAP/Detail/">
+                                <i class="fa fa-eye"></i>
+                            </ax-button>
+                        </td>
                     </tr>
                 }
             </tbody>
