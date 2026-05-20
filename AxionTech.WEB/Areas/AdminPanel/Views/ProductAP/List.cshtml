@@ -1,4 +1,5 @@
-﻿@using Core.Models.Entities.Product
+﻿@using AxionTech.WEB.TagHelpers
+@using Core.Models.Entities.Product
 
 @{
     ViewData["Title"] = "List";
@@ -37,6 +38,9 @@
                         <td>@item.Name</td>
                         <td>@item.Description</td>
                         <td> @item.CategoryName</td>
+                        <td>
+                            <ax-button name="Kaydet"></ax-button>
+                        </td>
                         <td><a class="btn btn-block btn-primary btn-sm" href="~/AdminPanel/ProductAP/Detail/@item.Id"><i class="fa fa-eye"></i></a></td>
                         <td><a class="btn btn-block btn-warning btn-sm" href="~/AdminPanel/ProductAP/Update/@item.Id"><i class="fa fa-pen"></i></a></td>
                         <td><a class="btn btn-block btn-danger btn-sm" href="~/AdminPanel/ProductAP/Delete/@item.Id"><i class="fa fa-trash"></i></a></td>
