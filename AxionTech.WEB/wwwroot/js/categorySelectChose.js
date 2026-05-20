@@ -20,7 +20,7 @@ $(document).ready(function () {
                 if (data.data.length > 0) {
 
                     //ountChildCategory++;
-                    var newCategory = `<div class="category-level"> <select id="categoryId" name="CategoryId"  class="form-control category-select"> <option value="0">Altkategori Seçiniz</option> `;
+                    var newCategory = `<div class="category-level mb-2"> <select id="categoryId" name="CategoryId"  class="form-control category-select"> <option value="0">Altkategori Seçiniz</option> `;
 
                     $.each(data.data, function (i, item) {
                         newCategory += ` <option value="${item.id}">${item.name}</option>`;
@@ -42,6 +42,7 @@ $(document).ready(function () {
 
             $("#parentCategorySelect").attr("disabled", "disabled");
             $("#parentCategorySelect").val("0");
+            $("#parentCategorySelect").closest('.category-level').nextAll('.category-level').remove();
 
         }
         else {

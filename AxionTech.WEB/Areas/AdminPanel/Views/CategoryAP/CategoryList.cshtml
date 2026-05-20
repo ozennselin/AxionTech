@@ -1,0 +1,29 @@
+﻿@using Core.Models.Entities.Category
+
+@model IEnumerable<CategoryResponseModel>
+
+<div id="categoryContainer">
+
+    <div class="category-level mb-2">
+
+        <select id="parentCategorySelect"
+                name="ParentId"
+                class="form-control category-select"
+                disabled>
+
+            <option value="0">
+                Select Parent Category
+            </option>
+
+            @foreach (var item in Model.Where(x => x.ParentId == 0))
+            {
+                <option value="@item.Id">
+                    @item.Name
+                </option>
+            }
+
+        </select>
+
+    </div>
+
+</div>

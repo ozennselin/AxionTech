@@ -44,21 +44,7 @@
                     <div class="form-group">
                         <label>Parent Category</label>
 
-                        <select id="parentCategorySelect"
-                                name="ParentId"
-                                class="form-control"
-                                disabled>
-
-                            <option value="0">Select Parent Category</option>
-
-                            @foreach (var item in Model.Where(x => x.ParentId == 0))
-                            {
-                                <option value="@item.Id">
-                                    @item.Name
-                                </option>
-                            }
-
-                        </select>
+                        @Html.Partial("CategoryList", Model)
                     </div>
 
                 </div>
