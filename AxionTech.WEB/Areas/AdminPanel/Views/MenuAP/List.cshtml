@@ -1,0 +1,144 @@
+﻿@using Core.Models.Entities.Menu
+@model List<MenuResponseModel>
+
+@{
+    ViewData["Title"] = "Menu List";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+
+    <div class="card-header">
+
+        <div class="d-flex justify-content-between">
+
+            <h3 class="card-title">
+                Menu List
+            </h3>
+
+            <a class="btn btn-success"
+                   href="~/AdminPanel/MenuAP/Create">
+
+                Create
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-striped">
+
+            <thead>
+
+                <tr>
+                    <th>Id</th>
+                    <th>Controller Name</th>
+                    <th>View Name</th>
+                    <th>Parent Id</th>
+                    <th>Status</th>
+                    <th>Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.Id</td>
+
+                            <td>
+                                @item.ControllerName
+                            </td>
+
+                            <td>
+                                @item.ViewName
+                            </td>
+
+                            <td>
+                                @item.ParentId
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge badge-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">
+                                        Passive
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-block btn-primary btn-sm"
+                                       href="~/AdminPanel/MenuAP/Detail/@item.Id">
+
+                                    <i class="fa fa-eye"></i>
+
+                                </a>
+
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-block btn-warning btn-sm"
+                                       href="~/AdminPanel/MenuAP/Update/@item.Id">
+
+                                    <i class="fa fa-pen"></i>
+
+                                </a>
+
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-block btn-danger btn-sm"
+                                       href="~/AdminPanel/MenuAP/Delete/@item.Id">
+
+                                    <i class="fa fa-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+
+                        <td colspan="8"
+                            class="text-center text-danger">
+
+                            No records found
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

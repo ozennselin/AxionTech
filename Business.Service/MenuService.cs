@@ -38,7 +38,7 @@ public class MenuService : IMenuService
 
             _menuRepository.Add(menuCreate);
 
-            return (ResponseMessageEnum.UpdateSuccess,null);
+            return (ResponseMessageEnum.Success,null);
         }
         catch (Exception)
         {
@@ -46,5 +46,18 @@ public class MenuService : IMenuService
         }
 
 
+    }
+    public List<MenuResponseModel> List()
+    {
+        var menuList = _menuRepository.GetAll().ToList();
+
+        return menuList.Select(x => new MenuResponseModel
+        {
+            Id = x.Id,
+            ControllerName = x.ControllerName,
+            ParentId = x.ParentId,
+            ViewName = x.ViewName,
+            IsActive = x.IsActive
+        }).ToList();
     }
 }

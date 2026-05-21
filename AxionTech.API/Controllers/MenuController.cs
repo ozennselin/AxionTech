@@ -20,12 +20,19 @@ public class MenuController : BaseAPIController
     public IActionResult Create([FromBody]CreateMenuRequestModel request)
     {
         var result = _menuService.Create(request);
-        if (result.Item1 == Core.Enums.ResponseMessageEnum.Success)
+        if (result.Item1 ==ResponseMessageEnum.Success)
         {
-            return ResultAPI(result.Item2);
+            return ResultAPI(result.Item1);
         }
         return BadRequest(new { Message = ResponseMessageEnum.ErrorWithData, ErrorCode = result.Item1 });
     }
+    [HttpGet("List")]
+    public IActionResult List()
+    {
+        var list = _menuService.List();
 
-     
+        return ResultAPI(list);
+    }
+
+
 }

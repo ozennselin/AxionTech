@@ -7,4 +7,5 @@ namespace Business.Service.Interfaces;
 public interface IMenuService
 {
     (ResponseMessageEnum, CreateMenuRequestModel) Create(CreateMenuRequestModel request);
+    List<MenuResponseModel> List();
 }

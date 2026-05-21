@@ -29,6 +29,7 @@ public class Program
         builder.Services.AddScoped<IProductPictureService, ProductPictureService>();
         builder.Services.AddScoped<IProductDocumentService, ProductDocumentService>();
         builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+        builder.Services.AddScoped<IMenuService, MenuService>();
 
 
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();//yaþam döngüsü boyunca
@@ -44,6 +45,7 @@ public class Program
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+        builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
 
 
