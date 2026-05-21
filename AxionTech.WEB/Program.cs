@@ -70,6 +70,10 @@ namespace AxionTech.WEB
             {
                 c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
             });
+            builder.Services.AddHttpClient<MenuRoleApi>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
 
             builder.Services.AddSession(k =>
             {

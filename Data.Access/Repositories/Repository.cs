@@ -23,6 +23,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _axionTechDB.SaveChanges();
         //_axionTechDB.Products.Add(product);
     }
+    public void AddRange(List<TEntity> entities)
+    {
+        _dbSet.AddRange(entities);
+
+        _axionTechDB.SaveChanges();
+    }
 
     public IQueryable<TEntity> GetAll()
     {

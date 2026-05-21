@@ -1,12 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Service.Interfaces;
+using Core.Enums;
+using Core.Models.Entities.MenuRole;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AxionTech.API.Controllers;
 
-public class MenuRoleController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class MenuRoleController : BaseAPIController
 {
-    [HttpGet("List")]
-    public IActionResult List()
+    private readonly IMenuRoleService _menuRoleService;
+
+    public MenuRoleController(IMenuRoleService menuRoleService)
     {
-        return Ok();
+        _menuRoleService = menuRoleService;
+    }
+
+    [HttpPost("Create")]
+    public IActionResult Create([FromBody] List<CreateMenuRoleRequestModel> request)
+    {
+        var result = _menuRoleService.Create(request);
+
+        if (result == ResponseMessageEnum.Success)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new
+        {
+            Message = ResponseMessageEnum.ErrorWithData,
+            ErrorCode = result
+        });
     }
 }
