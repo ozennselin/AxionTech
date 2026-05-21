@@ -60,4 +60,67 @@ public class MenuService : IMenuService
             IsActive = x.IsActive
         }).ToList();
     }
+    public MenuResponseModel GetById(int id)
+    {
+        var menu = _menuRepository.GetById(id);
+
+        if (menu == null)
+        {
+            return null;
+        }
+
+        return new MenuResponseModel
+        {
+            Id = menu.Id,
+            ControllerName = menu.ControllerName,
+            ParentId = menu.ParentId,
+            ViewName = menu.ViewName,
+            IsActive = menu.IsActive
+        };
+    }
+    public ResponseMessageEnum Update(UpdateMenuRequestModel request)
+    {
+        try
+        {
+            var menuToUpdate = _menuRepository.GetById(request.Id);
+
+            if (menuToUpdate == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            menuToUpdate.ControllerName = request.ControllerName;
+            menuToUpdate.ParentId = request.ParentId;
+            menuToUpdate.ViewName = request.ViewName;
+            menuToUpdate.IsActive = request.IsActive;
+
+            _menuRepository.Update(menuToUpdate);
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateErrorWithMessage;
+        }
+    }
+    public ResponseMessageEnum Delete(DeleteMenuRequestModel request)
+    {
+        try
+        {
+            var menuToDelete = _menuRepository.GetById(request.Id);
+
+            if (menuToDelete == null)
+            {
+                return ResponseMessageEnum.NotFound;
+            }
+
+            _menuRepository.Delete(menuToDelete);
+
+            return ResponseMessageEnum.Success;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.DeleteError;
+        }
+    }
 }

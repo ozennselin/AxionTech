@@ -38,6 +38,53 @@ public class MenuAPController : Controller
         ViewBag.Error = result.ToString();
         return View(request);
     }
+    public IActionResult Detail(int id)
+    {
+        var menu = _menuApi.GetById(id);
 
+        return View(menu);
+    }
+    public IActionResult Update(int id)
+    {
+        var menu = _menuApi.GetById(id);
 
+        return View(menu);
+    }
+
+    [HttpPost]
+    public IActionResult Update(UpdateMenuRequestModel request)
+    {
+        var result = _menuApi.Update(request);
+
+        if (result == ResponseMessageEnum.Success ||
+            result == ResponseMessageEnum.UpdateSuccess)
+        {
+            return RedirectToAction("List");
+        }
+
+        ViewBag.Error = result.ToString();
+
+        var menu = _menuApi.GetById(request.Id);
+
+        return View(menu);
+    }
+    public IActionResult Delete(int id)
+    {
+        var menu = _menuApi.GetById(id);
+
+        return View(menu);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(DeleteMenuRequestModel request)
+    {
+        var result = _menuApi.Delete(request);
+
+        if (result == ResponseMessageEnum.Success)
+        {
+            return RedirectToAction("List");
+        }
+
+        return View();
+    }
 }

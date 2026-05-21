@@ -28,4 +28,36 @@ public class MenuApi
 
         return response.Data;
     }
+    public MenuResponseModel GetById(int id)
+    {
+        var response = _httpClient
+            .GetFromJsonAsync<APIResponseDTO<MenuResponseModel>>($"Menu/GetById/{id}")
+            .Result;
+
+        return response.Data;
+    }
+    public ResponseMessageEnum Update(UpdateMenuRequestModel request)
+    {
+        var response = _httpClient
+            .PostAsJsonAsync("Menu/Update", request)
+            .Result;
+
+        var result = response.Content
+            .ReadFromJsonAsync<APIResponseDTO<ResponseMessageEnum>>()
+            .Result;
+
+        return result.Data;
+    }
+    public ResponseMessageEnum Delete(DeleteMenuRequestModel request)
+    {
+        var response = _httpClient
+            .PostAsJsonAsync("Menu/Delete", request)
+            .Result;
+
+        var result = response.Content
+            .ReadFromJsonAsync<APIResponseDTO<ResponseMessageEnum>>()
+            .Result;
+
+        return result.Data;
+    }
 }

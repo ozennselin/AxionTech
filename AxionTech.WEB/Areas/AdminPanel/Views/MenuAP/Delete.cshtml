@@ -1,0 +1,73 @@
+﻿@using Core.Models.Entities.Menu
+@model MenuResponseModel
+
+@{
+    ViewData["Title"] = "Delete Menu";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-danger">
+
+    <div class="card-header">
+        <h3 class="card-title">
+            Delete Menu
+        </h3>
+    </div>
+
+    <form method="post" action="~/AdminPanel/MenuAP/Delete">
+
+        <input type="hidden"
+               name="Id"
+               value="@Model.Id" />
+
+        <div class="card-body">
+
+            <div class="alert alert-danger">
+
+                Are you sure you want to delete this menu?
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Controller Name</label>
+
+                <input class="form-control"
+                       value="@Model.ControllerName"
+                       disabled />
+
+            </div>
+
+            <div class="form-group">
+
+                <label>View Name</label>
+
+                <input class="form-control"
+                       value="@Model.ViewName"
+                       disabled />
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Parent Id</label>
+
+                <input class="form-control"
+                       value="@Model.ParentId"
+                       disabled />
+
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+
+            <button class="btn btn-danger">
+                Delete
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

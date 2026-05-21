@@ -1,0 +1,64 @@
+﻿@using Core.Models.Entities.Menu
+@model MenuResponseModel
+
+@{
+    ViewData["Title"] = "Menu Detail";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_LayoutAP.cshtml";
+}
+
+<div class="card card-info">
+
+    <div class="card-header">
+        <h3 class="card-title">
+            Menu Detail
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-group">
+            <label>Controller Name</label>
+
+            <input class="form-control"
+                   value="@Model.ControllerName"
+                   disabled />
+        </div>
+
+        <div class="form-group">
+            <label>View Name</label>
+
+            <input class="form-control"
+                   value="@Model.ViewName"
+                   disabled />
+        </div>
+
+        <div class="form-group">
+            <label>Parent Id</label>
+
+            <input class="form-control"
+                   value="@Model.ParentId"
+                   disabled />
+        </div>
+
+        <div class="form-group">
+
+            <label>Status</label>
+
+            @if (Model.IsActive)
+            {
+                <span class="badge badge-success">
+                    Active
+                </span>
+            }
+            else
+            {
+                <span class="badge badge-danger">
+                    Passive
+                </span>
+            }
+
+        </div>
+
+    </div>
+
+</div>

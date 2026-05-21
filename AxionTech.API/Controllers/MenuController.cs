@@ -33,6 +33,44 @@ public class MenuController : BaseAPIController
 
         return ResultAPI(list);
     }
+    [HttpGet("GetById/{id}")]
+    public IActionResult GetById(int id)
+    {
+        var menu = _menuService.GetById(id);
 
+        return ResultAPI(menu);
+    }
 
+    [HttpPost("Update")]
+    public IActionResult Update([FromBody] UpdateMenuRequestModel request)
+    {
+        var result = _menuService.Update(request);
+
+        if (result == ResponseMessageEnum.UpdateSuccess)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new
+        {
+            Message = ResponseMessageEnum.ErrorWithData,
+            ErrorCode = result
+        });
+    }
+    [HttpPost("Delete")]
+    public IActionResult Delete([FromBody] DeleteMenuRequestModel request)
+    {
+        var result = _menuService.Delete(request);
+
+        if (result == ResponseMessageEnum.Success)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new
+        {
+            Message = ResponseMessageEnum.ErrorWithData,
+            ErrorCode = result
+        });
+    }
 }
