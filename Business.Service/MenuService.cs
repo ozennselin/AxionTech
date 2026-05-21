@@ -60,6 +60,7 @@ public class MenuService : IMenuService
             IsActive = x.IsActive
         }).ToList();
     }
+
     public MenuResponseModel GetById(int id)
     {
         var menu = _menuRepository.GetById(id);

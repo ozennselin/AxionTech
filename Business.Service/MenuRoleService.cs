@@ -1,6 +1,8 @@
 ﻿using Business.Service.Interfaces;
 using Core.Enums;
+using Core.Models.Entities.Menu;
 using Core.Models.Entities.MenuRole;
+using Data.Access.Repositories;
 using Data.Access.Repositories.Interfaces;
 using Data.Infrastructure.Entities;
 
@@ -35,4 +37,19 @@ public class MenuRoleService : IMenuRoleService
             return ResponseMessageEnum.Error;
         }
     }
+
+    public List<MenuRoleResponseModel> List()
+    {
+        var menuList = _menuRoleRepository.GetAll();
+
+        return menuList.Select(x => new MenuRoleResponseModel
+        {
+            RoleId = x.RoleId,
+            MenuId = x.MenuId,
+            RoleName= "role adı",
+            MenuName = "menu adı",
+            IsActive = x.IsActive
+        }).ToList();
+    }
+
 }

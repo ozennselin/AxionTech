@@ -25,4 +25,12 @@ public class MenuRoleApi
 
         return result.Data;
     }
+    public List<MenuRoleResponseModel> List()
+    {
+        var response = _httpClient
+            .GetFromJsonAsync<APIResponseDTO<List<MenuRoleResponseModel>>>("MenuRole/List")
+            .Result;
+
+        return response.Data;
+    }
 }

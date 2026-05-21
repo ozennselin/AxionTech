@@ -26,6 +26,7 @@ public class MenuController : BaseAPIController
         }
         return BadRequest(new { Message = ResponseMessageEnum.ErrorWithData, ErrorCode = result.Item1 });
     }
+    
     [HttpGet("List")]
     public IActionResult List()
     {
@@ -33,6 +34,7 @@ public class MenuController : BaseAPIController
 
         return ResultAPI(list);
     }
+
     [HttpGet("GetById/{id}")]
     public IActionResult GetById(int id)
     {
@@ -57,6 +59,7 @@ public class MenuController : BaseAPIController
             ErrorCode = result
         });
     }
+   
     [HttpPost("Delete")]
     public IActionResult Delete([FromBody] DeleteMenuRequestModel request)
     {

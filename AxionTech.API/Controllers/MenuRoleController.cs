@@ -1,4 +1,5 @@
-﻿using Business.Service.Interfaces;
+﻿using Business.Service;
+using Business.Service.Interfaces;
 using Core.Enums;
 using Core.Models.Entities.MenuRole;
 using Microsoft.AspNetCore.Mvc;
@@ -31,5 +32,13 @@ public class MenuRoleController : BaseAPIController
             Message = ResponseMessageEnum.ErrorWithData,
             ErrorCode = result
         });
+    }
+
+    [HttpGet("List")]
+    public IActionResult List()
+    {
+        var list = _menuRoleService.List();
+
+        return ResultAPI(list);
     }
 }
