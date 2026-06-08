@@ -9,5 +9,5 @@ public class ResponseMessage:BaseEntity
     public string MessageEng { get; set; }//Success
     public string MessageDautch { get; set; }//S
     public string MessageDautKrt { get; set; }//Serqefti
-
+    Product x=new Product();
 }
