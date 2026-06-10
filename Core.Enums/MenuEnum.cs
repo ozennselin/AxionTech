@@ -1,6 +1,6 @@
 ﻿namespace Core.Enums;
 
-public enum TableEnum
+public enum MenuEnum
 {
     Product=1,
     Customer = 2,
