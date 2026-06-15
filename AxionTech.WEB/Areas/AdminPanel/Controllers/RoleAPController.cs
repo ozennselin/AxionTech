@@ -113,7 +113,20 @@ public class RoleAPController : Controller
     public IActionResult Delete(int id)
     {
         var role = _roleApi.GetById(id);
-        return View(role);
+
+        RoleDeletePageResponseModel model = new RoleDeletePageResponseModel();
+
+        model.Role = role;
+
+        model.Menus = _menuApi.List();
+
+        var selectedMenus = _menuRoleApi.GetByRoleId(id);
+
+        model.SelectedMenuIds = selectedMenus != null
+            ? selectedMenus.Where(x => x.IsActive).Select(x => x.MenuId).ToList()
+            : new List<int>();
+
+        return View(model);
     }
 
     [HttpPost]
