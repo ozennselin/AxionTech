@@ -41,4 +41,28 @@ public class MenuRoleController : BaseAPIController
 
         return ResultAPI(list);
     }
+    [HttpGet("GetByRoleId")]
+    public IActionResult GetByRoleId(int roleId)
+    {
+        var list = _menuRoleService.GetByRoleId(roleId);
+
+        return ResultAPI(list);
+    }
+
+    [HttpPost("Update")]
+    public IActionResult Update([FromBody] UpdateMenuRoleRequestModel request)
+    {
+        var result = _menuRoleService.Update(request);
+
+        if (result == ResponseMessageEnum.UpdateSuccess)
+        {
+            return ResultAPI(result);
+        }
+
+        return BadRequest(new
+        {
+            Message = ResponseMessageEnum.ErrorWithData,
+            ErrorCode = result
+        });
+    }
 }

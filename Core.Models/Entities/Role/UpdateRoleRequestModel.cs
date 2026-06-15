@@ -7,4 +7,5 @@ public class UpdateRoleRequestModel:BaseUpdateModel
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public bool IsActive { get; set; } = true;
+    public List<int> MenuIds { get; set; } = new List<int>();
 }

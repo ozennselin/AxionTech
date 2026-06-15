@@ -8,4 +8,5 @@ public class MenuRoleCreatePageResponseModel
     public List<RoleResponseModel> Roles { get; set; }
 
     public List<MenuResponseModel> Menus { get; set; }
+    public List<int> SelectedMenuIds { get; set; } = new List<int>();
 }

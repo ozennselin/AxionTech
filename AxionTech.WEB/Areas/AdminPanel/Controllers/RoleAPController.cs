@@ -1,7 +1,9 @@
 ﻿using AxionTech.WEB.GetApi;
 using Core.Enums;
+using Core.Models.Entities.MenuRole;
 using Core.Models.Entities.Role;
 using Microsoft.AspNetCore.Mvc;
+using Core.Models.Entities.MenuRole;
 
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
@@ -10,10 +12,16 @@ namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 public class RoleAPController : Controller
 {
     private readonly RoleApi _roleApi;
+    private readonly MenuApi _menuApi;
+    private readonly MenuRoleApi _menuRoleApi;
 
-    public RoleAPController(RoleApi roleApi)
+    public RoleAPController(RoleApi roleApi,
+    MenuApi menuApi,
+    MenuRoleApi menuRoleApi)
     {
         _roleApi = roleApi;
+        _menuApi = menuApi;
+        _menuRoleApi = menuRoleApi;
     }
 
     public IActionResult List()
@@ -48,7 +56,20 @@ public class RoleAPController : Controller
     public IActionResult Update(int id)
     {
         var role = _roleApi.GetById(id);
-        return View(role);
+
+        RoleUpdatePageResponseModel model = new RoleUpdatePageResponseModel();
+
+        model.Role = role;
+
+        model.Menus = _menuApi.List();
+
+        var selectedMenus = _menuRoleApi.GetByRoleId(id);
+
+        model.SelectedMenuIds = selectedMenus != null
+      ? selectedMenus.Where(x => x.IsActive).Select(x => x.MenuId).ToList()
+      : new List<int>();
+
+        return View(model);
     }
 
     [HttpPost]
@@ -56,12 +77,37 @@ public class RoleAPController : Controller
     {
         var result = _roleApi.Update(request);
 
-        if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
+        if (result == ResponseMessageEnum.Success ||
+            result == ResponseMessageEnum.UpdateSuccess)
+        {
+            UpdateMenuRoleRequestModel menuRoleRequest =
+                new UpdateMenuRoleRequestModel();
+
+            menuRoleRequest.RoleId = request.Id;
+            menuRoleRequest.MenuIds = request.MenuIds;
+
+            _menuRoleApi.Update(menuRoleRequest);
+
             return RedirectToAction("List");
+        }
 
         ViewBag.Error = result.ToString();
+
         var role = _roleApi.GetById(request.Id);
-        return View(role);
+
+        RoleUpdatePageResponseModel model = new RoleUpdatePageResponseModel();
+
+        model.Role = role;
+
+        model.Menus = _menuApi.List();
+
+        var selectedMenus = _menuRoleApi.GetByRoleId(request.Id);
+
+        model.SelectedMenuIds = selectedMenus != null
+            ? selectedMenus.Select(x => x.MenuId).ToList()
+            : new List<int>();
+
+        return View(model);
     }
 
     public IActionResult Delete(int id)

@@ -26,13 +26,22 @@ public class MenuRoleAPController : Controller
         model.Roles = _roleApi.List();
 
         model.Menus = _menuApi.List();
+        var firstRole=model.Roles.FirstOrDefault();
+        if (firstRole != null)
+        {
+            var selectedMenus = _menuRoleApi.GetByRoleId(firstRole.Id);
+
+            model.SelectedMenuIds = selectedMenus != null
+                ? selectedMenus.Select(x => x.MenuId).ToList()
+                : new List<int>();
+        }
 
         return View(model);
     }
     [HttpPost]
-    public IActionResult Create(int roleId,List<int> menuIds)
+    public IActionResult Create(int roleId, List<int> menuIds)
     {
-        List<CreateMenuRoleRequestModel> request =new List<CreateMenuRoleRequestModel>();
+        List<CreateMenuRoleRequestModel> request = new List<CreateMenuRoleRequestModel>();
 
         foreach (var item in menuIds)
         {
@@ -52,11 +61,17 @@ public class MenuRoleAPController : Controller
 
         ViewBag.Error = result.ToString();
 
-        MenuRoleCreatePageResponseModel model =new MenuRoleCreatePageResponseModel();
+        MenuRoleCreatePageResponseModel model = new MenuRoleCreatePageResponseModel();
 
         model.Roles = _roleApi.List();
 
         model.Menus = _menuApi.List();
+
+        var selectedMenus = _menuRoleApi.GetByRoleId(roleId);
+
+        model.SelectedMenuIds = selectedMenus != null
+            ? selectedMenus.Select(x => x.MenuId).ToList()
+            : new List<int>();
 
         return View(model);
     }

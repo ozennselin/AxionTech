@@ -45,11 +45,15 @@
                 @foreach (var menu in Model.Menus)
                 {
                     <div class="form-check">
+                        @{
+                            var isChecked = Model.SelectedMenuIds != null && Model.SelectedMenuIds.Contains(menu.Id);
+                        }
 
                         <input class="form-check-input"
                                type="checkbox"
                                name="MenuIds"
-                               value="@menu.Id" />
+                               value="@menu.Id"
+                               checked="@isChecked" />
 
                         <label class="form-check-label">
 

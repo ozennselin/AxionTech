@@ -72,5 +72,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _axionTechDB.SaveChanges();
     }
 
-    
+    public void UpdateRange(List<TEntity> entities)
+    {
+        _dbSet.UpdateRange(entities);
+
+        _axionTechDB.SaveChanges();
+    }
 }

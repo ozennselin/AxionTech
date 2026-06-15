@@ -21,6 +21,14 @@ public class MenuRoleService : IMenuRoleService
     {
         try
         {
+            foreach(var item in request) 
+            {
+                bool isExist = _menuRoleRepository.Any(x => x.MenuId == item.MenuId && x.RoleId == item.RoleId);
+                if (isExist)
+                {
+                    return ResponseMessageEnum.Exist;
+                }
+            }
             var menuRoleList = request.Select(x => new MenuRole
             {
                 RoleId = x.RoleId,
@@ -50,6 +58,64 @@ public class MenuRoleService : IMenuRoleService
             MenuName = "menu adı",
             IsActive = x.IsActive
         }).ToList();
+    }
+    public List<MenuRoleResponseModel> GetByRoleId(int roleId)
+    {
+        var menuRoleList = _menuRoleRepository
+            .GetAll()
+            .Where(x => x.RoleId == roleId)
+            .ToList();
+
+        return menuRoleList.Select(x => new MenuRoleResponseModel
+        {
+            RoleId = x.RoleId,
+            MenuId = x.MenuId,
+            RoleName = "role adı",
+            MenuName = "menu adı",
+            IsActive = x.IsActive
+        }).ToList();
+    }
+    public ResponseMessageEnum Update(UpdateMenuRoleRequestModel request)
+    {
+        try
+        {
+            var oldMenuRoles = _menuRoleRepository
+                .GetAll()
+                .Where(x => x.RoleId == request.RoleId)
+                .ToList();
+
+            foreach (var item in oldMenuRoles)
+            {
+                item.IsActive = request.MenuIds.Contains(item.MenuId);
+            }
+
+            var oldMenuIds = oldMenuRoles
+                .Select(x => x.MenuId)
+                .ToList();
+
+            var newMenuRoles = request.MenuIds
+                .Where(menuId => !oldMenuIds.Contains(menuId))
+                .Select(menuId => new MenuRole
+                {
+                    RoleId = request.RoleId,
+                    MenuId = menuId,
+                    IsActive = true
+                })
+                .ToList();
+
+            _menuRoleRepository.UpdateRange(oldMenuRoles);
+
+            if (newMenuRoles.Any())
+            {
+                _menuRoleRepository.AddRange(newMenuRoles);
+            }
+
+            return ResponseMessageEnum.UpdateSuccess;
+        }
+        catch (Exception)
+        {
+            return ResponseMessageEnum.UpdateError;
+        }
     }
 
 }

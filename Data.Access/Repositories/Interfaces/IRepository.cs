@@ -18,4 +18,5 @@ public interface IRepository<TEntity> where TEntity : class
     bool Any(Expression<Func<TEntity, bool>> query);
      void Delete(TEntity entity);
     void Update(TEntity entity);
+    void UpdateRange(List<TEntity> entities);
 }
