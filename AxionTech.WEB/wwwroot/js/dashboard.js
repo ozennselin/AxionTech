@@ -35,9 +35,13 @@
         borderOpacity: 1,
         borderWidth: 1,
         color: '#ffffff',
-        hoverColor: '#f39c12',
+        hoverColor: '#dc2626',
         enableZoom: true,
         showTooltip: true,
+
+        onRegionOut: function (event, code, region) {
+            $('#turkey-map').vectorMap('set', 'colors', code, '#ffffff');
+        }
 
         onRegionClick: function (event, code, region) {
             alert(region + ' şehrine tıklandı');
