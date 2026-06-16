@@ -16,8 +16,10 @@ namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
 [Area("AdminPanel")]
 
-public class ProductAPController : Controller
+public class ProductAPController : BaseController
 {
+
+
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         var adminSession = HttpContext.Session.GetString("AdminPanelUserName");
