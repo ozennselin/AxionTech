@@ -38,7 +38,11 @@ public class RoleAPController : Controller
 
     public IActionResult Create()
     {
-        return View();
+        ViewData["SelectedMenuIds"] = new List<int>();
+
+        var menus = _menuApi.List();
+
+        return View(menus);
     }
 
     [HttpPost]
@@ -47,10 +51,36 @@ public class RoleAPController : Controller
         var result = _roleApi.Create(request);
 
         if (result == ResponseMessageEnum.Success || result == ResponseMessageEnum.UpdateSuccess)
+        {
+            var role = _roleApi.List()
+                .Where(x => x.Name == request.Name)
+                .OrderByDescending(x => x.Id)
+                .FirstOrDefault();
+
+            if (role != null && request.MenuIds != null && request.MenuIds.Any())
+            {
+                List<CreateMenuRoleRequestModel> menuRoleRequest = new List<CreateMenuRoleRequestModel>();
+
+                foreach (var menuId in request.MenuIds)
+                {
+                    menuRoleRequest.Add(new CreateMenuRoleRequestModel
+                    {
+                        RoleId = role.Id,
+                        MenuId = menuId
+                    });
+                }
+
+                _menuRoleApi.Create(menuRoleRequest);
+            }
+
             return RedirectToAction("List");
+        }
 
         ViewBag.Error = result.ToString();
-        return View(request);
+
+        ViewData["SelectedMenuIds"] = request.MenuIds ?? new List<int>();
+
+        return View(_menuApi.List());
     }
 
     public IActionResult Update(int id)

@@ -1,6 +1,6 @@
 ﻿@using Core.Enums
 @using Core.Models.Entities.Role
-@model CreateRoleRequestModel
+@model List<Core.Models.Entities.Menu.MenuResponseModel>
 
 @{
     ViewData["Title"] = "Create Role";
@@ -40,7 +40,7 @@
             </div>
 
             <div class="card-body">
-               @Html.Partial("_Role",null)
+               @Html.Partial("_Role",Model)
             </div>
         </div>
         <div class="card-footer">
