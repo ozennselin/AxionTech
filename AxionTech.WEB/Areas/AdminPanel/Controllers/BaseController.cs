@@ -16,14 +16,9 @@ namespace AxionTech.WEB.Areas.AdminPanel.Controllers
                     "Login",
                     "AdminLoginAP",
                     new { area = "AdminPanel" });
-            }
-
-            base.OnActionExecuting(context);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+  
     }
+}
 }

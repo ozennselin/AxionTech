@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
 [Area("AdminPanel")]
-public class DashboardController : Controller
+public class DashboardController : BaseController
 {
     private readonly ProductApi _productApi;
     private readonly UserApi _userApi;
