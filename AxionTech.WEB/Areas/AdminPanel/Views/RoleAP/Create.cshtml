@@ -40,38 +40,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered table-hover text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="text-start">Modül</th>
-                            <th>List</th>
-                            <th>Create</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (MenuEnum item in Enum.GetValues(typeof(MenuEnum)))
-                        {                            
-                            <tr>
-                                <td class="text-start"><strong>@item</strong></td>
-
-                                <td>
-                                    <input type="checkbox" name="@(item+"List")" class="form-check-input">
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="@(item + "Create")" class="form-check-input">
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="@(item + "Update")" class="form-check-input">
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="@(item + "Delete")" class="form-check-input">
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+               @Html.Partial("_Role",null)
             </div>
         </div>
         <div class="card-footer">

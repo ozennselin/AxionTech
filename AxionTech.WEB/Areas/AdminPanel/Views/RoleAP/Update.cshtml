@@ -1,4 +1,5 @@
-﻿@using Core.Models.Entities.Role
+﻿@using Core.Enums 
+@using Core.Models.Entities.Role
 @model RoleUpdatePageResponseModel
 
 @{
@@ -40,33 +41,16 @@
             </div>
 
         </div>
-        <div class="form-group">
+        <div class="card">
+            <div class="card-header">
+                <h5>Yetki Tanımları</h5>
+            </div>
 
-            <label>Menus</label>
+            <div class="card-body">
 
-            @foreach (var menu in Model.Menus)
-            {
-                var isChecked = Model.SelectedMenuIds.Contains(menu.Id);
-
-                <div class="form-check">
-
-                    <input class="form-check-input"
-                           type="checkbox"
-                           name="MenuIds"
-                           value="@menu.Id"
-                           checked="@isChecked" />
-
-                    <label class="form-check-label">
-
-                        @menu.ControllerName
-                        -
-                        @menu.ViewName
-
-                    </label>
-
-                </div>
-            }
-
+                               @Html.Partial("_Role",Model.Menus)
+                
+            </div>
         </div>
 
         <div class="card-footer">
