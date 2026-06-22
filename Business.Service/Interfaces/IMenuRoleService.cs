@@ -7,6 +7,7 @@ public interface IMenuRoleService
 {
     ResponseMessageEnum Create(List<CreateMenuRoleRequestModel> request);
     List<MenuRoleResponseModel> List();
+    List<MenuRoleResponseModel> List(int roleId);
     List<MenuRoleResponseModel> GetByRoleId(int roleId);
     ResponseMessageEnum Update(UpdateMenuRoleRequestModel request);
 }

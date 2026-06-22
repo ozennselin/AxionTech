@@ -65,4 +65,12 @@ public class MenuRoleController : BaseAPIController
             ErrorCode = result
         });
     }
+
+    [HttpGet("List")]
+    public IActionResult List(int roleId)
+    {
+        var list = _menuRoleService.List(roleId);
+
+        return ResultAPI(list);
+    }
 }

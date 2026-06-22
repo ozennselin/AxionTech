@@ -11,13 +11,17 @@ public class DashboardController : BaseController
     private readonly UserApi _userApi;
     private readonly OrderApi _orderApi;
     private readonly CartApi _cartApi;
+    private readonly MenuRoleApi _menuRoleApi;
 
-    public DashboardController(ProductApi productApi, UserApi userApi, OrderApi orderApi, CartApi cartApi)
+
+
+    public DashboardController(ProductApi productApi, OrderApi orderApi, CartApi cartApi, MenuRoleApi menuRoleApi, UserApi userApi = null) : base(menuRoleApi, userApi)
     {
         _productApi = productApi;
         _userApi = userApi;
         _orderApi = orderApi;
         _cartApi = cartApi;
+        _menuRoleApi = menuRoleApi;
     }
 
     public IActionResult Index()

@@ -24,16 +24,18 @@ public class ProductAPController : BaseController
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
     private readonly CategoryApi _categoryApi;
+    private readonly UserApi _userApi;
 
     public static int productId;
 
-    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, CategoryApi categoryApi = null)
+    public ProductAPController(ProductApi productApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, CategoryApi categoryApi, MenuRoleApi menuRoleApi, UserApi userApi) : base(menuRoleApi, userApi)
     {
         _productApi = productApi;
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
         _categoryApi = categoryApi;
+        _userApi = userApi;
     }
 
     #region Product    

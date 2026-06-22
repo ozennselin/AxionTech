@@ -95,6 +95,7 @@ public class UserService : IUserService
             DateOfBirth = user.DateOfBirth,
             Gender = user.Gender,
             IsActive = user.IsActive,
+            //RoleId=user.,=> UserRole tablosundan ilgili user için RoleId getrilmesi gereklidir
             IsEmailConfirmed = user.IsEmailConfirmed
         };
     }

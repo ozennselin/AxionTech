@@ -25,10 +25,29 @@ public class MenuRoleApi
 
         return result.Data;
     }
+    
+    /// <summary>
+    /// Getall MenuRole List
+    /// </summary>
+    /// <returns></returns>
     public List<MenuRoleResponseModel> List()
     {
         var response = _httpClient
             .GetFromJsonAsync<APIResponseDTO<List<MenuRoleResponseModel>>>("MenuRole/List")
+            .Result;
+
+        return response.Data;
+    }
+
+    /// <summary>
+    /// List with RoleId
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    public List<MenuRoleResponseModel> List(int roleId)
+    {
+        var response = _httpClient
+            .GetFromJsonAsync<APIResponseDTO<List<MenuRoleResponseModel>>>($"MenuRole/List?roleId={roleId}")
             .Result;
 
         return response.Data;

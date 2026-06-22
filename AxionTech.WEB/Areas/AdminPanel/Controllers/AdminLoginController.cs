@@ -29,6 +29,7 @@ public class AdminLoginAPController : Controller
         if (result != null && result.Id > 0)
         {
             HttpContext.Session.SetString("AdminPanelUserName", result.UserName);
+            HttpContext.Session.SetInt32("AdminPanelUserId", result.Id);
             return RedirectToAction("Index", "Dashboard", new { area = "AdminPanel" });
         }
 

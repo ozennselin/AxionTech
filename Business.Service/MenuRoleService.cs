@@ -46,15 +46,35 @@ public class MenuRoleService : IMenuRoleService
         }
     }
 
+    ///
     public List<MenuRoleResponseModel> List()
     {
-        var menuList = _menuRoleRepository.GetAll();
+        var menuList = _menuRoleRepository.GetAll();//40*25=1000
 
         return menuList.Select(x => new MenuRoleResponseModel
         {
             RoleId = x.RoleId,
             MenuId = x.MenuId,
             RoleName= "role adı",
+            MenuName = "menu adı",
+            IsActive = x.IsActive
+        }).ToList();
+    }
+
+    /// <summary>
+    /// MenuRole list with roleId List
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    public List<MenuRoleResponseModel> List(int roleId)
+    {
+        var menuList = _menuRoleRepository.GetAllQuery(k=>k.RoleId==roleId);//4*10=40
+
+        return menuList.Select(x => new MenuRoleResponseModel
+        {
+            RoleId = x.RoleId,
+            MenuId = x.MenuId,
+            RoleName = "role adı",
             MenuName = "menu adı",
             IsActive = x.IsActive
         }).ToList();

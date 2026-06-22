@@ -6,17 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace AxionTech.WEB.Areas.AdminPanel.Controllers;
 
 [Area("AdminPanel")]
-public class MenuRoleAPController : Controller
+public class MenuRoleAPController : BaseController
 {
     private readonly RoleApi _roleApi;
     private readonly MenuApi _menuApi;
     private readonly MenuRoleApi _menuRoleApi;
+    private readonly UserApi _userApi;
 
-    public MenuRoleAPController(RoleApi roleApi, MenuApi menuApi, MenuRoleApi menuRoleApi)
+    public MenuRoleAPController(RoleApi roleApi, MenuApi menuApi, MenuRoleApi menuRoleApi, UserApi userApi) : base(menuRoleApi,userApi)
     {
         _roleApi = roleApi;
         _menuApi = menuApi;
         _menuRoleApi = menuRoleApi;
+        _userApi = userApi;
     }
 
     public IActionResult Create()
