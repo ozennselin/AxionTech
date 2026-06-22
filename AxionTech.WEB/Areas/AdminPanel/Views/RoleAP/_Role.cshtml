@@ -3,6 +3,10 @@
 
 @model List<MenuResponseModel>
 
+@{
+    var selectedMenuIds = ViewData["SelectedMenuIds"] as List<int> ?? new List<int>();
+}
+
 <table class="table table-bordered table-hover text-center">
     <thead class="table-light">
         <tr>
@@ -13,51 +17,54 @@
             <th>Delete</th>
         </tr>
     </thead>
+
     <tbody>
-
-        @if (Model == null)
+        @foreach (MenuEnum item in Enum.GetValues(typeof(MenuEnum)))
         {
-            @foreach (MenuEnum item in Enum.GetValues(typeof(MenuEnum)))
-            {
-                <tr>
-                    <td class="text-start"><strong>@item</strong></td>
+            var controllerName = item.ToString() + "AP";
 
-                    <td>
-                        <input type="checkbox" name="@(item + "List")" class="form-check-input">
-                    </td>
-                    <td>
-                        <input type="checkbox" name="@(item + "Create")" class="form-check-input">
-                    </td>
-                    <td>
-                        <input type="checkbox" name="@(item + "Update")" class="form-check-input">
-                    </td>
-                    <td>
-                        <input type="checkbox" name="@(item + "Delete")" class="form-check-input">
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            @foreach (MenuEnum item in Enum.GetValues(typeof(MenuEnum)))
-            {
-                <tr>
-                    <td class="text-start"><strong>@item</strong></td>
+            var listMenu = Model?.FirstOrDefault(x => x.ControllerName == controllerName && x.ViewName == "List");
+            var createMenu = Model?.FirstOrDefault(x => x.ControllerName == controllerName && x.ViewName == "Create");
+            var updateMenu = Model?.FirstOrDefault(x => x.ControllerName == controllerName && x.ViewName == "Update");
+            var deleteMenu = Model?.FirstOrDefault(x => x.ControllerName == controllerName && x.ViewName == "Delete");
 
-                    <td>
-                        <input type="checkbox" name="@(item + "List")" class="form-check-input" checked="Model">
-                    </td>
-                    <td>
-                        <input type="checkbox" name="@(item + "Create")" class="form-check-input">
-                    </td>
-                    <td>
-                        <input type="checkbox" name="@(item + "Update")" class="form-check-input">
-                    </td>
-                    <td>
-                        <input type="checkbox" name="@(item + "Delete")" class="form-check-input">
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td class="text-start">
+                    <strong>@item</strong>
+                </td>
+
+                <td>
+                    <input type="checkbox"
+                           name="MenuIds"
+                           value="@(listMenu?.Id ?? 0)"
+                           class="form-check-input"
+                           checked="@(listMenu != null && selectedMenuIds.Contains(listMenu.Id))" />
+                </td>
+
+                <td>
+                    <input type="checkbox"
+                           name="MenuIds"
+                           value="@(createMenu?.Id ?? 0)"
+                           class="form-check-input"
+                           checked="@(createMenu != null && selectedMenuIds.Contains(createMenu.Id))" />
+                </td>
+
+                <td>
+                    <input type="checkbox"
+                           name="MenuIds"
+                           value="@(updateMenu?.Id ?? 0)"
+                           class="form-check-input"
+                           checked="@(updateMenu != null && selectedMenuIds.Contains(updateMenu.Id))" />
+                </td>
+
+                <td>
+                    <input type="checkbox"
+                           name="MenuIds"
+                           value="@(deleteMenu?.Id ?? 0)"
+                           class="form-check-input"
+                           checked="@(deleteMenu != null && selectedMenuIds.Contains(deleteMenu.Id))" />
+                </td>
+            </tr>
         }
     </tbody>
 </table>

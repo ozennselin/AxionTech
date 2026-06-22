@@ -48,7 +48,11 @@
 
             <div class="card-body">
 
-                               @Html.Partial("_Role",Model.Menus)
+                @{
+                    ViewData["SelectedMenuIds"] = Model.SelectedMenuIds;
+                }
+
+                @Html.Partial("_Role", Model.Menus)
                 
             </div>
         </div>
