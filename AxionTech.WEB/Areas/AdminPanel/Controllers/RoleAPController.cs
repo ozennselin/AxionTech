@@ -33,7 +33,19 @@ public class RoleAPController : Controller
     public IActionResult Detail(int id)
     {
         var role = _roleApi.GetById(id);
-        return View(role);
+
+        RoleUpdatePageResponseModel model = new RoleUpdatePageResponseModel();
+
+        model.Role = role;
+        model.Menus = _menuApi.List();
+
+        var selectedMenus = _menuRoleApi.GetByRoleId(id);
+
+        model.SelectedMenuIds = selectedMenus != null
+            ? selectedMenus.Where(x => x.IsActive).Select(x => x.MenuId).ToList()
+            : new List<int>();
+
+        return View(model);
     }
 
     public IActionResult Create()
