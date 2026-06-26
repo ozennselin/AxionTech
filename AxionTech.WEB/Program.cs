@@ -13,6 +13,7 @@ namespace AxionTech.WEB
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
             builder.Services.AddHttpClient();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddHttpClient<ProductApi>(k =>
             {
