@@ -55,75 +55,85 @@
 });
 
 function AddCart(productId) {
+
     $.ajax({
         url: '/Cart/AddCart',
         type: 'POST',
         data: { id: productId },
         success: function (gelenCevap) {
+
             if (gelenCevap.success) {
-                if (gelenCevap.data.id) {
-                    try {
-                        var product = gelenCevap.data;
-                        var unitPrice = parseInt(product.price) || 0;
 
-                        var getSameProduct = document.getElementById("product" + product.id);
+                debugger;
+                gelenCevap.data.forEach(function (urunler) {
 
-                        if (getSameProduct == null) {
-                            var deleteTag = document.getElementById("deleteTag");
-                            if (deleteTag) {
-                                deleteTag.remove();
-                            }
+                    debugger;
+                    if (urunler.productId) {
+                        try {
+                            // var product = gelenCevap.data;
+                            var unitPrice = parseInt(urunler.price) || 0;
 
-                            var eklenecekUrun = `<li id="product${product.id}">
-                                <a href="#" class="photo"><img src="${product.picture}" class="cart-thumb" alt="" /></a>
-                                <h6><a href="#">${product.name}</a></h6>
-                                <p id="quantity${product.id}">1x - 
-                                    <span class="price" id="price${product.id}">${unitPrice}</span>
+                            var getSameProduct = document.getElementById("product" + urunler.id);
+
+                            if (getSameProduct == null) {
+                                var deleteTag = document.getElementById("deleteTag");
+                                if (deleteTag) {
+                                    deleteTag.remove();
+                                }
+
+                                var eklenecekUrun = `<li id="product${urunler.id}">
+                                <a href="#" class="photo"><img src="${urunler.picture}" class="cart-thumb" alt="" /></a>
+                                <h6><a href="#">${urunler.name}</a></h6>
+                                <p id="quantity${urunler.id}">1x - 
+                                    <span class="price" id="price${urunler.id}">${unitPrice}</span>
                                 </p>
                             </li>`;
 
-                            document.getElementById("cartDetail").insertAdjacentHTML("beforeend", eklenecekUrun);
+                                document.getElementById("cartDetail").insertAdjacentHTML("beforeend", eklenecekUrun);
 
-                            var getTotal = document.getElementById("totalProcess");
-                            var getTotalPrice = parseInt(getTotal ? getTotal.innerHTML : 0) || 0;
-                            var getNewTotal = getTotalPrice + unitPrice;
+                                var getTotal = document.getElementById("totalProcess");
+                                var getTotalPrice = parseInt(getTotal ? getTotal.innerHTML : 0) || 0;
+                                var getNewTotal = getTotalPrice + unitPrice;
 
-                            var newTotalTag = `<li class="total" id="deleteTag">
+                                var newTotalTag = `<li class="total" id="deleteTag">
                                 <strong>Total</strong>: 
                                 <span class="float-right" id="totalProcess">${getNewTotal}</span>
                                 <a href="/Cart/CartItemList" class="btn btn-default hvr-bounce-to-bottom btn-cart">SEPETE GİT</a>
                             </li>`;
 
-                            document.getElementById("cartDetail").insertAdjacentHTML("beforeend", newTotalTag);
+                                document.getElementById("cartDetail").insertAdjacentHTML("beforeend", newTotalTag);
+                            }
+                            else {
+                                var element = document.getElementById("quantity" + product.id);
+                                var text = element.childNodes[0].nodeValue.trim();
+                                var quantity = parseInt(text) || 1;
+
+                                quantity = quantity + 1;
+
+                                element.innerHTML = quantity + `x - 
+                                <span class="price" id="price${urunler.id}">${unitPrice * quantity}</span>`;
+
+                                var getTotal = document.getElementById("totalProcess");
+                                var getTotalPrice = parseInt(getTotal.innerHTML) || 0;
+                                getTotal.innerText = getTotalPrice + unitPrice;
+                            }
+
+                            var getProductCount = document.getElementById("cartProductCount");
+                            if (getProductCount) {
+                                var getCount = parseInt(getProductCount.innerHTML) || 0;
+                                getProductCount.innerHTML = getCount + 1;
+                            }
+
+                        } catch (e) {
+                            console.log(e);
                         }
-                        else {
-                            var element = document.getElementById("quantity" + product.id);
-                            var text = element.childNodes[0].nodeValue.trim();
-                            var quantity = parseInt(text) || 1;
-
-                            quantity = quantity + 1;
-
-                            element.innerHTML = quantity + `x - 
-                                <span class="price" id="price${product.id}">${unitPrice * quantity}</span>`;
-
-                            var getTotal = document.getElementById("totalProcess");
-                            var getTotalPrice = parseInt(getTotal.innerHTML) || 0;
-                            getTotal.innerText = getTotalPrice + unitPrice;
-                        }
-
-                        var getProductCount = document.getElementById("cartProductCount");
-                        if (getProductCount) {
-                            var getCount = parseInt(getProductCount.innerHTML) || 0;
-                            getProductCount.innerHTML = getCount + 1;
-                        }
-
-                    } catch (e) {
-                        console.log(e);
                     }
-                }
-            }
-            else {
-                alert("Hata: " + gelenCevap.message);
+
+                    else {
+                        alert("Hata: " + gelenCevap.message);
+                    }
+
+                })
             }
         },
         error: function () {

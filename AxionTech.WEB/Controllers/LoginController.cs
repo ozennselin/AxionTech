@@ -63,6 +63,7 @@ public class LoginController : Controller
             HttpContext.Session.SetString("UserId", loginUser.Result.Id.ToString());
             //Cookie'de ürün varsa ürünleri giriş yapan kullanıcıya ata/sepetine ekle
            var cartItems = JsonSerializer.Deserialize<List<CreateCartCookieModel>>(Request.Cookies["guestCart"]);
+
             if (cartItems.Count()==0)
             {
             return RedirectToAction("Index", "Home");

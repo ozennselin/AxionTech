@@ -54,13 +54,32 @@ public class CartController : BaseController
             //her eklenen ürün cookie gönderilecek
             // AddToCartWithCookie(list);
             //ilk önce Cookie de ürün var mı sorgusu yapacağım, eğer ürün varsa o ürünleri getirecek list olarak tutacağım ve yeni ürünü liste ekleyip Cookie ye tekrar yeni ürünle beraber oluşturmak üzere AddToCartWithCookie göndereceğim, ürün cookide yoksa  aşağıdaki AddToCartWithCookie methoduna ilk ürünü eklemek için göndereceğim
-            var listCookie= CookieProductList();
-            listCookie.Add(getProduct);
+            var listCookie = CookieProductList();
+
+            var resultQuantity = listCookie.Where(k => k.ProductId == getProduct.Id).FirstOrDefault();
+
+
+            if (resultQuantity != null)
+            {
+                resultQuantity.Quantity += 1;
+            }
+            else
+            {
+                CreateCartCookieModel cartCookieItem = new CreateCartCookieModel();
+                cartCookieItem.ProductId = getProduct.Id;
+                cartCookieItem.UnitPrice = getProduct.Price;
+                cartCookieItem.Picture = getProduct.Picture;
+                cartCookieItem.Quantity = 1;
+                listCookie.Add(cartCookieItem);
+
+            }
+
             AddToCartWithCookie(listCookie);
 
             #endregion
 
-            return Json(new { success = true, data = getProduct });
+           // return Json(new { success = true, data = getProduct });
+            return Json(new { success = true, data = listCookie });
         }
         else
         {
@@ -92,9 +111,9 @@ public class CartController : BaseController
     /// Cookie oluşturma işlemi
     /// </summary>
     /// <param name="cartCookieItems"></param>
-    public void AddToCartWithCookie(List<ProductResponseModel> cartCookieItems)
+    public void AddToCartWithCookie(List<CreateCartCookieModel> cartCookieItems)
     {
-        
+
         var cookieOptions = new CookieOptions
         {
             Expires = DateTime.Now.AddDays(7),//cookie nin geçerlilik süresi
@@ -113,14 +132,14 @@ public class CartController : BaseController
     /// Cooki de olan json formatındaki ürünleri c# formatına dönüştürüp List olarak getirir
     /// </summary>
     /// <returns></returns>
-    public List<ProductResponseModel> CookieProductList()
+    public List<CreateCartCookieModel> CookieProductList()
     {
         var cookieList = _httpContextAccessor.HttpContext.Request.Cookies["guestCart"];
-        if (cookieList!=null)
+        if (cookieList != null)
         {
-        return  JsonSerializer.Deserialize<List<ProductResponseModel>>(cookieList);//json formatında olan Cookiedeki ürünleri c# formatına getirecek
+            return JsonSerializer.Deserialize<List<CreateCartCookieModel>>(cookieList);//json formatında olan Cookiedeki ürünleri c# formatına getirecek
         }
-            return new List<ProductResponseModel>();
+        return new List<CreateCartCookieModel>();
     }
 
     public IActionResult PaymentSuccess()
