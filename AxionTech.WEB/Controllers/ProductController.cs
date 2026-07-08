@@ -1,6 +1,4 @@
 ﻿using AxionTech.WEB.GetApi;
-using Core.Dtos;
-using Core.Models.Entities.Category;
 using Core.Models.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +11,15 @@ public class ProductController : BaseController
     private readonly ProductPriceApi _productPriceApi;
     private readonly ProductPictureApi _productPictureApi;
     private readonly ProductDocumentApi _productDocumentApi;
-    public ProductController(HttpClient httpClient, ProductApi productApi, CategoryApi categoryApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi) : base(httpClient)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public ProductController(HttpClient httpClient, ProductApi productApi, CategoryApi categoryApi, ProductPriceApi productPriceApi, ProductPictureApi productPictureApi, ProductDocumentApi productDocumentApi, IHttpContextAccessor httpContextAccessor ) : base(httpClient, httpContextAccessor)
     {
         _productApi = productApi;
         _categoryApi = categoryApi;
         _productPriceApi = productPriceApi;
         _productPictureApi = productPictureApi;
         _productDocumentApi = productDocumentApi;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public IActionResult List()
@@ -33,9 +33,19 @@ public class ProductController : BaseController
         //var uriApiAdresPro = "https://localhost:7162/api/Product/List";
         //var responsePro = _httpClient.GetFromJsonAsync<APIResponseDTO<List<ProductResponseModel>>>(uriApiAdresPro).Result;   
         #endregion
-        ViewBag.category=_categoryApi.List();
-      
-        ViewBag.AllPrices=_productPriceApi.List();
+
+       var  cookieList = _httpContextAccessor.HttpContext.Request.Cookies["guestCart"];
+
+        if (cookieList != null)
+        {
+            var listCookie = CookieProductList();
+            AddToCartWithCookie(listCookie);
+            ViewBag.cookieData = listCookie;
+
+        }
+        ViewBag.category = _categoryApi.List();
+
+        ViewBag.AllPrices = _productPriceApi.List();
         return View(_productApi.List());
     }
     
@@ -72,5 +82,6 @@ public class ProductController : BaseController
     {
         return View();
     }
+
 
 }

@@ -64,10 +64,10 @@ function AddCart(productId) {
 
             if (gelenCevap.success) {
 
-                debugger;
+               // debugger;
                 gelenCevap.data.forEach(function (urunler) {
 
-                    debugger;
+                    //debugger;
                     if (urunler.productId) {
                         try {
                             // var product = gelenCevap.data;
